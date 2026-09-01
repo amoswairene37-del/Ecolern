@@ -1,311 +1,88 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ENS/B/26 SYNCED</title>
-<script src="https://meet.jit.si/external_api.js"></script>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecolern ENS/B/26 Hub + Messenger</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
+import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// ⚠️ REPLACE THIS CONFIG WITH YOUR REAL ONE FROM Firebase Console > Project Settings > General
 const firebaseConfig = {
-  apiKey: "AIzaSyCZEEUq1qANI9PpU29QIlVS84UVI2ZAe5g",
-  authDomain: "ens-b-26-c1474.firebaseapp.com",
-  projectId: "ens-b-26-c1474",
-  storageBucket: "ens-b-26-c1474.firebasestorage.app",
-  messagingSenderId: "472500993224",
-  appId: "1:472500993224:web:9b513dfa3f491ed44479fd"
+  apiKey:"AIzaSy...",
+  authDomain:"ecolern-2691b.firebaseapp.com",
+  projectId:"ecolern-2691b",
+  storageBucket:"ecolern-2691b.appspot.com",
+  messagingSenderId:"123456",
+  appId:"1:123:web:abc"
 };
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-window.db=db; window.collection=collection; window.addDoc=addDoc; window.query=query; window.orderBy=orderBy; window.onSnapshot=onSnapshot; window.serverTimestamp=serverTimestamp;
-console.log("✅ Firebase ENS-B-26 connected!");
+const app=initializeApp(firebaseConfig); const db=getFirestore(app);
+window.db=db; window.collection=collection; window.addDoc=addDoc; window.query=query; window.orderBy=orderBy; window.limit=limit; window.onSnapshot=onSnapshot; window.serverTimestamp=serverTimestamp; window.doc=doc; window.setDoc=setDoc;
 </script>
-<script>
-function go(id){document.querySelectorAll('.page').forEach(p=>p.style.display='none');document.getElementById(id).style.display='block';window.scrollTo(0,0);}
-function openReg(){document.getElementById('regModal').style.display='block'}function closeReg(){document.getElementById('regModal').style.display='none'}
-let tempPic='',tempChart='',tempTT='';
-</script>
-<style>
-body{margin:0;font-family:Arial;background:#e8f5e9;padding-bottom:20px}
-.header{background:#1b5e20;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.card{background:#fff;margin:8px;padding:12px;border-radius:12px;box-shadow:0 2px 5px #0002}
-.btn{background:#1b5e20;color:#fff;border:0;padding:13px;width:100%;border-radius:10px;font-weight:bold;margin:5px 0;font-size:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}
-.gcard{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 6px #0002;border-left:5px solid #1b5e20}
-.page{display:none}#home{display:block}
-input,textarea{width:100%;padding:11px;margin:5px 0;border:1px solid #999;border-radius:10px;font-size:16px;box-sizing:border-box}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;padding:15px;overflow:auto}
-.modalBox{background:#fff;border-radius:16px;padding:18px;max-width:400px;margin:20px auto}
-.notif{position:fixed;top:60px;left:10px;right:10px;background:#25D366;color:#fff;padding:12px;border-radius:12px;z-index:9999;display:none;font-weight:bold}
-</style>
-</head>
-<body>
+<style>.tab-active{border-bottom:3px solid #16a34a;color:#16a34a;font-weight:700}</style>
+</head><body class="bg-gray-50">
+<header class="bg-green-700 text-white p-4 flex justify-between sticky top-0 z-50"><div><h1 class="font-bold">Ecolern ENS/B/26</h1><p class="text-xs">Rep: Amos Nyongesa | Patron: Dr Okore</p></div><div><span id="userRole" class="bg-white text-green-700 px-2 py-1 rounded-full text-xs font-bold">Guest</span><button id="loginBtn" class="ml-2 bg-yellow-400 text-black px-3 py-1 rounded text-sm font-bold">Register</button></div></header>
+<nav class="bg-white flex overflow-x-auto border-b sticky top-[60px] z-40">
+<button onclick="showTab('messenger')" id="tab-messenger" class="tab-active px-4 py-3 text-sm"><i class="fa fa-comments"></i> Messenger</button>
+<button onclick="showTab('qa')" id="tab-qa" class="px-4 py-3 text-sm"><i class="fa fa-question"></i> Q&A</button>
+<button onclick="showTab('notes')" id="tab-notes" class="px-4 py-3 text-sm"><i class="fa fa-book"></i> Notes</button>
+<button onclick="showTab('assignments')" id="tab-assignments" class="px-4 py-3 text-sm"><i class="fa fa-tasks"></i> Assignments</button>
+<button onclick="showTab('papers')" id="tab-papers" class="px-4 py-3 text-sm"><i class="fa fa-file"></i> Past Papers</button>
+<button onclick="showTab('lessons')" id="tab-lessons" class="px-4 py-3 text-sm"><i class="fa fa-video"></i> Lessons</button>
+<button onclick="showTab('timetable')" id="tab-timetable" class="px-4 py-3 text-sm"><i class="fa fa-calendar"></i> Timetable</button>
+<button onclick="showTab('ai')" id="tab-ai" class="px-4 py-3 text-sm"><i class="fa fa-robot"></i> AI</button>
+</nav>
+<main class="p-3 max-w-5xl mx-auto">
 
-<div class=notif id=notifBox></div>
-
-<div class=header>
-<div style=display:flex;gap:8px;align-items:center>
-<img id=hdrPic src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style=width:42px;height:42px;border-radius:50%;border:2px solid #fff;object-fit:cover>
-<div><b id=hdrName>ENS/B/26 SYNCED</b><br><small>Real-time - All See</small></div>
-</div>
-<button onclick="openReg()" style=background:#fff;color:#1b5e20;border:0;padding:8px 14px;border-radius:20px;font-weight:bold>👤 Profile</button>
-</div>
-
-<div id=home class=page>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#4caf50);color:#fff;text-align:center>
-<h2>🌍 ENS/B/26 SYNCED</h2>
-<p id=welcome>All members now see each other!</p>
-<p id=liveBanner style=background:yellow;color:red;padding:8px;border-radius:10px;display:none;font-weight:bold></p>
-<p style=background:#fff;color:#1b5e20;padding:8px;border-radius:10px;font-size:12px>✅ Firebase Connected - Real-time Sync ON</p>
-</div>
-<div class=grid>
-<div class=gcard><div>💬<br><b>Q&A</b><br><button class=btn onclick="go('qa')">OPEN</button></div></div>
-<div class=gcard style=border-color:#1565c0><div>📚<br><b>Notes</b><br><button class=btn style=background:#1565c0 onclick="go('notes')">OPEN</button></div></div>
-<div class=gcard style=border-color:#ff9800><div>📊<br><b>Charts + Photo</b><br><small id=chartCount>0 charts</small><br><button class=btn style=background:#ff9800 onclick="go('charts')">OPEN</button></div></div>
-<div class=gcard style=border-color:#25D366><div>💬<br><b>Chat SYNCED</b><br><small id=chatInfo>Connecting...</small><br><button class=btn style=background:#25D366 onclick="go('chat')">OPEN CHAT</button></div></div>
-<div class=gcard><div>👥<br><b>Members</b><br><small id=memCount>Loading...</small><br><button class=btn onclick="go('members')">OPEN</button></div></div>
-<div class=gcard style=border-color:#9c27b0><div>🤖<br><b>AI Tutor PRO</b><br><button class=btn style=background:#9c27b0 onclick="go('ai')">OPEN</button></div></div>
-<div class=gcard style=border-color:#1565c0><div>📞<br><b>Calls No Echo</b><br><button class=btn style=background:#1565c0 onclick="go('calls')">OPEN</button></div></div>
-<div class=gcard style=border-color:#d32f2f><div>🎥<br><b>Live</b><br><button class=btn style=background:#d32f2f onclick="go('live')">OPEN LIVE</button></div></div>
-<div class=gcard><div>🕒<br><b>Timetable Photo</b><br><button class=btn style=background:#ff9800 onclick="go('timetable')">OPEN</button></div></div>
-</div>
-<div class=card style=background:#fff3cd><b>👨‍🏫 Patron - PIN Hidden</b><br><button onclick="document.getElementById('patModal').style.display='block'" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff;margin-top:6px>Patron Login</button></div>
-<div class=card style=background:#e3f2fd><b>📋 Rep - PIN Hidden</b><br><button onclick="document.getElementById('repModal').style.display='block'" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff;margin-top:6px>Rep Login</button></div>
-</div>
-
-<div id=chat class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>💬 Synced Group Chat - All Members See</h3><div id=gChat style=height:320px;overflow:auto;background:#f0f4c3;padding:8px;border-radius:10px">Connecting to Firebase...</div><div style=display:flex;gap:5px;margin-top:8px><input id=cInput placeholder="Message all members - all will see..." style=flex:1><button onclick="sendC()" style=background:#1b5e20;color:#fff;padding:12px;border:0;border-radius:20px;font-weight:bold">Send to All</button></div><div style=margin-top:8px><input type=file id=chatImg accept="image/*"><button onclick="sendChart()" style=padding:8px 12px;border-radius:20px;border:1px solid #1b5e20;background:#fff;margin-top:4px">📊 Send Chart + Photo</button></div></div></div>
-
-<div id=members class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>👥 Members - All Phones See Same List</h3><p id=mCount>Loading members...</p></div><div id=mList></div></div>
-
-<div id=charts class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>📊 Charts - Profile Photo Shows Who Shared</h3><input id=cTitle placeholder="Title e.g. Carbon Cycle"><input type=file id=cFile accept="image/*"><textarea id=cDesc placeholder="Description"></textarea><button class=btn style=background:#ff9800 onclick="uploadChart()">📤 Share Chart + My Photo to All</button></div><div id=chartList></div></div>
-
-<div id=qa class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>Q&A - Synced</h3><input id=q placeholder="Question..."><textarea id=qd placeholder="Details"></textarea><button class=btn onclick="askQ()">POST to All</button></div><div id=qList></div></div>
-
-<div id=notes class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>Notes</h3><div id=nList>Loading...</div></div><div class=card id=patNotes style=display:none><h4>Patron Upload</h4><input id=nT placeholder=Title><textarea id=nC placeholder="Link or text"></textarea><input id=nP type=password placeholder="Confirm PIN"><button class=btn onclick="addNote()">Upload to All</button></div></div>
-
-<div id=ai class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🤖 AI Tutor PRO - Efficient Answers</h3><input id=aiQ placeholder="e.g. eutrophication, pollution, ENS 110"><button class=btn style=background:#9c27b0 onclick="askAI()">ASK AI</button><div id=aiA></div></div></div>
-
-<div id=timetable class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🕒 Timetable - Text + Photo</h3><div id=ttView style=background:#fff8e1;padding:12px;border-radius:10px">Loading...</div><div id=ttImgView></div></div><div class=card id=ttEdit style=display:none;background:#e3f2fd><h4>Rep: Upload Timetable Photo</h4><textarea id=ttInput placeholder="Text timetable" style=height:70px></textarea><input type=file id=ttFile accept="image/*"><input id=ttP type=password placeholder="Confirm PIN"><button class=btn style=background:#ff9800 onclick="saveTT()">Save Photo + Text to All</button></div></div>
-
-<div id=calls class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>📞 Calls - No Echo Fixed ✅</h3><p><small>Echo cancellation + Noise suppression ON. Use earphones for 100% no echo.</small></p><button class=btn style=background:#1565c0 onclick="startCall()">📹 Start Group Call No Echo</button></div></div>
-
-<div id=live class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🎥 Live Lessons No Echo</h3><p id=liveS>🔴 No live</p><button class=btn id=joinB style=display:none;background:#d32f2f onclick="joinLive()">JOIN LIVE NOW</button></div><div class=card id=liveAdmin style=display:none><input id=liveTitle placeholder=Topic><input id=livePin type=password placeholder="Confirm PIN ENS2026"><button class=btn style=background:#d32f2f onclick="goLive()">🔴 GO LIVE + Notify All Members</button><button class=btn style=background:#333 onclick="endLive()">End Live</button></div><div id=jitsi style=width:100%;height:420px;display:none;border-radius:12px"></div></div>
-
-<div id=patModal class=modal><div class=modalBox><h3>👨‍🏫 Patron Login - PIN Hidden</h3><input id=patPin type=password placeholder="Secure PIN"><button class=btn onclick="loginPat()">Login</button><button onclick="document.getElementById('patModal').style.display='none'" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button></div></div>
-<div id=repModal class=modal><div class=modalBox><h3>📋 Rep Login - PIN Hidden</h3><input id=rpPin type=password placeholder="Secure PIN"><button class=btn onclick="loginRep()">Login</button><button onclick="document.getElementById('repModal').style.display='none'" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button></div></div>
-
-<div id=regModal class=modal><div class=modalBox>
-<h3>👤 Register With Photo - All Will See You</h3>
-<input id=rName placeholder="Full Name *"><input id=rReg placeholder="Reg No ENS/B/01/26 *"><input id=rPhone placeholder="WhatsApp 07...">
-<p><b>📸 Profile Photo * - Shows in Charts & Members</b></p><input type=file id=rPic accept="image/*">
-<div id=rPrev style=text-align:center;display:none><img id=rImg style=width:90px;height:90px;border-radius:50%;border:3px solid #1b5e20;object-fit:cover><br><small>Photo ready ✅ All will see this</small></div>
-<button class=btn onclick="registerMe()">✅ Register - All Will See Me</button>
-<button onclick="closeReg()" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button>
+<!-- MESSENGER -->
+<div id="section-messenger" class="tab-section"><div class="grid md:grid-cols-3 gap-3 h-[75vh]">
+<div class="bg-white rounded shadow p-3 flex flex-col"><h3 class="font-bold text-sm mb-2"><i class="fa fa-users"></i> Members</h3><div class="flex gap-2 mb-2"><button id="btn-group" onclick="setChatMode('group')" class="flex-1 bg-green-600 text-white py-1 rounded text-xs font-bold">Group</button><button id="btn-dm" onclick="setChatMode('dm')" class="flex-1 bg-gray-200 py-1 rounded text-xs">DMs</button></div><div id="membersListChat" class="flex-1 overflow-y-auto space-y-1 text-sm"></div></div>
+<div class="bg-white rounded shadow col-span-2 flex flex-col"><div class="p-3 border-b flex justify-between"><b id="chatTitle" class="text-sm">Group Chat - ENS/B/26</b><span class="text-xs text-green-600">● Live</span></div><div id="chatMessages" class="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50"></div><div class="p-2 border-t flex gap-2"><input id="chatInput" class="flex-1 border p-2 rounded text-sm" placeholder="Type message..." onkeypress="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()" class="bg-green-600 text-white px-4 rounded"><i class="fa fa-paper-plane"></i></button></div></div>
 </div></div>
 
-<script type="module">
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- Q&A -->
+<div id="section-qa" class="tab-section hidden"><div class="bg-white p-3 rounded shadow mb-3"><textarea id="qText" class="w-full border p-2 rounded text-sm" placeholder="Ask question..."></textarea><button onclick="postQuestion()" class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-sm">Post Question</button></div><div id="qList"></div></div>
 
-function showNotif(m){let b=document.getElementById('notifBox');b.innerText=m;b.style.display='block';setTimeout(()=>b.style.display='none',4000);}
+<!-- NOTES -->
+<div id="section-notes" class="tab-section hidden"><div id="notesAdmin" class="hidden bg-yellow-50 border p-3 rounded mb-3"><input id="noteTitle" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Note title"><textarea id="noteContent" class="w-full border p-2 rounded text-sm" placeholder="Content / link"></textarea><button onclick="postNote()" class="mt-2 bg-green-700 text-white px-3 py-1 rounded text-sm">Post Note (Dr Okore only)</button></div><div id="notesList"></div></div>
 
-function waitForDB(){
-if(!window.db){setTimeout(waitForDB,500);return;}
-const db=window.db;
-console.log("Firebase ready - syncing all members");
+<!-- ASSIGNMENTS -->
+<div id="section-assignments" class="tab-section hidden"><div id="assignAdmin" class="hidden bg-yellow-50 border p-3 rounded mb-3"><input id="assignTitle" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Assignment title"><textarea id="assignDesc" class="w-full border p-2 rounded text-sm" placeholder="Details + deadline"></textarea><button onclick="postAssignment()" class="mt-2 bg-green-700 text-white px-3 py-1 rounded text-sm">Post Assignment (Dr Okore only)</button></div><div id="assignList"></div></div>
 
-// ===== CHAT SYNC - ALL MEMBERS SEE EACH OTHER =====
-const qChat=query(collection(db,"chats"), orderBy("time","asc"));
-onSnapshot(qChat, snap=>{
-let html='';snap.forEach(doc=>{
-let m=doc.data();
-let date = m.time? new Date(m.time.seconds*1000).toLocaleTimeString() : 'now';
-html+=`<div style=display:flex;gap:8px;background:#fff;padding:8px;margin:5px 0;border-radius:12px"><img src="${m.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" style=width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20"><div style=flex:1><b>${m.name}</b> <small style=background:#e8f5e9;padding:2px 6px;border-radius:10px>${m.reg||''}</small><br>${m.text||''}${m.img?`<br><img src="${m.img}" style=width:100%;border-radius:8px;margin-top:6px;max-height:200px;object-fit:contain;border:1px solid #ddd">`:''}<br><small style=color:#888>${date}</small></div></div>`;
-});
-document.getElementById('gChat').innerHTML=html||'<div class=card>💬 No chats yet - Be first! All members will see your message instantly</div>';
-document.getElementById('gChat').scrollTop=99999;
-document.getElementById('chatInfo').innerText=snap.size+' messages - Synced to all';
-if(snap.size>0 && document.getElementById('chat').style.display=='none'){showNotif('💬 New chat from class!');}
-});
+<!-- PAST PAPERS -->
+<div id="section-papers" class="tab-section hidden"><div class="bg-white p-3 rounded shadow"><h3 class="font-bold text-sm">Past Papers Repository</h3><input id="paperSearch" oninput="filterPapers()" class="w-full border p-2 rounded text-sm mt-2" placeholder="Search unit..."><div id="papersList" class="mt-3 grid gap-2"></div></div></div>
 
-// ===== MEMBERS SYNC - ALL REGISTERED WITH PHOTOS =====
-const qMem=query(collection(db,"members"), orderBy("time","desc"));
-onSnapshot(qMem, snap=>{
-let html='';let count=snap.size;
-document.getElementById('memCount').innerText=count+' members';
-document.getElementById('mCount').innerText=count+' Members Registered With Photos - All Phones See Same List';
-snap.forEach(doc=>{
-let m=doc.data();
-html+=`<div class=card style=display:flex;gap:12px;align-items:center"><img src="${m.pic}" style=width:58px;height:58px;border-radius:50%;border:3px solid #1b5e20;object-fit:cover"><div style=flex:1><b>${m.name}</b><br><small>🆔 ${m.reg}</small><br><small>📱 ${m.phone||''}</small><br><small style=color:green>✅ Photo visible to all</small></div><div><a href="https://wa.me/${(m.phone||'').replace(/[^0-9]/g,'').replace(/^0/,'254')}" target=_blank style=background:#25D366;color:#fff;padding:7px 12px;border-radius:15px;text-decoration:none;font-size:12px>💬 WhatsApp</a></div></div>`;
-});
-document.getElementById('mList').innerHTML=html||'<div class=card>No members yet - Register with photo to appear to all!</div>';
-});
+<!-- LESSONS -->
+<div id="section-lessons" class="tab-section hidden"><div class="bg-white p-3 rounded shadow"><h3 class="font-bold text-sm">Online Lessons</h3><div class="aspect-video bg-black rounded flex items-center justify-center text-white text-sm mt-2">Live Lesson Player - Paste YouTube/Meet link in Notes</div><div id="lessonsList" class="mt-3"></div></div></div>
 
-// ===== CHARTS SYNC - WITH PROFILE PHOTO =====
-const qCharts=query(collection(db,"charts"), orderBy("time","desc"));
-onSnapshot(qCharts, snap=>{
-let html='';snap.forEach(doc=>{
-let c=doc.data();
-let date = c.time? new Date(c.time.seconds*1000).toLocaleString() : 'now';
-html+=`<div class=card style=border-left:6px solid #ff9800><div style=display:flex;gap:10px;align-items:center"><img src="${c.pic}" style=width:42px;height:42px;border-radius:50%;border:2px solid #ff9800;object-fit:cover"><div><b>${c.by}</b><br><small>🆔 ${c.reg} - ${date}</small></div></div><b style=margin-top:8px;display:block>📊 ${c.title}</b><small>${c.desc||''}</small><br><img src="${c.img}" style=width:100%;border-radius:10px;margin-top:8px;border:1px solid #ddd"><br><div style=margin-top:8px><a href="${c.img}" download="${c.title}.jpg" style=background:#1b5e20;color:#fff;padding:8px 14px;border-radius:20px;text-decoration:none;font-size:12px>📥 Download</a> <button onclick="window.open('https://wa.me/?text=📊 ${c.title} by ${c.by} - https://amoswairene37-del.github.io/Ecolern/')" style=padding:7px 12px;border-radius:15px;border:1px solid #ff9800;background:#fff;font-size:12px>📲 Share WhatsApp</button></div></div>`;
-});
-document.getElementById('chartList').innerHTML=html||'<div class=card>📊 No charts yet - Be first to share chart with your profile photo!</div>';
-document.getElementById('chartCount').innerText=snap.size+' charts - All synced';
-});
+<!-- TIMETABLE -->
+<div id="section-timetable" class="tab-section hidden"><div id="timeAdmin" class="hidden bg-blue-50 border p-3 rounded mb-3"><textarea id="timeContent" class="w-full border p-2 rounded text-sm" placeholder="Paste timetable or image link..."></textarea><button onclick="postTimetable()" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded text-sm">Update Timetable (Amos only)</button></div><div id="timetableView" class="bg-white p-3 rounded shadow text-sm whitespace-pre-wrap">Loading timetable...</div></div>
 
-// ===== TIMETABLE SYNC =====
-const qTT=query(collection(db,"timetable"), orderBy("time","desc"));
-onSnapshot(qTT, snap=>{
-if(!snap.empty){
-let t=snap.docs[0].data();
-document.getElementById('ttView').innerText=t.text||'No text';
-if(t.img){document.getElementById('ttImgView').innerHTML=`<img src="${t.img}" style=width:100%;border-radius:12px;border:2px solid #ff9800;margin-top:10px><br><a href="${t.img}" download="timetable.jpg" style=background:#1b5e20;color:#fff;padding:8px 14px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:6px>📥 Download Photo</a><br><small>By ${t.by} - ${t.reg}</small>`}else document.getElementById('ttImgView').innerHTML='';
-}
-});
+<!-- AI -->
+<div id="section-ai" class="tab-section hidden"><div class="bg-white p-3 rounded shadow h-[70vh] flex flex-col"><div id="aiChat" class="flex-1 overflow-y-auto space-y-2 mb-2 p-2 bg-gray-50 rounded text-sm"></div><div class="flex gap-2"><input id="aiInput" class="flex-1 border p-2 rounded text-sm" placeholder="Ask AI anything about ENS..."><button onclick="askAI()" class="bg-purple-600 text-white px-3 rounded"><i class="fa fa-paper-plane"></i></button></div></div></div>
 
-// ===== NOTES SYNC =====
-const qNotes=query(collection(db,"notes"), orderBy("time","desc"));
-onSnapshot(qNotes, snap=>{
-let html='';snap.forEach(doc=>{let n=doc.data();html+=`<div class=card style=border-left:5px solid #1565c0><b>${n.title}</b><br><small>${new Date(n.time?.seconds*1000||Date.now()).toLocaleDateString()} - By ${n.by}</small><p>${n.content.includes('http')?`<a href="${n.content}" target=_blank style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none>📥 OPEN</a>`:n.content}</p></div>`});
-document.getElementById('nList').innerHTML=html||'<div class=card>No notes yet</div>';
-});
+</main>
 
-// ===== LIVE SYNC =====
-const qLive=query(collection(db,"live"), orderBy("time","desc"));
-onSnapshot(qLive, snap=>{
-if(!snap.empty){
-let lv=snap.docs[0].data();
-if(lv.on){
-document.getElementById('liveS').innerText='🟢 LIVE: '+lv.title;
-document.getElementById('joinB').style.display='block';
-let bn=document.getElementById('liveBanner');bn.style.display='block';bn.innerText='🔴 LIVE NOW: '+lv.title+' - Tap to join';bn.onclick=()=>go('live');
-localStorage.setItem('lv_room', lv.room); localStorage.setItem('lv_title', lv.title);
-}else{
-document.getElementById('liveS').innerText='🔴 No live';
-document.getElementById('joinB').style.display='none';
-document.getElementById('liveBanner').style.display='none';
-}
-}
-});
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[100]"><div class="bg-white p-5 rounded w-[90%] max-w-sm"><h3 class="font-bold mb-3">Register as Member</h3><input id="regName" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Full Name"><input id="regNo" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Reg No ENS/B/26/..."><select id="regRole" class="w-full border p-2 rounded mb-3 text-sm"><option value="member">Student Member</option><option value="rep">ENS Rep (Amos)</option><option value="patron">Patron Dr Okore</option></select><button onclick="registerUser()" class="w-full bg-green-600 text-white py-2 rounded font-bold">Enter Hub</button><button onclick="document.getElementById('loginModal').classList.add('hidden')" class="w-full mt-2 text-xs text-gray-500">Cancel</button></div></div>
 
-// ===== FUNCTIONS =====
-window.registerMe=async function(){
-let n=document.getElementById('rName').value.trim(), rg=document.getElementById('rReg').value.trim(), ph=document.getElementById('rPhone').value.trim();
-if(!n||!rg){alert('Enter name and reg no');return}
-if(!tempPic){alert('Select profile photo - shows to all members in charts');return}
-try{
-await addDoc(collection(db,"members"), {name:n,reg:rg,phone:ph,pic:tempPic,time:serverTimestamp()});
-localStorage.setItem('me_final', JSON.stringify({name:n,reg:rg,phone:ph,pic:tempPic}));
-document.getElementById('hdrName').innerText=n;document.getElementById('hdrPic').src=tempPic;document.getElementById('welcome').innerText='Welcome '+n+' ✅ All see you!';
-closeReg();showNotif('✅ Registered! All 11 members can now see you with photo!');go('members');
-}catch(e){alert('Error: '+e.message+'\n\nGo to Firestore → Rules → Set to Test Mode:\nallow read, write: if true;');}
-};
-
-window.sendC=async function(){
-let txt=document.getElementById('cInput').value.trim();if(!txt)return;
-let me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
-try{await addDoc(collection(db,"chats"), {name:me.name,reg:me.reg,pic:me.pic,text:txt,time:serverTimestamp()});document.getElementById('cInput').value='';}catch(e){alert(e.message)}
-};
-
-window.sendChart=async function(){
-let f=document.getElementById('chatImg').files[0];if(!f){alert('Select chart image');return}
-let me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
-let r=new FileReader();r.onload=async ev=>{
-try{
-await addDoc(collection(db,"chats"), {name:me.name,reg:me.reg,pic:me.pic,text:'📊 Shared chart:',img:ev.target.result,time:serverTimestamp()});
-await addDoc(collection(db,"charts"), {by:me.name,reg:me.reg,pic:me.pic,title:'From Chat',desc:'Shared in chat',img:ev.target.result,time:serverTimestamp()});
-document.getElementById('chatImg').value='';showNotif('📊 Chart + your photo sent to all!');
-}catch(e){alert(e.message)}
-};r.readAsDataURL(f);
-};
-
-window.uploadChart=async function(){
-let me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
-let title=document.getElementById('cTitle').value||'Chart';let desc=document.getElementById('cDesc').value;
-if(!tempChart){alert('Select chart image first');return}
-try{
-await addDoc(collection(db,"charts"), {by:me.name,reg:me.reg,pic:me.pic,title:title,desc:desc,img:tempChart,time:serverTimestamp()});
-document.getElementById('cTitle').value='';document.getElementById('cDesc').value='';document.getElementById('cFile').value='';tempChart='';
-showNotif('📊 Chart + your photo shared to ALL members!');go('charts');
-}catch(e){alert(e.message)}
-};
-
-window.saveTT=async function(){
-let pin=document.getElementById('ttP').value;if(pin!='REP2026'&&pin!='ENS2026'){alert('Wrong PIN');return}
-let me=JSON.parse(localStorage.getItem('me_final')||'null');
-let text=document.getElementById('ttInput').value;
-if(!text&&!tempTT){alert('Add text or photo');return}
-try{
-await addDoc(collection(db,"timetable"), {text:text||'See photo',img:tempTT||'',by:me?me.name:'Rep',reg:me?me.reg:'',time:serverTimestamp()});
-alert('✅ Timetable photo saved - All members see it instantly!');go('timetable');
-}catch(e){alert(e.message)}
-};
-
-window.addNote=async function(){
-let pin=document.getElementById('nP').value;if(pin!='ENS2026'){alert('Wrong PIN');return}
-let me=JSON.parse(localStorage.getItem('me_final')||'null');
-let title=document.getElementById('nT').value, content=document.getElementById('nC').value;
-if(!title)return;
-try{
-await addDoc(collection(db,"notes"), {title:title,content:content,by:me?me.name:'Patron',time:serverTimestamp()});
-document.getElementById('nT').value='';document.getElementById('nC').value='';document.getElementById('nP').value='';
-showNotif('📚 Notes shared to all members!');go('notes');
-}catch(e){alert(e.message)}
-};
-
-window.askQ=async function(){
-let me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
-let q=document.getElementById('q').value.trim();let qd=document.getElementById('qd').value.trim();if(!q)return;
-try{await addDoc(collection(db,"qa"), {q:q,d:qd,by:me.name,reg:me.reg,pic:me.pic,time:serverTimestamp(),answers:[]});document.getElementById('q').value='';document.getElementById('qd').value='';showNotif('Question posted to all!');}catch(e){alert(e.message)}
-};
-
-const qQA=query(collection(db,"qa"), orderBy("time","desc"));
-onSnapshot(qQA, snap=>{
-let html='';snap.forEach(doc=>{let x=doc.data();html+=`<div class=card><div style=display:flex;gap:8px;align-items:center"><img src="${x.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" style=width:32px;height:32px;border-radius:50%"><b>${x.by}</b> <small>${x.reg||''}</small></div><b>Q: ${x.q}</b><br><small>${x.d||''}</small></div>`});
-document.getElementById('qList').innerHTML=html||'<div class=card>No questions yet</div>';
-});
-
-}
-
-waitForDB();
-
-// Setup file readers
-document.getElementById('rPic').addEventListener('change', e=>{
-let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{tempPic=ev.target.result;document.getElementById('rImg').src=tempPic;document.getElementById('rPrev').style.display='block';};r.readAsDataURL(f);
-});
-document.getElementById('cFile').addEventListener('change', e=>{
-let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{tempChart=ev.target.result;};r.readAsDataURL(f);
-});
-document.getElementById('ttFile').addEventListener('change', e=>{
-let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{tempTT=ev.target.result;};r.readAsDataURL(f);
-});
-
-window.loginPat=function(){if(document.getElementById('patPin').value=='ENS2026'){document.getElementById('patModal').style.display='none';document.getElementById('patNotes').style.display='block';document.getElementById('liveAdmin').style.display='block';document.getElementById('ttEdit').style.display='block';go('patron');showNotif('Welcome Patron!');}else alert('Wrong PIN')}
-window.loginRep=function(){if(document.getElementById('rpPin').value=='REP2026'||document.getElementById('rpPin').value=='ENS2026'){document.getElementById('repModal').style.display='none';document.getElementById('ttEdit').style.display='block';go('timetable');showNotif('Welcome Rep!');}else alert('Wrong PIN')}
-
-window.goLive=async function(){
-let pin=document.getElementById('livePin').value;if(pin!='ENS2026'){alert('Wrong PIN');return}
-let title=document.getElementById('liveTitle').value||'Live Class';let room='ENS26-'+Date.now();
-try{await addDoc(collection(window.db,"live"), {on:true,title:title,room:room,time:serverTimestamp()});localStorage.setItem('lv_room',room);joinLiveWithRoom(room);}catch(e){alert(e.message)}
-};
-window.endLive=async function(){
-try{await addDoc(collection(window.db,"live"), {on:false,title:'',room:'',time:serverTimestamp()});document.getElementById('jitsi').style.display='none';}catch(e){}
-};
-function joinLiveWithRoom(room){document.getElementById('jitsi').style.display='block';new JitsiMeetExternalAPI('meet.jit.si',{roomName:room,width:'100%',height:420,parentNode:document.getElementById('jitsi'),configOverwrite:{constraints:{audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}},prejoinPageEnabled:false},userInfo:{displayName:JSON.parse(localStorage.getItem('me_final')||'{"name":"Student"}').name}});}
-window.joinLive=function(){let room=localStorage.getItem('lv_room');if(!room){alert('No live');return}joinLiveWithRoom(room);}
-window.startCall=function(){let room='ENS26-CALL-'+Date.now();document.getElementById('jitsi').style.display='block';go('live');setTimeout(()=>joinLiveWithRoom(room),500);}
-window.askAI=function(){
-let q=document.getElementById('aiQ').value.toLowerCase();
-let db={eutrophication:"**EUTROPHICATION (Exam):** Excess N & P from fertilizers → Algal bloom → Blocks sunlight → Algae dies → Bacteria decompose (uses O2) → Fish kill. CONTROL: Buffer strips, sewage treatment. Example: Lake Victoria.",pollution:"**POLLUTION 4 Types:** Air (CO2, SO2) - filters, renewable. Water (sewage) - treatment. Soil (pesticides) - organic farming. Noise. Solution: 3Rs.",ecology:"**ECOLOGY:** Individual→Population→Community→Ecosystem→Biosphere. 10% energy law. Food chain.",climate:"**CLIMATE CHANGE:** GHGs CO2,CH4 cause warming. Effects: sea rise, drought. Mitigation: Renewable + Afforestation.",biodiversity:"**BIODIVERSITY:** Genetic, Species, Ecosystem. Threats: Habitat loss. Conservation: In-situ (Mau Forest) & Ex-situ.",ens110:"**ENS 110:** Environment = Biotic+Abiotic. Components: Atmosphere, Hydrosphere, Lithosphere, Biosphere. Sustainable development.",carboncycle:"**CARBON CYCLE:** CO2→Photosynthesis→Plants→Animals→Respiration→CO2. Fossil burning adds CO2. Deforestation breaks cycle.",eia:"**EIA:** Steps: Screening, Scoping, Impact Assessment, Mitigation, Report. Required by NEMA Kenya."};
-let best=null;for(let k in db){if(q.includes(k)){best=k;break}}
-let ans=best?db[best]:`For "${document.getElementById('aiQ').value}": Definition + Causes + Effects + Control + Kenya example. Try: eutrophication, pollution, carbon cycle, EIA, ENS 110`;
-document.getElementById('aiA').innerHTML=`<div class=card style=background:#f3e5f5;border-left:6px solid #9c27b0;white-space:pre-wrap><b>🤖 AI PRO Efficient:</b><br>${ans}</div>`;
-};
-
-// Load me
-let me=JSON.parse(localStorage.getItem('me_final')||'null');
-if(me){document.getElementById('hdrName').innerText=me.name;document.getElementById('hdrPic').src=me.pic;document.getElementById('welcome').innerText='Welcome '+me.name+' ✅ Synced';}
+<script>
+let currentUser=null; let chatMode='group'; let dmTo=null;
+function showTab(t){document.querySelectorAll('.tab-section').forEach(s=>s.classList.add('hidden'));document.getElementById('section-'+t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('tab-active'));document.getElementById('tab-'+t).classList.add('tab-active'); if(t==='messenger') loadMessenger();}
+document.getElementById('loginBtn').onclick=()=>document.getElementById('loginModal').classList.remove('hidden');
+async function registerUser(){const name=document.getElementById('regName').value; const regNo=document.getElementById('regNo').value; const role=document.getElementById('regRole').value; if(!name) return alert('Enter name'); currentUser={name,regNo,role}; localStorage.setItem('ecolern_user', JSON.stringify(currentUser)); document.getElementById('userRole').textContent=role.toUpperCase(); document.getElementById('loginBtn').textContent=name; document.getElementById('loginModal').classList.add('hidden'); if(role==='patron'){document.getElementById('notesAdmin').classList.remove('hidden');document.getElementById('assignAdmin').classList.remove('hidden');} if(role==='rep'){document.getElementById('timeAdmin').classList.remove('hidden');} try{await setDoc(doc(db,'members', regNo||name), {name,regNo,role, joined:serverTimestamp()});}catch(e){} loadMessenger();}
+window.onload=()=>{const saved=localStorage.getItem('ecolern_user'); if(saved){currentUser=JSON.parse(saved);document.getElementById('userRole').textContent=currentUser.role.toUpperCase();document.getElementById('loginBtn').textContent=currentUser.name; if(currentUser.role==='patron'){document.getElementById('notesAdmin').classList.remove('hidden');document.getElementById('assignAdmin').classList.remove('hidden');} if(currentUser.role==='rep'){document.getElementById('timeAdmin').classList.remove('hidden');}} loadAll(); loadMessenger();}
+function setChatMode(mode){chatMode=mode; document.getElementById('btn-group').className= mode==='group'?'flex-1 bg-green-600 text-white py-1 rounded text-xs font-bold':'flex-1 bg-gray-200 py-1 rounded text-xs'; document.getElementById('btn-dm').className= mode==='dm'?'flex-1 bg-green-600 text-white py-1 rounded text-xs font-bold':'flex-1 bg-gray-200 py-1 rounded text-xs'; if(mode==='group'){document.getElementById('chatTitle').textContent='Group Chat - ENS/B/26'; dmTo=null;} loadMessenger();}
+function loadMessenger(){const q=query(collection(db,'chats'), orderBy('timestamp','desc'), limit(50)); onSnapshot(q, snap=>{const box=document.getElementById('chatMessages'); if(!box) return; box.innerHTML=''; let msgs=[]; snap.forEach(d=>msgs.push({id:d.id,...d.data()})); msgs.reverse(); msgs.forEach(m=>{if(chatMode==='dm' && dmTo && m.to!==dmTo && m.from!==dmTo) return; const isMe=m.name===currentUser?.name; box.innerHTML+=`<div class="${isMe?'text-right':''}"><div class="${isMe?'bg-green-600 text-white':'bg-white'} inline-block px-3 py-1.5 rounded-lg max-w-[80%] shadow text-sm"><div class="text-[9px] opacity-60">${m.name}${m.to?' → '+m.to:''}</div>${m.text}</div></div>`;}); box.scrollTop=box.scrollHeight;}); onSnapshot(collection(db,'members'), snap=>{const list=document.getElementById('membersListChat'); if(!list) return; list.innerHTML=''; snap.forEach(d=>{const mem=d.data(); if(mem.name!==currentUser?.name){list.innerHTML+=`<div onclick="startDM('${mem.regNo||mem.name}','${mem.name}')" class="p-2 hover:bg-gray-100 rounded cursor-pointer flex justify-between text-xs"><span>${mem.name}</span><span class="text-[10px] text-gray-400">${mem.role||''}</span></div>`;}});});}
+window.startDM=(regNo,name)=>{chatMode='dm'; dmTo=regNo; document.getElementById('chatTitle').textContent='DM: '+name; setChatMode('dm'); loadMessenger();}
+window.sendMessage=async()=>{if(!currentUser) return alert('Register first'); const text=document.getElementById('chatInput').value; if(!text) return; const payload={text,name:currentUser.name,from:currentUser.regNo||currentUser.name,timestamp:serverTimestamp()}; if(chatMode==='dm'&&dmTo) payload.to=dmTo; await addDoc(collection(db,'chats'), payload); document.getElementById('chatInput').value='';};
+function loadAll(){onSnapshot(query(collection(db,'questions'), orderBy('created','desc'), limit(20)), snap=>{const list=document.getElementById('qList'); list.innerHTML=''; snap.forEach(d=>{const data=d.data(); list.innerHTML+=`<div class="bg-white p-3 rounded shadow mb-2 text-sm"><b>${data.name}</b><p class="mt-1">${data.text}</p><div class="mt-2 flex gap-1"><input id="ans-${d.id}" class="flex-1 border p-1 rounded text-xs" placeholder="Answer..."><button onclick="answerQ('${d.id}')" class="bg-gray-800 text-white px-2 py-1 rounded text-xs">Answer</button></div><div id="answers-${d.id}" class="mt-1"></div></div>`; onSnapshot(collection(db,'questions',d.id,'answers'), s=>{let h=''; s.forEach(a=>{h+=`<div class="bg-gray-100 p-1.5 rounded mt-1 text-xs"><b>${a.data().name}:</b> ${a.data().text}</div>`}); const el=document.getElementById('answers-'+d.id); if(el) el.innerHTML=h;});});}); onSnapshot(query(collection(db,'notes'), orderBy('created','desc'), limit(20)), snap=>{const list=document.getElementById('notesList'); list.innerHTML=''; snap.forEach(d=>{list.innerHTML+=`<div class="bg-white p-3 rounded shadow mb-2 text-sm"><b>${d.data().title}</b> <span class="text-xs text-gray-500">by Dr Okore</span><p class="mt-1 whitespace-pre-wrap">${d.data().content}</p></div>`;});}); onSnapshot(query(collection(db,'assignments'), orderBy('created','desc'), limit(20)), snap=>{const list=document.getElementById('assignList'); list.innerHTML=''; snap.forEach(d=>{list.innerHTML+=`<div class="bg-white p-3 rounded shadow mb-2 border-l-4 border-red-500 text-sm"><b>${d.data().title}</b><p class="mt-1 whitespace-pre-wrap">${d.data().desc}</p></div>`;});}); onSnapshot(doc(db,'config','timetable'), snap=>{if(snap.exists()) document.getElementById('timetableView').textContent=snap.data().content; else document.getElementById('timetableView').textContent='No timetable yet. Amos will upload.';}); window.allPapers=[{unit:'ENS 101 Ecology',year:'2023'},{unit:'ENS 102 Soil Science',year:'2024'},{unit:'ENS 201 GIS',year:'2023'},{unit:'ENS 203 Environmental Law',year:'2024'}]; renderPapers(window.allPapers);}
+function renderPapers(list){const el=document.getElementById('papersList'); if(!el) return; el.innerHTML=list.map(p=>`<div class="flex justify-between bg-white p-2 rounded shadow text-sm"><span>${p.unit} - ${p.year}</span><a class="text-green-600 font-bold">Open</a></div>`).join('');}
+window.filterPapers=()=>{const q=document.getElementById('paperSearch').value.toLowerCase(); renderPapers(window.allPapers.filter(p=>p.unit.toLowerCase().includes(q)));};
+window.postQuestion=async()=>{if(!currentUser) return alert('Register'); const text=document.getElementById('qText').value; if(!text) return; await addDoc(collection(db,'questions'), {text,name:currentUser.name,regNo:currentUser.regNo,created:serverTimestamp()}); document.getElementById('qText').value='';};
+window.answerQ=async(qid)=>{if(!currentUser) return alert('Register'); const input=document.getElementById('ans-'+qid); await addDoc(collection(db,'questions',qid,'answers'), {text:input.value,name:currentUser.name,created:serverTimestamp()}); input.value='';};
+window.postNote=async()=>{const title=document.getElementById('noteTitle').value; const content=document.getElementById('noteContent').value; await addDoc(collection(db,'notes'), {title,content,created:serverTimestamp()}); document.getElementById('noteTitle').value='';document.getElementById('noteContent').value='';};
+window.postAssignment=async()=>{const title=document.getElementById('assignTitle').value; const desc=document.getElementById('assignDesc').value; await addDoc(collection(db,'assignments'), {title,desc,created:serverTimestamp()}); document.getElementById('assignTitle').value='';document.getElementById('assignDesc').value='';};
+window.postTimetable=async()=>{const content=document.getElementById('timeContent').value; await setDoc(doc(db,'config','timetable'), {content,updated:serverTimestamp(),by:'Amos'}); alert('Timetable updated!');};
+window.askAI=async()=>{const q=document.getElementById('aiInput').value; if(!q) return; const chat=document.getElementById('aiChat'); chat.innerHTML+=`<div class="text-right"><span class="bg-green-600 text-white px-3 py-1 rounded inline-block text-sm">${q}</span></div>`; document.getElementById('aiInput').value=''; chat.innerHTML+=`<div id="ai-thinking" class="text-gray-500 text-xs">AI thinking...</div>`; setTimeout(()=>{document.getElementById('ai-thinking').remove(); const a=q.toLowerCase().includes('soil')?'Soil: O-A-B-C horizons, pH 6-7 best, texture triangle. See Dr Okore notes.': q.toLowerCase().includes('gis')?'GIS uses layers, QGIS/ArcGIS, buffering & overlay.':'As ENS AI tutor I help with Ecology, Soil, GIS, Law. Ask specific topic!'; chat.innerHTML+=`<div><span class="bg-white border px-3 py-1 rounded inline-block text-sm"><i class="fa fa-robot text-purple-600"></i> ${a}</span></div>`; chat.scrollTop=chat.scrollHeight;},600);};
 </script>
-</body>
-  </html>
+</body></html>
