@@ -2,179 +2,86 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>ENS COHORTS 2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>ENS COHORTS 2026 MOI UNIVERSITY</title>
 <style>
-html,body{margin:0;padding:0;width:100%;height:100%;font-family:Arial;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-*{box-sizing:border-box}
-.top{background:#202c33;color:white;padding:12px}
-.t{font-weight:900;font-size:15px}
-.s{font-size:10px;color:#25d366;font-weight:bold}
-.searchbox{background:#111b21;border:1px solid #333;border-radius:25px;display:flex;align-items:center;padding:10px 14px;margin-top:8px}
-.searchbox input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:16px}
-.go{background:#00a884;color:white;padding:8px 16px;border-radius:20px;font-weight:900;font-size:13px}
-.nav{display:flex;overflow-x:auto;background:#111b21;padding:6px;gap:5px}
-.tab{white-space:nowrap;background:#2a3942;color:#aebac1;padding:10px 16px;border-radius:20px;font-size:12px;font-weight:bold}
-.tab.on{background:#00a884;color:white}
-.page{display:none;padding:10px;background:white;min-height:60vh;color:black;overflow-y:auto}
-.page.on{display:block}
-.box{border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:10px}
-.in{width:100%;border:1px solid #ccc;border-radius:10px;padding:12px;font-size:15px;margin-top:6px;outline:none}
-.btn{width:100%;background:#00a884;color:white;padding:14px;border-radius:25px;text-align:center;font-weight:900;font-size:15px;margin-top:10px}
-.btn:active{background:#008069}
-.contact{padding:14px;border-bottom:1px solid #eee;display:flex;gap:12px;align-items:center}
-.contact:active{background:#f0f0f0}
-.avatar{width:48px;height:48px;border-radius:50%;background:#00a884;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;flex-shrink:0}
-.login{position:fixed;left:0;top:0;right:0;bottom:0;background:#111b21;display:flex;align-items:center;justify-content:center;padding:20px;z-index:10000}
-.card{background:white;border-radius:20px;padding:22px;width:100%;max-width:360px;color:black;text-align:center}
+body{margin:0;font-family:Arial;background:#111b21;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.box{background:white;border-radius:20px;padding:22px;width:100%;max-width:360px;text-align:center}
+input{width:100%;padding:16px;border:2px solid #00a884;border-radius:25px;font-size:18px;text-align:center;margin-top:12px}
+button{width:100%;padding:16px;background:#00a884;color:white;border:0;border-radius:25px;font-weight:900;font-size:16px;margin-top:12px}
+button:active{background:#008069}
 </style>
 </head>
 <body>
 
-<div class="top">
-<div class="t">ENS COHORTS 2026 MOI UNIVERSITY</div>
-<div class="s">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA</div>
-<div class="searchbox"><input id="gs" type="search" placeholder="Search Google, Elimu, Scholar..." inputmode="search"><div class="go" onclick="doSearch()" ontouchstart="doSearch()">SEARCH</div></div>
-</div>
-
-<div class="nav">
-<div class="tab on" id="t-chat" onclick="show('chat')" ontouchstart="show('chat')">💬 CHAT</div>
-<div class="tab" id="t-plat" onclick="show('plat')" ontouchstart="show('plat')">🌐 PLATFORMS</div>
-<div class="tab" id="t-notes" onclick="show('notes')" ontouchstart="show('notes')">📚 NOTES</div>
-<div class="tab" id="t-assign" onclick="show('assign')" ontouchstart="show('assign')">📝 ASSIGN</div>
-<div class="tab" id="t-time" onclick="show('time')" ontouchstart="show('time')">📅 TIME</div>
-<div class="tab" id="t-admin" onclick="show('admin')" ontouchstart="show('admin')">🔐 ADMIN</div>
-</div>
-
-<div id="p-chat" class="page on" style="padding:0">
-<div style="display:flex;min-height:70vh">
-<div id="left" style="width:100%;background:white;display:flex;flex-direction:column">
-<div style="padding:8px;background:#f0f2f5;display:flex;gap:6px"><input id="cs" class="in" style="margin:0" placeholder="Search members" oninput="filt()"><div class="go" onclick="showReg()" ontouchstart="showReg()" style="display:flex;align-items:center">+ADD</div></div>
-<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold">PINNED</div>
-<div class="contact" onclick="openC('DR OKORE LUTHER','PATRON')" ontouchstart="openC('DR OKORE LUTHER','PATRON')"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER</b> <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 6px;border-radius:10px">PATRON</span><div style="font-size:12px;color:#667781">Paste Notes & Assignments</div></div></div>
-<div class="contact" onclick="openC('AMOS NYONGESA','REP')" ontouchstart="openC('AMOS NYONGESA','REP')"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA</b> <span style="background:#166534;color:white;font-size:9px;padding:2px 6px;border-radius:10px">REP</span><div style="font-size:12px;color:#667781">Timetable & Password</div></div></div>
-<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold">MEMBERS</div>
-<div id="contacts" style="flex:1;overflow-y:auto"></div>
-</div>
-<div id="right" style="flex:1;background:#e5ddd5;display:none;flex-direction:column">
-<div style="background:#f0f2f5;padding:10px;display:flex;gap:10px;align-items:center"><div style="background:#ddd;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold" onclick="back()" ontouchstart="back()">←</div><div id="ca" class="avatar">A</div><div><b id="cn">Name</b><div id="cs2" style="font-size:11px;color:#667781">ENS</div></div></div>
-<div id="msgs" style="flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px"></div>
-<div id="sres" style="background:white;max-height:40%;overflow-y:auto;display:none;border-top:2px solid #00a884"></div>
-<div style="background:#f0f2f5;padding:8px;display:flex;gap:6px"><input id="mi" class="in" style="margin:0;flex:1" placeholder="Type..."><div class="go" style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center" onclick="send()" ontouchstart="send()">➤</div></div>
-</div>
-</div>
-</div>
-
-<div id="p-plat" class="page">
-<h3>🌐 Academic Platforms</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-<div class="box" style="text-align:center" onclick="openL('https://elearning.mu.ac.ke/')" ontouchstart="openL('https://elearning.mu.ac.ke/')"><div style="font-size:26px">🎓</div><b style="font-size:12px">Moi eLearning</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://elimu.go.ke/')" ontouchstart="openL('https://elimu.go.ke/')"><div style="font-size:26px">📖</div><b style="font-size:12px">Elimu App</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://scholar.google.com/')" ontouchstart="openL('https://scholar.google.com/')"><div style="font-size:26px">🔬</div><b style="font-size:12px">Scholar</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://www.youtube.com/results?search_query=ecology')" ontouchstart="openL('https://www.youtube.com/results?search_query=ecology')"><div style="font-size:26px">▶️</div><b style="font-size:12px">YouTube</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://portal.helb.co.ke/')" ontouchstart="openL('https://portal.helb.co.ke/')"><div style="font-size:26px">💰</div><b style="font-size:12px">HELB</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://www.kuccps.net/')" ontouchstart="openL('https://www.kuccps.net/')"><div style="font-size:26px">🏫</div><b style="font-size:12px">KUCCPS</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://drive.google.com/')" ontouchstart="openL('https://drive.google.com/')"><div style="font-size:26px">💾</div><b style="font-size:12px">Drive</b></div>
-<div class="box" style="text-align:center" onclick="openL('https://www.nema.go.ke/')" ontouchstart="openL('https://www.nema.go.ke/')"><div style="font-size:26px">🌿</div><b style="font-size:12px">NEMA</b></div>
-</div>
-</div>
-
-<div id="p-notes" class="page">
-<h3>📚 Notes Per Unit</h3>
-<div class="box" style="background:#e7f3ff"><b style="font-size:12px">👨‍🏫 Patron - Post Notes</b>
-<select id="unit" class="in"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 201 - GIS</option><option>ENS 202 - Env Law</option></select>
-<textarea id="nc" class="in" style="height:100px" placeholder="Paste notes..."></textarea>
-<input id="nf" class="in" placeholder="File name">
-<div class="btn" onclick="postN()" ontouchstart="postN()">POST NOTE</div>
-</div>
-<div id="nl"></div>
-</div>
-
-<div id="p-assign" class="page">
-<h3>📝 Assignments</h3>
-<div class="box" style="background:#fff3cd"><b>Patron - Post Assignment</b><input id="at" class="in" placeholder="Title"><textarea id="ad" class="in" style="height:70px" placeholder="Details"></textarea><div class="btn" style="background:#0b5ed7" onclick="postA()" ontouchstart="postA()">POST ASSIGNMENT</div></div>
-<div id="al"></div>
-<div class="box" style="background:#d1e7dd;margin-top:10px"><b>📤 Student Upload via Email</b><input id="se" type="email" class="in" placeholder="Your Email"><input id="sr" class="in" placeholder="Reg No"><select id="asel" class="in"><option>Select Assignment</option></select><input id="sf" type="file" class="in"><textarea id="st" class="in" style="height:70px" placeholder="Or paste text"></textarea><div class="btn" onclick="subA()" ontouchstart="subA()">UPLOAD</div><div id="sl" style="margin-top:10px"></div></div>
-</div>
-
-<div id="p-time" class="page">
-<h3>📅 Timetable</h3><div id="tv" class="box" style="white-space:pre-wrap;min-height:100px;background:#f8f9fa">No timetable yet</div>
-<div class="box" style="background:#e7f3ff"><b>Update Timetable - Rep/Patron Only</b><textarea id="tc" class="in" style="height:120px" placeholder="MON 8-10 ENS101..."></textarea><input id="ta" type="password" class="in" placeholder="Rep/Patron Password"><div class="btn" onclick="postT()" ontouchstart="postT()">PUBLISH</div></div>
-</div>
-
-<div id="p-admin" class="page">
-<h3>🔐 Change Password</h3>
-<div class="box" style="background:#f8d7da"><b>Current Student Password: <span id="cpv">•••••</span> <span style="background:#ddd;padding:2px 8px;border-radius:10px;font-size:11px" onclick="tog()" ontouchstart="tog()">Show</span></b></div>
-<div class="box"><b>Change Student Password - Rep/Patron Only</b>
-<select id="ar" class="in"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select>
-<input id="ao" type="password" class="in" placeholder="Your Admin Password">
-<input id="ns" class="in" placeholder="New Student Password">
-<input id="cs3" class="in" placeholder="Confirm New Password">
-<div class="btn" onclick="changeP()" ontouchstart="changeP()">UPDATE PASSWORD</div>
-</div>
-</div>
-
-<!-- LOGIN -->
-<div id="login" class="login">
-<div class="card">
+<div class="box" id="loginBox">
 <div style="width:60px;height:60px;background:#00a884;border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;margin:0 auto">ENS</div>
-<h3 style="margin-top:10px">ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
+<h3>ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
 <div style="font-size:10px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA</div>
-<div style="background:#f0f2f5;border-radius:12px;padding:10px;margin-top:12px;text-align:left"><b style="font-size:13px">🔒 Secure Access</b><div style="font-size:11px;color:#666">Enter password</div></div>
-<input id="lp" type="password" class="in" style="text-align:center;font-size:18px;border:2px solid #00a884;border-radius:25px" placeholder="••••••">
-<div id="le" style="color:red;font-size:11px;display:none;margin-top:6px">Wrong password</div>
-<div class="btn" style="border-radius:25px;padding:16px" onclick="doLogin()" ontouchstart="doLogin()">UNLOCK APP - ENTER</div>
-<div style="font-size:10px;color:#999;margin-top:8px">Contact Rep for password<br>No password shown</div>
-</div>
+<div style="margin-top:10px;background:#f0f2f5;padding:10px;border-radius:12px;text-align:left"><b>🔒 Secure Access</b><div style="font-size:11px">Enter password</div></div>
+<input id="pass" type="password" placeholder="••••••" autocomplete="off">
+<div id="err" style="color:red;font-size:12px;display:none;margin-top:8px">Wrong password</div>
+<button id="unlockBtn">UNLOCK APP - ENTER</button>
+<div style="font-size:10px;color:#999;margin-top:8px">No password shown<br>If not touching, tap input first</div>
+<div style="font-size:11px;margin-top:12px"><span id="touchTest" style="background:#eee;padding:6px 12px;border-radius:20px">Test Touch Here</span> <span id="status">Not touched yet</span></div>
 </div>
 
-<div id="reg" class="login" style="display:none">
-<div class="card"><h3>Registration</h3><input id="rn" class="in" placeholder="Full Name"><input id="rr" class="in" placeholder="Reg No"><input id="rp" class="in" placeholder="Phone"><input id="re" class="in" placeholder="Email"><input id="rpas" type="password" class="in" style="border:2px solid #00a884;background:#f0fff4" placeholder="Access Password"><div id="pe" style="color:red;font-size:11px;display:none">Wrong password</div><div class="btn" onclick="doReg()" ontouchstart="doReg()">REGISTER</div><div style="padding:10px;color:gray;font-size:13px" onclick="hideReg()" ontouchstart="hideReg()">Cancel</div></div>
+<div class="box" id="appBox" style="display:none">
+<h3>✅ UNLOCKED!</h3>
+<p style="font-size:13px">ENS COHORTS 2026 MOI UNIVERSITY<br>PATRON DR OKORE LUTHER<br>REP AMOS NYONGESA</p>
+<p style="font-size:12px;color:green;font-weight:bold">Touch is working! Now I will give you full app.</p>
+<div style="text-align:left;margin-top:12px;font-size:12px">
+<div style="background:#f0f2f5;padding:8px;border-radius:10px;margin-top:6px" onclick="window.open('https://elearning.mu.ac.ke/')">🎓 Moi eLearning - TAP</div>
+<div style="background:#f0f2f5;padding:8px;border-radius:10px;margin-top:6px" onclick="window.open('https://elimu.go.ke/')">📖 Elimu App - TAP</div>
+<div style="background:#f0f2f5;padding:8px;border-radius:10px;margin-top:6px" onclick="window.open('https://scholar.google.com/')">🔬 Google Scholar - TAP</div>
+</div>
+<button onclick="localStorage.clear();location.reload()">LOGOUT & CLEAR</button>
 </div>
 
 <script>
-let sPass = localStorage.getItem('sp') || 'ENS26';
-let pPass = localStorage.getItem('pp') || 'PATRON2026';
-let rPass = localStorage.getItem('rp2') || 'REP2026';
-let contacts = JSON.parse(localStorage.getItem('c2')||'[]');
-let msgs = JSON.parse(localStorage.getItem('m2')||'{}');
-let notes = JSON.parse(localStorage.getItem('n2')||'[]');
-let assigns = JSON.parse(localStorage.getItem('a2')||'[]');
-let subs = JSON.parse(localStorage.getItem('s2')||'[]');
-let tt = localStorage.getItem('tt') || '';
-let active = null;
+let sPass = 'ENS26';
+let stored = localStorage.getItem('sp');
+if(stored) sPass = stored;
 
-if(localStorage.getItem('logged')==='1'){ document.getElementById('login').style.display='none'; }
-
-function show(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('p-'+id).classList.add('on');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('t-'+id).classList.add('on');
-}
 function doLogin(){
-  const p=document.getElementById('lp').value.trim();
-  if(p===sPass || p.toLowerCase()===sPass.toLowerCase()){
+  var p = document.getElementById('pass').value.trim();
+  if(p === sPass || p.toLowerCase() === 'ens26'){
     localStorage.setItem('logged','1');
-    document.getElementById('login').style.display='none';
-  } else { document.getElementById('le').style.display='block'; setTimeout(()=>document.getElementById('le').style.display='none',2000); }
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('appBox').style.display='block';
+  } else {
+    document.getElementById('err').style.display='block';
+    document.getElementById('err').textContent = 'Wrong! Try again';
+    setTimeout(function(){ document.getElementById('err').style.display='none'; }, 2000);
+  }
 }
-function showReg(){ document.getElementById('reg').style.display='flex'; }
-function hideReg(){ document.getElementById('reg').style.display='none'; }
-function doReg(){
-  const name=document.getElementById('rn').value.trim();
-  const reg=document.getElementById('rr').value.trim();
-  const phone=document.getElementById('rp').value.trim();
-  const email=document.getElementById('re').value.trim();
-  const pas=document.getElementById('rpas').value.trim();
-  if(!name||!reg){ alert('Enter Name & Reg'); return; }
-  if(pas!==sPass && pas.toLowerCase()!==sPass.toLowerCase()){ document.getElementById('pe').style.display='block'; return; }
-  contacts.push({name,reg,phone,email});
-  localStorage.setItem('c2',JSON.stringify(contacts));
-  hideReg(); renderC(); renderAS();
+
+// MAKE BUTTON 100% TOUCHABLE - 4 WAYS
+var btn = document.getElementById('unlockBtn');
+btn.addEventListener('click', doLogin, false);
+btn.addEventListener('touchend', function(e){ e.preventDefault(); doLogin(); }, false);
+btn.addEventListener('touchstart', function(){ document.getElementById('status').textContent='Touch started!'; }, false);
+
+// Test touch
+document.getElementById('touchTest').addEventListener('click', function(){ document.getElementById('status').textContent='TOUCH WORKS! ✅'; document.getElementById('touchTest').style.background='#00a884'; document.getElementById('touchTest').style.color='white'; });
+document.getElementById('touchTest').addEventListener('touchend', function(e){ e.preventDefault(); document.getElementById('status').textContent='TOUCH WORKS! ✅'; document.getElementById('touchTest').style.background='#00a884'; document.getElementById('touchTest').style.color='white'; });
+
+// Enter key
+document.getElementById('pass').addEventListener('keypress', function(e){ if(e.key==='Enter'){ doLogin(); } });
+
+// Auto login if already logged
+if(localStorage.getItem('logged')==='1'){
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('appBox').style.display='block';
 }
-function renderC(){
-  const el=document.getElementById('contacts'); el.innerHTML='';
-  contacts.forEach(c=>{ el.innerHTML+=`<div class="contact" onclick="openC('${c.name.replace(/'/g,'')}','${c.reg}')" ontouchstart="openC('${c.name.replace(/'/g,'')}','${c.reg}')"><div class="avatar">${c.name[0].toUpperCase()}</div><div><b>${c.name}</b><div style="font-size:11px;color:#667781">${c.reg} • Verified</div></div></div>`; });
-}
-function openC(name,sub){ active=name; document.getElementById('
+
+// Force focus on input when tapping box
+document.getElementById('loginBox').addEventListener('click', function(e){
+  if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT'){
+    document.getElementById('pass').focus();
+  }
+});
+</script>
+</body>
+</html>
