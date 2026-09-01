@@ -70,3 +70,17 @@ function askAI(){let qq=document.getElementById('aiQ').value.toLowerCase();let k
 function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
 loadProfile();render();renderLive();
 </script></body></html>
+loadProfile();render();renderLive();
+// AUTO CHECK EVERY 10 SECONDS FOR LIVE
+setInterval(()=>{
+let latest = JSON.parse(localStorage.getItem('ensLiveV6')||'{"on":false}');
+if(latest.on && !live.on && latest.time > (Date.now()-60000)){
+live=latest;
+renderLive();
+if(confirm('🔴 LIVE CLASS STARTED: '+live.title+' - Join now?')){show('live');joinLive()}
+// play beep
+let audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');audio.play().catch(()=>{});
+}
+},10000);
+// Ask for notification permission on load
+if('Notification' in window){Notification.requestPermission()}
