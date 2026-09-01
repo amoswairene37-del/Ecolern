@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ecolern</title>
-<style>body{font-family:Arial;background:#e8f5e9;text-align:center;padding:15px}
-.card{background:#fff;padding:15px;border-radius:15px;margin:10px 0}
-.btn{background:green;color:#fff;padding:10px;border:none;border-radius:10px;width:100%}
-h1{color:green}</style></head>
-<body><h1>🌿 Ecolern</h1><p>Environmental Science App</p>
-<div class=card><h3>🌳 Ecosystem</h3><p>Environment is surroundings. Biotic=living, Abiotic=non-living.</p></div>
-<div class=card><h3>🏭 Pollution</h3><p>Air, Water, Soil pollution. Control: Reduce Reuse Recycle.</p></div>
-<div class=card><h3>💧 Conservation</h3><p>Plant trees, protect water, save wildlife. Like Wangari Maathai.</p></div>
-<div class=card><h3>🌍 Climate Change</h3><p>CO2 causes warming. Solution: solar, biogas, plant trees.</p><button class=btn>Start Learning</button></div>
-<p style=font-size:12px;margin-top:20px>By Amos Wairene - Baringo</p></body></html>
+<!DOCTYPE html><html><head><meta name=viewport content="width=device-width,initial-scale=1">
+<title>ENS/B/26 Moi University</title>
+<style>body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
+.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
+.btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold}
+input,textarea{width:95%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
+h2{color:#1b5e20;text-align:center;margin:5px}</style></head><body>
+<h2>🌿 ENS/B/26</h2><p style=text-align:center;margin:0>Moi University - Environmental Science<br><small>Class Q&A Platform 2026</small></p>
+<div class=card><input id=q placeholder="Ask question... e.g. Explain carrying capacity">
+<textarea id=d placeholder="Add details (optional)"></textarea><button class=btn onclick=ask()>POST QUESTION</button></div>
+<input id=s placeholder="🔍 Search questions..." oninput=filter() style=width:98%>
+<div id=list></div>
+<script>
+let qs=JSON.parse(localStorage.getItem('ens26')||'[]');
+function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q${a.length-i}: ${x.q}</b><p>${x.d}</p><div>${x.ans.map(v=>`<p style=background:#f1f8e9;padding:6px;border-radius:6px>✅ ${v}</p>`).join('')}</div><input id=a${i} placeholder=Type answer...><button class=btn onclick=ans(${i}) style=margin-top:5px>Submit Answer</button></div>`).join('')||'<p style=text-align:center>No questions yet. Be first!</p>'}
+function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ens26',JSON.stringify(qs));q.value=d.value='';render()}
+function ans(i){let v=document.getElementById('a'+i).value;if(!v)return;qs[i].ans.push(v);localStorage.setItem('ens26',JSON.stringify(qs));render()}
+function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
+render();
+</script></body></html>
