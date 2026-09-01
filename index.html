@@ -4,93 +4,196 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ENS/B/26 FINAL</title>
 <script src="https://meet.jit.si/external_api.js"></script>
+<script>
+// THIS FUNCTION IS AT TOP SO IT ALWAYS WORKS
+function go(id){
+try{
+var all=document.querySelectorAll('.page');
+for(var i=0;i<all.length;i++){all[i].style.display='none';}
+var p=document.getElementById(id);
+if(p){p.style.display='block';}
+window.scrollTo(0,0);
+if(id=='qa')document.getElementById('qList').innerHTML=localStorage.getItem('qs_html')||'<div class=card>No Q&A yet</div>';
+if(id=='notes')showNotes();
+if(id=='charts')showCharts();
+if(id=='members')showMembers();
+if(id=='chat')showChat();
+if(id=='timetable')showTT();
+if(id=='live')showLive();
+}catch(e){alert('Opening '+id+' - Error:'+e.message);document.getElementById(id).style.display='block';}
+}
+function openReg(){document.getElementById('regModal').style.display='block';}
+function closeReg(){document.getElementById('regModal').style.display='none';}
+</script>
 <style>
-body{margin:0;font-family:Arial;background:#e8f5e9;padding-bottom:80px}
-.header{background:#1b5e20;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+body{margin:0;font-family:Arial;background:#e8f5e9;padding-bottom:20px}
+.header{background:#1b5e20;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center}
 .card{background:#fff;margin:8px;padding:12px;border-radius:12px;box-shadow:0 2px 5px #0002}
-.btn{background:#1b5e20;color:#fff;border:0;padding:13px;width:100%;border-radius:10px;font-weight:bold;margin:5px 0;font-size:15px}
-.btn2{padding:7px 12px;border-radius:20px;border:1.5px solid #1b5e20;background:#fff;color:#1b5e20;font-size:12px}
+.btn{border:0;padding:14px;width:100%;border-radius:10px;font-weight:bold;margin:5px 0;font-size:15px;color:#fff;cursor:pointer}
+.btn:active{transform:scale(0.97)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}
-.gcard{background:#fff;border-radius:14px;padding:0;text-align:center;box-shadow:0 2px 5px #0002;border-left:5px solid #1b5e20}
-.page{display:none}#home{display:block}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:2px solid #1b5e20;z-index:99;overflow:auto}
-.b{flex:1;padding:8px 1px;text-align:center;font-size:9px;font-weight:bold;min-width:45px}
-.b.active{background:#1b5e20;color:#fff}
-input,textarea{width:100%;padding:11px;margin:5px 0;border:1px solid #aaa;border-radius:10px;font-size:16px;box-sizing:border-box}
-.chartImg{width:100%;border-radius:10px;margin:6px 0;border:1px solid #ddd}
-.ppic{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20}
-.ppicBig{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #1b5e20}
-.notif{position:fixed;top:60px;left:10px;right:10px;background:#25D366;color:#fff;padding:12px;border-radius:12px;z-index:9999;display:none;font-weight:bold;box-shadow:0 4px 10px #0004}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:none;padding:15px;overflow:auto}
-.modalBox{background:#fff;border-radius:16px;padding:18px;max-width:400px;margin:30px auto}
-.memberRow{display:flex;gap:10px;align-items:center;background:#f9fbe7;padding:8px;border-radius:10px;margin:5px 0}
+.gcard{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 6px #0002;border-left:5px solid #1b5e20}
+.page{display:none} #home{display:block}
+input,textarea{width:100%;padding:12px;margin:5px 0;border:1px solid #999;border-radius:10px;font-size:16px;box-sizing:border-box}
+.ppic{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;padding:15px;overflow:auto}
+.modalBox{background:#fff;border-radius:16px;padding:18px;max-width:400px;margin:20px auto}
 </style>
 </head>
 <body>
 
-<div class=notif id=notifBox></div>
-
 <div class=header>
 <div style=display:flex;gap:8px;align-items:center>
-<img id=hdrPic src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class=ppic style=width:42px;height:42px;border-color:#fff>
-<div><b id=hdrName>ENS/B/26</b><br><small id=hdrReg>Moi University</small></div>
+<img id=hdrPic src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style=width:42px;height:42px;border-radius:50%;border:2px solid #fff>
+<div><b>ENS/B/26</b><br><small id=hdrName>Moi University</small></div>
 </div>
-<button class=btn2 style=background:#fff onclick="openModal('regModal')">👤 Profile</button>
+<button onclick="openReg()" style=background:#fff;color:#1b5e20;border:0;padding:8px 14px;border-radius:20px;font-weight:bold>👤 Profile</button>
 </div>
-
-<div id=regModal class=modal><div class=modalBox>
-<h3>👤 Member Registration - Add Photo</h3>
-<p><small>Your photo will appear to others in Charts & Chat</small></p>
-<input id=rName placeholder="Full Name *">
-<input id=rReg placeholder="Reg No e.g. ENS/B/01/26 *">
-<input id=rPhone placeholder="WhatsApp 07...">
-<p><b>📸 Select Profile Picture:</b></p>
-<input type=file id=rPic accept="image/*">
-<div id=rPrev style=text-align:center;display:none;margin:10px 0>
-<img id=rImg class=ppicBig><br><small>Your profile photo preview - will show to others</small><br><small style=color:green>✅ Photo ready</small>
-</div>
-<div id=regStatus style=text-align:center;color:green;font-weight:bold"></div>
-<button class=btn onclick="registerMe()">✅ Save Profile + Photo</button>
-<button class=btn2 style=width:100%;margin-top:8px;padding:12px onclick="closeModal('regModal')">Close</button>
-</div></div>
 
 <div id=home class=page>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#66bb6a);color:#fff;text-align:center>
-<h2>🌍 ENS/B/26 FINAL</h2>
-<p id=welcomeTxt>Welcome - Register with photo</p>
-<p id=liveBanner style=background:yellow;color:red;padding:10px;border-radius:20px;display:none;font-weight:bold></p>
+<div class=card style=background:linear-gradient(135deg,#1b5e20,#4caf50);color:#fff;text-align:center>
+<h2 style=margin:5px>🌍 ENS/B/26 FINAL</h2>
+<p id=welcome>Welcome - Tap any OPEN button</p>
+<p style=background:yellow;color:red;padding:8px;border-radius:10px;display:none id=liveBanner></p>
 </div>
 
 <div class=grid>
-<div class=gcard><div style=padding:10px><div style=font-size:26px>💬</div><b>Q&A</b><br><button class=btn onclick="checkAccess('qa')">OPEN</button></div></div>
-<div class=gcard style=border-color:#1565c0><div style=padding:10px><div style=font-size:26px>📚</div><b>Notes</b><br><button class=btn style=background:#1565c0 onclick="checkAccess('notes')">OPEN</button></div></div>
-<div class=gcard style=border-color:#ff9800><div style=padding:10px><div style=font-size:26px>📊</div><b>Charts</b><br><small>With Profile Pic</small><br><button class=btn style=background:#ff9800 onclick="checkAccess('charts')">OPEN</button></div></div>
-<div class=gcard style=border-color:#9c27b0><div style=padding:10px><div style=font-size:26px>🤖</div><b>AI Tutor</b><br><button class=btn style=background:#9c27b0 onclick="checkAccess('ai')">OPEN</button></div></div>
-<div class=gcard style=border-color:#25D366><div style=padding:10px><div style=font-size:26px>💬</div><b>Chat</b><br><button class=btn style=background:#25D366 onclick="checkAccess('chat')">OPEN CHAT</button></div></div>
-<div class=gcard style=border-color:#1565c0><div style=padding:10px><div style=font-size:26px>📞</div><b>Calls No Echo</b><br><button class=btn style=background:#1565c0 onclick="checkAccess('calls')">OPEN</button></div></div>
-<div class=gcard style=border-color:#d32f2f><div style=padding:10px><div style=font-size:26px>🎥</div><b>Live</b><br><button class=btn style=background:#d32f2f onclick="checkAccess('live')">OPEN LIVE</button></div></div>
-<div class=gcard><div style=padding:10px><div style=font-size:26px>👥</div><b>Members</b><br><small id=memberCount>0 members</small><br><button class=btn onclick="checkAccess('members')">OPEN</button></div></div>
+<div class=gcard><div>💬<br><b>Q&A</b><br><button class=btn style=background:#1b5e20 onclick="go('qa')">OPEN</button></div></div>
+<div class=gcard style=border-color:#1565c0><div>📚<br><b>Notes</b><br><button class=btn style=background:#1565c0 onclick="go('notes')">OPEN</button></div></div>
+<div class=gcard style=border-color:#ff9800><div>📊<br><b>Charts</b><br><small>With Photo</small><br><button class=btn style=background:#ff9800 onclick="go('charts')">OPEN</button></div></div>
+<div class=gcard style=border-color:#9c27b0><div>🤖<br><b>AI Tutor</b><br><button class=btn style=background:#9c27b0 onclick="go('ai')">OPEN</button></div></div>
+<div class=gcard style=border-color:#25D366><div>💬<br><b>Chat</b><br><button class=btn style=background:#25D366 onclick="go('chat')">OPEN CHAT</button></div></div>
+<div class=gcard style=border-color:#1565c0><div>📞<br><b>Calls No Echo</b><br><button class=btn style=background:#1565c0 onclick="go('calls')">OPEN</button></div></div>
+<div class=gcard style=border-color:#d32f2f><div>🎥<br><b>Live</b><br><button class=btn style=background:#d32f2f onclick="go('live')">OPEN LIVE</button></div></div>
+<div class=gcard><div>👥<br><b>Members</b><br><small id=memCount>0 members</small><br><button class=btn style=background:#1b5e20 onclick="go('members')">OPEN</button></div></div>
 </div>
 
-<div class=card style=background:#fff3cd><b>👨‍🏫 Patron Access</b><br><small>Authorized only - PIN hidden</small><br><button class=btn2 onclick="openModal('patModal')">Patron Login</button></div>
-<div class=card style=background:#e3f2fd><b>📋 Rep Access</b><br><small>Authorized only - PIN hidden</small><br><button class=btn2 onclick="openModal('repModal')">Rep Login</button></div>
+<div class=card style=background:#fff3cd><b>👨‍🏫 Patron</b> - PIN hidden <br><button onclick="document.getElementById('patModal').style.display='block'" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>Login Patron</button></div>
+<div class=card style=background:#e3f2fd><b>📋 Rep</b> - PIN hidden<br><button onclick="document.getElementById('repModal').style.display='block'" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>Login Rep</button></div>
 </div>
 
-<div id=patModal class=modal><div class=modalBox><h3>👨‍🏫 Patron Login</h3><input id=patPin type=password placeholder="Secure PIN"><button class=btn onclick="loginPat()">Login</button><button class=btn2 style=width:100%;padding:12px;margin-top:8px" onclick="closeModal('patModal')">Close</button></div></div>
-<div id=repModal class=modal><div class=modalBox><h3>📋 Rep Login</h3><input id=rpPin type=password placeholder="Secure PIN"><button class=btn onclick="loginRep()">Login</button><button class=btn2 style=width:100%;padding:12px;margin-top:8px" onclick="closeModal('repModal')">Close</button></div></div>
+<div id=qa class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>💬 Q&A Place</h3><input id=q placeholder="Question..."><textarea id=qd placeholder="Details"></textarea><button class=btn style=background:#1b5e20 onclick="askQ()">POST QUESTION</button></div><div id=qList></div></div>
+
+<div id=notes class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>📚 Notes & Past Papers</h3><div id=nList></div></div><div class=card><h4>Upload (Patron)</h4><input id=nT placeholder=Title><textarea id=nC placeholder="Link or text"></textarea><input id=nP type=password placeholder="Confirm PIN"><button class=btn style=background:#1b5e20 onclick="addNote()">Upload</button></div></div>
 
 <div id=charts class=page>
-<div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>📊 Charts - With Member Profile Photos</h3><p><small>Your profile photo appears next to your chart so others know who shared</small></p>
-<input id=chartTitle placeholder="Chart title e.g. Carbon Cycle"><input type=file id=chartFile accept="image/*"><div id=chartFilePrev style=text-align:center;display:none><img id=chartFileImg style=width:100%;border-radius:10px;max-height:200px;object-fit:contain;border:2px solid #ff9800></div><textarea id=chartDesc placeholder="Description"></textarea><button class=btn style=background:#ff9800 onclick="uploadChart()">📤 Share Chart + My Profile Photo</button></div>
+<div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>📊 Charts - With Profile Photo</h3><input id=cTitle placeholder="Chart title"><input type=file id=cFile accept="image/*"><textarea id=cDesc placeholder="Description"></textarea><button class=btn style=background:#ff9800 onclick="uploadChart()">📤 SHARE CHART + MY PHOTO</button></div>
 <div id=chartList></div>
 </div>
 
-<div id=chat class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>💬 Group Chat - With Photos</h3><div id=gChat style=height:280px;overflow:auto;background:#f0f4c3;padding:8px;border-radius:10px"></div><div style=display:flex;gap:5px;margin-top:8px><input id=cInput placeholder="Message..." style=flex:1><button class=btn2 style=background:#1b5e20;color:#fff;padding:12px onclick="sendC()">Send</button></div><div style=margin-top:8px><input type=file id=chatImg accept="image/*"><button class=btn2 onclick="sendChartInChat()">📊 Send Chart + Profile</button></div></div></div>
+<div id=ai class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🤖 AI Tutor PRO - Efficient</h3><input id=aiQ placeholder="e.g. eutrophication"><button class=btn style=background:#9c27b0 onclick="askAI()">ASK AI</button><div id=aiA></div></div></div>
 
-<div id=members class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>👥 Members Directory - With Photos</h3><p><small>All members who registered with profile picture</small></p><p id=mCount></p></div><div id=mList></div></div>
+<div id=chat class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>💬 Chat - With Photos</h3><div id=gChat style=height:260px;overflow:auto;background:#f0f4c3;padding:8px;border-radius:10px"></div><div style=display:flex;gap:5px;margin-top:8px><input id=cInput placeholder="Message..." style=flex:1><button onclick="sendC()" style=background:#1b5e20;color:#fff;padding:12px;border:0;border-radius:20px>Send</button></div><div style=margin-top:8px><input type=file id=chatImg accept="image/*"><button onclick="sendChartInChat()" style=padding:8px 12px;border-radius:20px;border:1px solid #1b5e20;background:#fff">📊 Send Chart</button></div></div></div>
 
-<div id=ai class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>🤖 AI Tutor PRO</h3><input id=aiQ placeholder="Ask..."><button class=btn style=background:#9c27b0 onclick="askAI()">ASK AI</button><div id=aiA></div></div></div>
+<div id=calls class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>📞 Calls - No Echo Fixed</h3><p><small>✅ Echo cancellation ON<br>Use earphones for 100% no echo</small></p><button class=btn style=background:#1565c0 onclick="startCall()">📹 Start Group Call No Echo</button></div></div>
 
-<div id=qa class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>💬 Q&A</h3><input id=q placeholder="Question..."><textarea id=qd placeholder="Details"></textarea><button class=btn onclick="askQ()">POST</button></div><div id=qList></div></div>
+<div id=live class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🎥 Live Lessons</h3><p id=liveS>🔴 No live</p><button class=btn id=joinB style=display:none;background:#d32f2f onclick="joinLive()">JOIN LIVE NOW</button></div><div class=card><h4>Start Live (Patron)</h4><input id=liveTitle placeholder=Topic><input id=livePin type=password placeholder="Confirm PIN"><button class=btn style=background:#d32f2f onclick="goLive()">🔴 GO LIVE + Notify</button><button class=btn style=background:#333 onclick="endLive()">End Live</button></div><div id=jitsi style=width:100%;height:420px;display:none"></div></div>
 
-<div id=notes class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ HOME</button><h3>📚 Notes</h3><div id=nList></div></div><div id=patNotes class=card style=display:none><h4>Upload Notes (
+<div id=members class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>👥 Members With Photos</h3><p id=mCount></p></div><div id=mList></div></div>
+
+<div id=timetable class=page><div class=card><button onclick="go('home')" style=padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff>⬅️ HOME</button><h3>🕒 Timetable - Photo Allowed</h3><div id=ttView style=background:#fff8e1;padding:12px;border-radius:10px"></div><div id=ttImgView></div></div><div class=card id=ttEdit style=background:#e3f2fd><h4>Rep: Upload Timetable Photo</h4><textarea id=ttInput placeholder="Text timetable" style=height:70px></textarea><input type=file id=ttFile accept="image/*"><input id=ttP type=password placeholder="Confirm PIN"><button class=btn style=background:#ff9800 onclick="saveTT()">Save Timetable Photo</button></div></div>
+
+<div id=patModal class=modal><div class=modalBox><h3>👨‍🏫 Patron Login</h3><input id=patPin type=password placeholder="Secure PIN"><button class=btn style=background:#1b5e20 onclick="if(patPin.value=='ENS2026'){alert('Welcome Patron!');document.getElementById('patModal').style.display='none';go('live');}else alert('Wrong PIN')">Login</button><button onclick="document.getElementById('patModal').style.display='none'" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button></div></div>
+<div id=repModal class=modal><div class=modalBox><h3>📋 Rep Login</h3><input id=rpPin type=password placeholder="Secure PIN"><button class=btn style=background:#1b5e20 onclick="if(rpPin.value=='REP2026'||rpPin.value=='ENS2026'){alert('Welcome Rep!');document.getElementById('repModal').style.display='none';go('timetable');}else alert('Wrong PIN')">Login</button><button onclick="document.getElementById('repModal').style.display='none'" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button></div></div>
+
+<div id=regModal class=modal><div class=modalBox>
+<h3>👤 Register With Profile Photo</h3>
+<p><small>Your photo will appear to others in Charts</small></p>
+<input id=rName placeholder="Full Name *"><input id=rReg placeholder="Reg No ENS/B/01/26 *"><input id=rPhone placeholder="WhatsApp 07...">
+<p><b>📸 Profile Photo *</b></p><input type=file id=rPic accept="image/*">
+<div id=rPrev style=text-align:center;display:none><img id=rImg style=width:90px;height:90px;border-radius:50%;border:3px solid #1b5e20;object-fit:cover><br><small>Photo ready ✅</small></div>
+<button class=btn style=background:#1b5e20 onclick="registerMe()">✅ Save Profile Photo</button>
+<button onclick="closeReg()" style=width:100%;padding:12px;border-radius:20px;border:1px solid #aaa;background:#fff;margin-top:8px>Close</button>
+</div></div>
+
+<script>
+var tempPic='',tempTT='',tempChart='';
+document.getElementById('rPic').addEventListener('change',function(e){
+var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){tempPic=ev.target.result;document.getElementById('rImg').src=tempPic;document.getElementById('rPrev').style.display='block';};r.readAsDataURL(f);
+});
+document.getElementById('ttFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){tempTT=ev.target.result;};r.readAsDataURL(f);});
+document.getElementById('cFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){tempChart=ev.target.result;};r.readAsDataURL(f);});
+
+function registerMe(){
+var n=document.getElementById('rName').value.trim(), rg=document.getElementById('rReg').value.trim(), ph=document.getElementById('rPhone').value.trim();
+if(!n||!rg){alert('Enter name and reg');return}
+if(!tempPic){alert('Select profile photo first - required');return}
+var me={name:n,reg:rg,phone:ph,pic:tempPic,time:Date.now()};
+localStorage.setItem('me_final',JSON.stringify(me));
+var members=JSON.parse(localStorage.getItem('members_final')||'[]');
+var idx=members.findIndex(function(m){return m.reg==rg});if(idx>=0)members[idx]=me;else members.unshift(me);
+localStorage.setItem('members_final',JSON.stringify(members));
+document.getElementById('hdrName').innerText=n;document.getElementById('hdrPic').src=tempPic;document.getElementById('welcome').innerText='Welcome '+n+' ✅';
+closeReg();alert('✅ Registered! Your photo will show in charts');
+showMembers();
+}
+function askQ(){var q=document.getElementById('q').value;var qd=document.getElementById('qd').value;if(!q)return;var qs=JSON.parse(localStorage.getItem('qs')||'[]');qs.unshift({q:q,d:qd,ans:[]});localStorage.setItem('qs',JSON.stringify(qs));document.getElementById('q').value='';document.getElementById('qd').value='';document.getElementById('qList').innerHTML=qs.map(function(x,i){return '<div class=card><b>Q: '+x.q+'</b><br><small>'+(x.d||'')+'</small></div>'}).join('');alert('Posted');}
+function showNotes(){var ns=JSON.parse(localStorage.getItem('ns')||'[]');document.getElementById('nList').innerHTML=ns.map(function(n){return '<div class=card style=border-left:5px solid #1565c0><b>'+n.t+'</b><br><small>'+n.d+'</small><p>'+(n.c.includes('http')?'<a href="'+n.c+'" target=_blank style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none>📥 OPEN</a>':n.c)+'</p></div>'}).join('')||'<div class=card>No notes yet</div>'}
+function addNote(){var t=document.getElementById('nT').value,c=document.getElementById('nC').value,p=document.getElementById('nP').value;if(p!='ENS2026'){alert('Wrong PIN');return}if(!t)return;var ns=JSON.parse(localStorage.getItem('ns')||'[]');ns.unshift({t:t,c:c,d:new Date().toLocaleDateString()});localStorage.setItem('ns',JSON.stringify(ns));document.getElementById('nT').value='';document.getElementById('nC').value='';document.getElementById('nP').value='';showNotes();alert('Uploaded')}
+function uploadChart(){
+var me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
+var title=document.getElementById('cTitle').value||'Chart';var desc=document.getElementById('cDesc').value;if(!tempChart){alert('Select chart image first');return}
+var charts=JSON.parse(localStorage.getItem('charts_final')||'[]');
+charts.unshift({title:title,desc:desc,img:tempChart,date:new Date().toLocaleString(),by:me.name,reg:me.reg,pic:me.pic});
+localStorage.setItem('charts_final',JSON.stringify(charts));
+document.getElementById('cTitle').value='';document.getElementById('cDesc').value='';document.getElementById('cFile').value='';tempChart='';
+showCharts();alert('📊 Chart + your profile photo shared!');
+}
+function showCharts(){
+var charts=JSON.parse(localStorage.getItem('charts_final')||'[]');
+document.getElementById('chartList').innerHTML=charts.map(function(c){
+return '<div class=card style=border-left:6px solid #ff9800><div style=display:flex;gap:10px;align-items:center><img src="'+(c.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png')+'" style=width:40px;height:40px;border-radius:50%;border:2px solid #1b5e20;object-fit:cover><div><b>'+(c.by||'Member')+'</b><br><small>'+(c.reg||'')+' - '+c.date+'</small></div></div><b style=margin-top:8px;display:block>📊 '+c.title+'</b><small>'+(c.desc||'')+'</small><br><img src="'+c.img+'" style=width:100%;border-radius:10px;margin-top:6px;border:1px solid #ddd><br><a href="'+c.img+'" download="'+c.title+'.jpg" style=background:#1b5e20;color:#fff;padding:7px 12px;border-radius:15px;text-decoration:none;display:inline-block;margin-top:6px>📥 Download</a></div>';
+}).join('')||'<div class=card>No charts yet</div>';
+}
+function showMembers(){
+var members=JSON.parse(localStorage.getItem('members_final')||'[]');
+document.getElementById('memCount').innerText=members.length+' members';
+document.getElementById('mCount').innerText=members.length+' Members With Photos';
+document.getElementById('mList').innerHTML=members.map(function(m){
+return '<div class=card style=display:flex;gap:12px;align-items:center><img src="'+(m.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png')+'" style=width:56px;height:56px;border-radius:50%;border:3px solid #1b5e20;object-fit:cover><div style=flex:1><b>'+m.name+'</b><br><small>🆔 '+m.reg+'</small><br><small>📱 '+(m.phone||'')+'</small></div><div>'+(m.phone?'<a href="https://wa.me/'+m.phone.replace(/[^0-9]/g,'').replace(/^0/,'254')+'" target=_blank style=background:#25D366;color:#fff;padding:6px 10px;border-radius:15px;text-decoration:none;font-size:11px>WhatsApp</a>':'')+'</div></div>';
+}).join('')||'<div class=card>No members yet - Register with photo!</div>';
+}
+function showChat(){
+var me=JSON.parse(localStorage.getItem('me_final')||'null');
+var ch=JSON.parse(localStorage.getItem('ch')||'[]');
+if(!me){document.getElementById('gChat').innerHTML='<div class=card>Register first</div>';return}
+document.getElementById('gChat').innerHTML=ch.map(function(m){
+return '<div style=display:flex;gap:8px;background:'+(m.n==me.name?'#dcf8c6':'#fff')+';padding:8px;margin:5px 0;border-radius:10px"><img src="'+(m.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png')+'" style=width:32px;height:32px;border-radius:50%;object-fit:cover"><div><b>'+m.n+':</b> '+(m.t||'')+(m.img?'<br><img src="'+m.img+'" style=width:100%;border-radius:8px;margin-top:4px>':'')+'</div></div>';
+}).join('')||'<div class=card>No chats</div>';
+document.getElementById('gChat').scrollTop=9999;
+}
+function sendC(){
+var me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
+var txt=document.getElementById('cInput').value.trim();if(!txt)return;
+var ch=JSON.parse(localStorage.getItem('ch')||'[]');
+ch.push({n:me.name,pic:me.pic,t:txt,time:Date.now()});
+localStorage.setItem('ch',JSON.stringify(ch));localStorage.setItem('lastChat',Date.now().toString());
+document.getElementById('cInput').value='';showChat();
+}
+function sendChartInChat(){
+var me=JSON.parse(localStorage.getItem('me_final')||'null');if(!me){openReg();return}
+var f=document.getElementById('chatImg').files[0];if(!f){alert('Select chart image');return}
+var r=new FileReader();r.onload=function(ev){
+var ch=JSON.parse(localStorage.getItem('ch')||'[]');
+ch.push({n:me.name,pic:me.pic,t:'📊 Shared chart:',img:ev.target.result,time:Date.now()});
+localStorage.setItem('ch',JSON.stringify(ch));
+var charts=JSON.parse(localStorage.getItem('charts_final')||'[]');
+charts.unshift({title:'From Chat',desc:'Shared in chat',img:ev.target.result,date:new Date().toLocaleString(),by:me.name,reg:me.reg,pic:me.pic});
+localStorage.setItem('charts_final',JSON.stringify(charts));
+document.getElementById('chatImg').value='';showChat();
+};r.readAsDataURL(f);
+}
+function showTT(){var tt=JSON.parse(localStorage.getItem('tt_final')||'{"text":"No timetable yet","img":""}');document.getElementById('ttView').innerText=tt.text||'No timetable';if(tt.img){document.getElementById('ttImgView').innerHTML='<img src="'+tt.img+'" style=width:100%;border-radius:12px;border:2px solid #ff9800;margin-top:10px><br><a href="'+tt.img+'" download="timetable.jpg" style=background:#1b5e20;color:#fff;padding:8px 14px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:6px>📥 Download Photo</a>'}else document.getElementById('ttImgView').innerHTML=''}
+function saveTT(){var p=document.getElementById('ttP').value;if(p!='REP2026'&&p!='ENS2026'){alert('Wrong PIN');return}var text=document.getElementById('ttInput').value;var tt={text:text||'See photo',img:tempTT||'',date:new Date().toLocaleString()};localStorage.setItem('tt_final',JSON.stringify(tt));showTT();alert('Timetable photo saved!')}
+function showLive(){var lv=JSON.parse(localStorage.getItem('lv')||'{"on":false}');document.getElementById('liveS').innerText=lv.on?'🟢 LIVE: '+lv.title:'🔴 No live';document.getElementById('joinB').style.display=lv.on?'block':'none';var bn=document.getElementById('liveBanner');if(lv.on){bn.style.display='block';bn.innerText='🔴 LIVE: '+lv.title;bn.onclick=function(){go('live')}}else bn.style.display='none'}
+function goLive(){var pin=document.getElementById('livePin').value;if(pin!='ENS2026'){alert('Wrong PIN');return}var title=document.getElementById('liveTitle').value||'Live Class';var lv={on:true,title:title,room:'ENS26-'+Date.now()};localStorage.setItem('lv',JSON.stringify(lv));showLive();joinLive();}
+function endLive(){localStorage.setItem('lv',JSON.stringify({on:false,title:'',room:''}));document.getElementById('jitsi').style.display='none';showLive();}
+function joinLive(){var lv=JSON.parse(localStorage.getItem('lv')||'{"on":false}');if(!lv.on)return;document.getElementById('jitsi').style.display='block';new JitsiMeetExternalAPI('meet.jit.si',{roomName:lv.room,width:'100%',height:420,parentNode:document.getElementById('jitsi'),configOverwrite:{constraints:{audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}}},userInfo:{displayName:'Student'}});}
+function startCall(){var room='ENS26-'+Date.now();document.getElementById('jitsi').style.display='block';go('live');setTimeout(function(){new JitsiMeetExternalAPI('meet.jit.si',{roomName:room,width:'100%',height:400,parentNode:document.getElementById('jitsi'),configOverwrite:{constraints:{audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}}},userInfo:{displayName:'Student'}})},500);}
+function askAI(){var q=document.getElementById('aiQ').value.toLowerCase();var db={eutrophication:"Eutrophication = Excess nutrients -> algal bloom -> O2 low -> fish die. Control: buffer strips.",pollution:"Pollution: Air, Water, Soil, Noise. Solution: 3Rs.",ecology:"Ecology: Individual->Population->Community->Ecosystem. 10% law."};var ans=null;for(var k in db){if(q.includes(k)){ans=db[k];break}}if(!ans)ans="For '"+document.getElementById('aiQ').value+"': Check Notes tab or ask Q&A. Try eutrophication, pollution.";document.getElementById('aiA').innerHTML='<div class=card style=background:#f3e5f5;border-left:5px solid #9c27b0><b>🤖 AI:</b><br>'+ans+'</div>';}
+
+var me=JSON.parse(localStorage.getItem('me_final')||'null');
+if(me){document.getElementById('hdrName').innerText=me.name;document.getElementById('hdrPic').src=me.pic;document.getElementById('welcome').innerText='Welcome '+me.name+' ✅';showMembers();}
+</script>
+</body>
+                                                                                                                                                                         </html>
