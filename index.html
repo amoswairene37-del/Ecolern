@@ -1,53 +1,6 @@
 <!DOCTYPE html><html><head><meta name=viewport content="width=device-width,initial-scale=1">
 <title>ENS/B/26 Moi University</title>
 <style>body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
-.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0;box-shadow:0 1px 3px #ccc}
-.btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:3px 0}
-.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:12px;margin:2px}
-input,textarea{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
-h2{color:#1b5e20;text-align:center;margin:5px}
-#tutor{background:#fff3cd;border-left:4px solid #ff9800;padding:10px;border-radius:8px;margin:8px 0;display:none}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;z-index:9}
-.modal div{background:#fff;margin:20px;padding:15px;border-radius:12px;max-height:80%;overflow:auto}
-</style></head><body>
-<h2>🌿 ENS/B/26</h2><p style=text-align:center;margin:0>Moi University - Environmental Science<br><small>Class Q&A Platform 2026</small></p>
-<div style=text-align:center>
-<button class=btn2 onclick="document.getElementById('clist').style.display='block'">👥 Class List</button>
-<button class=btn2 onclick="askAI()">🤖 AI Tutor</button>
-<button class=btn2 onclick="shareWA()">📱 Share App</button>
-</div>
-<div id=tutor></div>
-<div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea>
-<button class=btn onclick=ask()>POST QUESTION</button>
-<button class=btn2 onclick="autoAns()" style=width:100%;background:#fff3cd;color:#333>✨ Get AI Answer First</button>
-</div>
-<input id=s placeholder="🔍 Search..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc>
-<div id=list></div>
-
-<div id=clist class=modal onclick="this.style.display='none'"><div>
-<h3>ENS/B/26 Class List 2026</h3><p id=cn>Loading...</p><textarea id=newName placeholder="Add name e.g. Amos Wairene - ENS/B/001/26"></textarea>
-<button class=btn onclick=addStudent()>Add Student</button><button class=btn2 onclick="document.getElementById('clist').style.display='none'">Close</button></div></div>
-
-<script>
-let qs=JSON.parse(localStorage.getItem('ens26')||'[]');
-let students=JSON.parse(localStorage.getItem('stu26')||'["Amos Wairene - Class Rep","Sample: Jane Doe - ENS/B/002/26"]');
-let aiDB={carrying:"Carrying capacity is max population environment can sustain indefinitely with available resources.",eutrophication:"Eutrophication is excess nutrients in water causing algal bloom, oxygen depletion and fish death.",ecology:"Ecology is study of interactions between organisms and environment.",pollution:"Pollution is introduction of harmful contaminants into environment.",biodiversity:"Biodiversity is variety of life in a habitat/ecosystem.",climate:"Climate change is long-term shift in temperatures and weather patterns.",gis:"GIS is system to capture, store and analyze spatial/geographic data.",conservation:"Conservation is protection and sustainable management of natural resources.",environmental:"Environmental Science is interdisciplinary study of environment, solving environmental problems using biology, chemistry, physics."}
-
-function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><p>${x.d}</p><small>${x.ans.length} answers • ${x.date||''}</small><div>${x.ans.map(v=>`<p style=background:#f1f8e9;padding:6px;border-radius:6px>✅ ${v}</p>`).join('')}</div><input id=a${i} placeholder=Answer...><button class=btn onclick=ans(${i}) style=margin-top:5px>Submit Answer</button><button class=btn2 onclick="shareQ('${x.q.replace(/'/g,'')}')">Share Q on WhatsApp</button></div>`).join('')||'<p style=text-align:center>No questions yet.</p>';document.getElementById('cn').innerHTML=students.map(s=>`• ${s}<br>`).join('')}
-function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[],date:new Date().toLocaleDateString()});localStorage.setItem('ens26',JSON.stringify(qs));q.value=d.value='';render()}
-function ans(i){let v=document.getElementById('a'+i).value;if(!v)return;qs[i].ans.push(v);localStorage.setItem('ens26',JSON.stringify(qs));render()}
-function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
-function autoAns(){let txt=q.value.toLowerCase();if(!txt){alert('Type question first');return}let k=Object.keys(aiDB).find(k=>txt.includes(k));let a=k?aiDB[k]:"For ENS: This topic relates to sustainable interaction between humans and environment. Check lecture notes, but key is understanding human impact and conservation.";let t=document.getElementById('tutor');t.style.display='block';t.innerHTML=`<b>🤖 AI Tutor Answer:</b><br>${a}<br><button class=btn2 onclick="useAI()">Use as Answer</button><button class=btn2 onclick="t.style.display='none'">Close</button>`;window.aiTemp=a}
-function useAI(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[window.aiTemp],date:new Date().toLocaleDateString()});localStorage.setItem('ens26',JSON.stringify(qs));document.getElementById('tutor').style.display='none';q.value=d.value='';render()}
-function askAI(){let t=document.getElementById('tutor');t.style.display='block';t.innerHTML=`<b>🤖 ENS AI Tutor</b><br>Ask me anything: e.g. 'What is GIS?' 'Define biodiversity'<br><input id=aiQ placeholder=Type topic... style=width:90%><button class=btn onclick=doAI()>Ask AI</button>`}
-function doAI(){let v=document.getElementById('aiQ').value.toLowerCase();let k=Object.keys(aiDB).find(k=>v.includes(k));let a=k?aiDB[k]:"In Environmental Science: "+v+" - This is key for ENS/B/26. Refer to EMG 101 notes. Focus on definition, causes, effects, mitigation.";document.getElementById('tutor').innerHTML=`<b>🤖 Answer:</b> ${a}<br><button class=btn2 onclick="document.getElementById('tutor').style.display='none'">Close</button>`}
-function shareWA(){let url="https://amoswairene37-del.github.io/Ecolern/";window.open("https://wa.me/?text=Join ENS/B/26 Moi University Q&A App 🌿 "+encodeURIComponent(url))}
-function shareQ(q){window.open("https://wa.me/?text=ENS/B/26 Question: "+encodeURIComponent(q)+" - Answer on: https://amoswairene37-del.github.io/Ecolern/")}
-function addStudent(){let v=document.getElementById('newName').value;if(!v)return;students.push(v);localStorage.setItem('stu26',JSON.stringify(students));document.getElementById('newName').value='';render()}
-render();
-</script></body></html><!DOCTYPE html><html><head><meta name=viewport content="width=device-width,initial-scale=1">
-<title>ENS/B/26 Moi University</title>
-<style>body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
 .card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
 .btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:3px 0}
 .btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:12px;margin:2px}
