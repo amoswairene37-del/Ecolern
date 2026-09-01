@@ -1,207 +1,69 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ecolern ENS/B/26 - Contacts Messenger + Live Call</title>
+<title>EcolernBook - Academic Facebook for ENS/B/26</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, where, limit, onSnapshot, serverTimestamp, doc, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = { apiKey:"YOUR_KEY", authDomain:"ecolern-2691b.firebaseapp.com", projectId:"ecolern-2691b", storageBucket:"ecolern-2691b.appspot.com", messagingSenderId:"123", appId:"1:123:web:abc" };
+import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp, doc, setDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = { apiKey:"YOUR_API_KEY", authDomain:"ecolern-2691b.firebaseapp.com", projectId:"ecolern-2691b", storageBucket:"ecolern-2691b.appspot.com", messagingSenderId:"123", appId:"1:123:web:abc" };
 const app=initializeApp(firebaseConfig); const db=getFirestore(app);
-window.db=db; window.collection=collection; window.addDoc=addDoc; window.query=query; window.where=where; window.orderBy=orderBy; window.limit=limit; window.onSnapshot=onSnapshot; window.serverTimestamp=serverTimestamp; window.doc=doc; window.setDoc=setDoc; window.updateDoc=updateDoc; window.deleteDoc=deleteDoc;
+window.db=db; window.collection=collection; window.addDoc=addDoc; window.query=query; window.orderBy=orderBy; window.limit=limit; window.onSnapshot=onSnapshot; window.serverTimestamp=serverTimestamp; window.doc=doc; window.setDoc=setDoc; window.updateDoc=updateDoc; window.deleteDoc=deleteDoc; window.arrayUnion=arrayUnion; window.arrayRemove=arrayRemove; window.increment=increment;
 </script>
-<style>.tab-active{border-bottom:3px solid #16a34a;color:#16a34a;font-weight:700}.online-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block}</style>
-</head><body class="bg-gray-50">
+<style>body{background:#f0f2f5}.fb-card{background:white;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}.fb-btn:hover{background:#f2f2f2}</style>
+</head><body>
 
-<header class="bg-green-700 text-white p-3 flex justify-between sticky top-0 z-50">
-<div><h1 class="font-bold text-sm">Ecolern ENS/B/26</h1><p class="text-[10px]">Amos Nyongesa | Dr Okore | Contacts Messenger</p></div>
-<div><span id="userRole" class="bg-white text-green-700 px-2 py-1 rounded-full text-[10px] font-bold">Guest</span><button id="loginBtn" class="ml-2 bg-yellow-400 text-black px-2 py-1 rounded text-xs font-bold">Register</button></div>
+<!-- FACEBOOK HEADER -->
+<header class="bg-white shadow sticky top-0 z-50 flex justify-between items-center px-3 py-2">
+<div class="flex items-center gap-2"><div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-xl">e</div><h1 class="font-bold text-green-700 hidden md:block">ecolernbook</h1><div class="bg-gray-100 rounded-full px-3 py-1.5 flex items-center gap-2"><i class="fa fa-search text-gray-500 text-sm"></i><input id="fbSearch" oninput="searchFeed()" class="bg-transparent outline-none text-sm w-32 md:w-64" placeholder="Search ENS..."></div></div>
+<div class="flex gap-1 md:gap-6 text-xl text-gray-600"><i class="fa fa-home text-green-600"></i><i class="fa fa-users hidden md:block"></i><i class="fa fa-video hidden md:block"></i><i class="fa fa-book"></i></div>
+<div class="flex items-center gap-2"><button class="w-8 h-8 bg-gray-200 rounded-full"><i class="fa fa-plus text-sm"></i></button><button class="w-8 h-8 bg-gray-200 rounded-full"><i class="fa fa-bell text-sm"></i></button><div id="fbProfile" class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">G</div></div>
 </header>
 
-<nav class="bg-white flex overflow-x-auto border-b sticky top-[48px] z-40 text-xs">
-<button onclick="showTab('contacts')" id="tab-contacts" class="tab-active px-3 py-2"><i class="fa fa-address-book"></i> Contacts</button>
-<button onclick="showTab('messenger')" id="tab-messenger" class="px-3 py-2"><i class="fa fa-comments"></i> Chats</button>
-<button onclick="showTab('live')" id="tab-live" class="px-3 py-2"><i class="fa fa-video"></i> Live Call</button>
-<button onclick="showTab('qa')" id="tab-qa" class="px-3 py-2">Q&A</button>
-<button onclick="showTab('notes')" id="tab-notes" class="px-3 py-2">Notes</button>
-<button onclick="showTab('timetable')" id="tab-timetable" class="px-3 py-2">Timetable</button>
-<button onclick="showTab('ai')" id="tab-ai" class="px-3 py-2">AI</button>
-</nav>
+<div class="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-0 md:gap-4 pt-2">
 
-<main class="max-w-5xl mx-auto">
-
-<!-- CONTACTS - MAIN -->
-<div id="section-contacts" class="tab-section">
-<div class="p-3">
-<div class="bg-white rounded shadow p-2 flex gap-2">
-<input id="contactSearch" oninput="filterContacts()" class="flex-1 border p-2 rounded text-sm" placeholder="Search contacts / phone...">
-<button onclick="syncContacts()" class="bg-green-600 text-white px-3 rounded text-xs"><i class="fa fa-sync"></i> Sync</button>
-</div>
-<div id="contactsList" class="mt-3 space-y-1"></div>
-</div>
+<!-- LEFT SIDEBAR - Facebook style -->
+<div class="hidden md:block col-span-3 p-2 space-y-1 sticky top-[60px] h-[90vh] overflow-y-auto">
+<div class="flex items-center gap-2 p-2 hover:bg-gray-200 rounded cursor-pointer"><div id="leftAvatar" class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">A</div><b id="leftName" class="text-sm">Amos Nyongesa</b></div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer" onclick="filterFeed('all')"><i class="fa fa-newspaper w-6 text-blue-500"></i> News Feed</div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer"><i class="fa fa-user-friends w-6 text-blue-400"></i> Classmates (<span id="memberCount">0</span>)</div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer" onclick="filterFeed('notes')"><i class="fa fa-book w-6 text-green-600"></i> Dr Okore Notes</div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer" onclick="filterFeed('assignment')"><i class="fa fa-tasks w-6 text-red-500"></i> Assignments</div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer" onclick="filterFeed('pastpaper')"><i class="fa fa-file-alt w-6 text-yellow-600"></i> Past Papers</div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer"><i class="fa fa-calendar w-6 text-purple-600"></i> Timetable - <span class="text-xs">by Amos</span></div>
+<div class="p-2 hover:bg-gray-200 rounded text-sm cursor-pointer"><i class="fa fa-video w-6 text-red-600"></i> Live Lessons</div>
+<hr class="my-2">
+<p class="text-xs text-gray-500 font-bold">Your Courses</p>
+<div class="p-2 hover:bg-gray-200 rounded text-xs cursor-pointer">ENS 101 - Ecology Basics</div>
+<div class="p-2 hover:bg-gray-200 rounded text-xs cursor-pointer">ENS 102 - Soil Science</div>
+<div class="p-2 hover:bg-gray-200 rounded text-xs cursor-pointer">ENS 201 - GIS & Remote Sensing</div>
+<button id="loginBtn" class="w-full mt-3 bg-green-600 text-white py-2 rounded text-sm font-bold">Register / Login</button>
 </div>
 
-<!-- MESSENGER - FAST CHAT BY CONTACT -->
-<div id="section-messenger" class="tab-section hidden">
-<div class="grid md:grid-cols-3 gap-0 h-[80vh] bg-white">
-<div class="border-r p-2 col-span-1 flex flex-col">
-<div class="flex justify-between items-center mb-2"><b class="text-sm">Chats</b><button onclick="showTab('contacts')" class="text-xs bg-gray-100 px-2 py-1 rounded">+ New</button></div>
-<div id="chatListContacts" class="flex-1 overflow-y-auto space-y-1"></div>
+<!-- CENTER FEED - Like Facebook -->
+<div class="col-span-12 md:col-span-6">
+
+<!-- Create Post - Facebook style -->
+<div class="fb-card p-3 m-2">
+<div class="flex gap-2 items-center"><div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold" id="postAvatar">A</div><button onclick="focusPost()" class="flex-1 bg-gray-100 rounded-full text-left px-4 py-2 text-sm text-gray-500">What's on your mind, <span id="postName">ENS Student</span>?</button></div>
+<hr class="my-3">
+<div class="flex justify-around text-sm text-gray-600">
+<button onclick="setPostType('question')" class="flex items-center gap-2 p-2 fb-btn rounded"><i class="fa fa-question-circle text-green-500"></i> Question</button>
+<button onclick="setPostType('notes')" class="flex items-center gap-2 p-2 fb-btn rounded"><i class="fa fa-book text-blue-500"></i> Note</button>
+<button onclick="setPostType('live')" class="flex items-center gap-2 p-2 fb-btn rounded"><i class="fa fa-video text-red-500"></i> Live Lesson</button>
 </div>
-<div class="col-span-2 flex flex-col">
-<div class="p-2 border-b flex justify-between items-center bg-green-50">
-<div><b id="chatWithName" class="text-sm">Select Contact</b><div class="text-[10px] text-gray-500"><span id="chatWithPhone"></span> • <span id="typingStatus"></span></div></div>
-<div class="flex gap-2">
-<button onclick="startFastCall()" class="bg-green-600 text-white w-8 h-8 rounded-full"><i class="fa fa-phone"></i></button>
-<button onclick="startFastVideo()" class="bg-blue-600 text-white w-8 h-8 rounded-full"><i class="fa fa-video"></i></button>
-</div>
-</div>
-<div id="chatMessages" class="flex-1 overflow-y-auto p-3 space-y-1 bg-[#e5ddd5]"></div>
-<div class="p-2 border-t flex gap-2"><input id="chatInput" class="flex-1 border p-2 rounded-full text-sm" placeholder="Message..." onkeypress="if(event.key==='Enter') sendFastMessage()"><button onclick="sendFastMessage()" class="bg-green-600 text-white w-10 h-10 rounded-full"><i class="fa fa-paper-plane"></i></button></div>
-</div>
+<!-- Expanded Post Area -->
+<div id="createPostArea" class="hidden mt-3">
+<div class="flex gap-2 mb-2"><select id="postType" class="border rounded-full px-3 py-1 text-xs"><option value="general">General Post</option><option value="question">Question - Help Needed</option><option value="notes">Notes - Dr Okore Only</option><option value="assignment">Assignment</option><option value="pastpaper">Past Paper</option><option value="live">Live Lesson Link</option></select><span id="postRoleBadge" class="text-[10px] bg-yellow-100 px-2 py-1 rounded-full">Member</span></div>
+<textarea id="postText" class="w-full border rounded-lg p-3 text-sm" rows="3" placeholder="Explain your question, share notes, assignment..."></textarea>
+<input id="postLink" class="w-full border rounded-lg p-2 mt-2 text-sm" placeholder="Optional: Link (YouTube, Drive, IMO, Meet...)">
+<div class="flex justify-between mt-2"><button onclick="document.getElementById('createPostArea').classList.add('hidden')" class="text-sm text-gray-500">Cancel</button><button onclick="createPost()" class="bg-blue-600 text-white px-6 py-1.5 rounded-full text-sm font-bold">Post</button></div>
 </div>
 </div>
 
-<!-- FAST LIVE CALL PLATFORM -->
-<div id="section-live" class="tab-section hidden">
-<div class="p-3">
-<div class="bg-white rounded shadow p-3">
-<h3 class="font-bold text-sm">⚡ Fast Live Call - Peer to Peer (No Loading)</h3>
-<p class="text-xs text-gray-500 mt-1">Direct call between contacts - like IMO, uses less data, connects in 2 seconds</p>
-<div class="mt-3 grid grid-cols-2 gap-2">
-<div class="bg-gray-900 rounded aspect-video flex items-center justify-center relative">
-<video id="localVideo" autoplay muted class="w-full h-full rounded"></video>
-<span class="absolute bottom-1 left-1 text-[10px] bg-black/50 text-white px-1 rounded">You</span>
-</div>
-<div class="bg-gray-800 rounded aspect-video flex items-center justify-center relative">
-<video id="remoteVideo" autoplay class="w-full h-full rounded"></video>
-<span class="absolute bottom-1 left-1 text-[10px] bg-black/50 text-white px-1 rounded" id="remoteName">Member</span>
-</div>
-</div>
-<div class="mt-3 flex justify-center gap-3">
-<button onclick="startFastVideo()" class="bg-green-600 text-white px-4 py-2 rounded-full text-sm"><i class="fa fa-video"></i> Video Call</button>
-<button onclick="startFastCall()" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm"><i class="fa fa-phone"></i> Voice Call</button>
-<button onclick="endCall()" class="bg-red-600 text-white px-4 py-2 rounded-full text-sm"><i class="fa fa-phone-slash"></i> End</button>
-</div>
-<div id="activeCalls" class="mt-3 space-y-1 text-xs"></div>
-</div>
-</div>
+<!-- FEED -->
+<div id="feed" class="space-y-2 p-2">Loading academic feed...</div>
+
 </div>
 
-<!-- Other tabs simplified -->
-<div id="section-qa" class="tab-section hidden p-3"><div class="bg-white p-3 rounded shadow"><textarea id="qText" class="w-full border p-2 rounded text-sm" placeholder="Ask..."></textarea><button onclick="postQuestion()" class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-xs">Post</button></div><div id="qList" class="mt-3"></div></div>
-<div id="section-notes" class="tab-section hidden p-3"><div id="notesList"></div></div>
-<div id="section-timetable" class="tab-section hidden p-3"><div id="timetableView" class="bg-white p-3 rounded shadow text-sm whitespace-pre-wrap">Loading...</div></div>
-<div id="section-ai" class="tab-section hidden p-3"><div class="bg-white p-3 rounded shadow h-[60vh] flex flex-col"><div id="aiChat" class="flex-1 overflow-y-auto space-y-2 bg-gray-50 p-2 rounded text-sm"></div><div class="flex gap-2 mt-2"><input id="aiInput" class="flex-1 border p-2 rounded text-sm" placeholder="Ask AI..."><button onclick="askAI()" class="bg-purple-600 text-white px-3 rounded">Send</button></div></div></div>
-
-</main>
-
-<!-- REGISTER WITH PHONE -->
-<div id="loginModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[100]"><div class="bg-white p-5 rounded w-[90%] max-w-sm"><h3 class="font-bold mb-2">Register - Add Contact</h3><input id="regName" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Full Name"><input id="regPhone" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Phone 07... (for contacts)"><input id="regNo" class="w-full border p-2 rounded mb-2 text-sm" placeholder="Reg No ENS/B/26/..."><select id="regRole" class="w-full border p-2 rounded mb-3 text-sm"><option value="member">Student</option><option value="rep">Rep Amos</option><option value="patron">Dr Okore</option></select><button onclick="registerUser()" class="w-full bg-green-600 text-white py-2 rounded font-bold">Save Contact & Enter</button></div></div>
-
-<script>
-let currentUser=null, activeChat=null, localStream=null;
-function showTab(t){document.querySelectorAll('.tab-section').forEach(s=>s.classList.add('hidden'));document.getElementById('section-'+t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('tab-active'));document.getElementById('tab-'+t).classList.add('tab-active');}
-document.getElementById('loginBtn').onclick=()=>document.getElementById('loginModal').classList.remove('hidden');
-
-async function registerUser(){
- const name=document.getElementById('regName').value; const phone=document.getElementById('regPhone').value; const regNo=document.getElementById('regNo').value; const role=document.getElementById('regRole').value;
- if(!name||!phone) return alert('Name & Phone required');
- currentUser={name, phone, regNo, role, lastSeen: Date.now()};
- localStorage.setItem('ecolern_user', JSON.stringify(currentUser));
- document.getElementById('userRole').textContent=role.toUpperCase(); document.getElementById('loginBtn').textContent=name;
- document.getElementById('loginModal').classList.add('hidden');
- await setDoc(doc(db,'members', phone), {name, phone, regNo, role, lastSeen: serverTimestamp(), online:true});
- loadContacts();
-}
-window.onload=()=>{
- const saved=localStorage.getItem('ecolern_user');
- if(saved){currentUser=JSON.parse(saved); document.getElementById('userRole').textContent=currentUser.role.toUpperCase(); document.getElementById('loginBtn').textContent=currentUser.name; if(currentUser.phone) setDoc(doc(db,'members', currentUser.phone), {online:true, lastSeen:serverTimestamp()}, {merge:true});}
- loadContacts(); loadAll();
-};
-
-function loadContacts(){
- onSnapshot(collection(db,'members'), snap=>{
-  const list=document.getElementById('contactsList'); const chatList=document.getElementById('chatListContacts');
-  if(!list) return; list.innerHTML=''; if(chatList) chatList.innerHTML='';
-  let contacts=[]; snap.forEach(d=>contacts.push(d.data()));
-  window.allContacts=contacts;
-  contacts.forEach(c=>{
-   if(c.phone===currentUser?.phone) return;
-   const online = c.online? '<span class="online-dot"></span> online' : 'offline';
-   const html=`<div onclick="openChat('${c.phone}','${c.name}')" class="bg-white p-3 rounded shadow flex justify-between items-center hover:bg-green-50 cursor-pointer"><div class="flex gap-3 items-center"><div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">${c.name[0]}</div><div><div class="font-bold text-sm">${c.name}</div><div class="text-[11px] text-gray-500">${c.phone} • ${online}</div><div class="text-[10px] text-gray-400">${c.regNo||''} ${c.role||''}</div></div></div><div class="flex gap-1"><button onclick="event.stopPropagation(); openChat('${c.phone}','${c.name}')" class="w-8 h-8 bg-green-100 rounded-full"><i class="fa fa-comment text-green-600"></i></button><button onclick="event.stopPropagation(); startFastCallTo('${c.phone}','${c.name}')" class="w-8 h-8 bg-blue-100 rounded-full"><i class="fa fa-phone text-blue-600"></i></button><button onclick="event.stopPropagation(); startFastVideoTo('${c.phone}','${c.name}')" class="w-8 h-8 bg-purple-100 rounded-full"><i class="fa fa-video text-purple-600"></i></button></div></div>`;
-   list.innerHTML+=html;
-   if(chatList) chatList.innerHTML+=`<div onclick="openChat('${c.phone}','${c.name}')" class="p-2 hover:bg-gray-100 rounded cursor-pointer flex gap-2 items-center text-sm"><div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">${c.name[0]}</div><div class="flex-1"><div class="font-bold text-xs">${c.name}</div><div class="text-[10px] text-gray-500 truncate">${c.phone}</div></div><div class="text-[9px]">${c.online?'<span class="online-dot"></span>':''}</div></div>`;
-  });
- });
-}
-window.filterContacts=()=>{const q=document.getElementById('contactSearch').value.toLowerCase(); if(!window.allContacts) return; const filtered=window.allContacts.filter(c=>c.name.toLowerCase().includes(q)||c.phone.includes(q)); const list=document.getElementById('contactsList'); list.innerHTML=''; filtered.forEach(c=>{if(c.phone===currentUser?.phone) return; list.innerHTML+=`<div onclick="openChat('${c.phone}','${c.name}')" class="bg-white p-3 rounded shadow flex justify-between items-center cursor-pointer"><div><b class="text-sm">${c.name}</b><div class="text-xs text-gray-500">${c.phone}</div></div><i class="fa fa-chevron-right text-gray-300"></i></div>`;});};
-window.syncContacts=()=>{loadContacts(); alert('Contacts synced from members! Total: '+(window.allContacts?.length||0));};
-
-window.openChat=(phone, name)=>{
- activeChat=phone; document.getElementById('chatWithName').textContent=name; document.getElementById('chatWithPhone').textContent=phone;
- showTab('messenger');
- // FAST: only messages between you and this contact
- const q1=query(collection(db,'fastChats'), where('chatId','==', getChatId(currentUser.phone, phone)), orderBy('timestamp','asc'), limit(100));
- onSnapshot(q1, snap=>{
-  const box=document.getElementById('chatMessages'); box.innerHTML='';
-  snap.forEach(d=>{
-   const m=d.data(); const isMe=m.from===currentUser.phone;
-   const status = isMe? (m.read? '✓✓<span class="text-blue-500">✓</span>' : m.delivered? '✓✓' : '✓') : '';
-   const delBtn = isMe? `<button onclick="deleteFastMsg('${d.id}')" class="text-[9px] ml-2 text-red-300"><i class="fa fa-trash"></i></button>` : '';
-   box.innerHTML+=`<div class="${isMe?'text-right':''}"><div class="${isMe?'bg-[#dcf8c6]':'bg-white'} inline-block px-3 py-1.5 rounded-lg max-w-[75%] shadow text-sm"><div class="text-[9px] opacity-50">${m.fromName} ${delBtn}</div>${m.text}<div class="text-[9px] text-gray-500 text-right">${new Date(m.timestamp?.seconds*1000||Date.now()).toLocaleTimeString()} ${status}</div></div></div>`;
-   // mark delivered/read
-   if(!isMe &&!m.delivered){ updateDoc(doc(db,'fastChats', d.id), {delivered:true}); }
-   if(!isMe &&!m.read){ updateDoc(doc(db,'fastChats', d.id), {read:true}); }
-  });
-  box.scrollTop=box.scrollHeight;
- });
- // typing
- onSnapshot(doc(db,'typing', getChatId(currentUser.phone, phone)), snap=>{
-  if(snap.exists() && snap.data().from!==currentUser.phone && snap.data().typing){ document.getElementById('typingStatus').textContent='typing...'; setTimeout(()=>document.getElementById('typingStatus').textContent='',2000); }
- });
-};
-
-function getChatId(a,b){ return [a,b].sort().join('_'); }
-
-window.sendFastMessage=async()=>{
- if(!currentUser) return alert('Register'); if(!activeChat) return alert('Select contact'); const text=document.getElementById('chatInput').value; if(!text) return;
- await addDoc(collection(db,'fastChats'), {chatId:getChatId(currentUser.phone, activeChat), text, from:currentUser.phone, to:activeChat, fromName:currentUser.name, timestamp:serverTimestamp(), delivered:false, read:false});
- document.getElementById('chatInput').value='';
- await setDoc(doc(db,'typing', getChatId(currentUser.phone, activeChat)), {typing:false, from:currentUser.phone});
-};
-document.getElementById('chatInput')?.addEventListener('input', async()=>{
- if(!activeChat) return; await setDoc(doc(db,'typing', getChatId(currentUser.phone, activeChat)), {typing:true, from:currentUser.phone, at:serverTimestamp()});
-});
-window.deleteFastMsg=async(id)=>{ if(!confirm('Delete?')) return; await deleteDoc(doc(db,'fastChats', id)); };
-
-// FAST CALL - WebRTC peer via Firebase signaling
-window.startFastCallTo=(phone,name)=>{ openChat(phone,name); startFastCall(); };
-window.startFastVideoTo=(phone,name)=>{ openChat(phone,name); startFastVideo(); };
-window.startFastCall=async()=>{ if(!activeChat) return alert('Select contact first'); await setDoc(doc(db,'calls', getChatId(currentUser.phone, activeChat)), {from:currentUser.phone, to:activeChat, fromName:currentUser.name, type:'voice', status:'ringing', at:serverTimestamp()}); alert('Calling '+document.getElementById('chatWithName').textContent+'... They will get popup'); showTab('live'); loadCalls(); };
-window.startFastVideo=async()=>{
- if(!activeChat) return alert('Select contact');
- try{ localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); document.getElementById('localVideo').srcObject=localStream; }catch(e){ alert('Allow camera/mic'); return; }
- await setDoc(doc(db,'calls', getChatId(currentUser.phone, activeChat)), {from:currentUser.phone, to:activeChat, fromName:currentUser.name, type:'video', status:'ringing', at:serverTimestamp()});
- showTab('live'); loadCalls();
-};
-window.endCall=async()=>{ if(localStream) localStream.getTracks().forEach(t=>t.stop()); if(activeChat) await updateDoc(doc(db,'calls', getChatId(currentUser.phone, activeChat)), {status:'ended'}); document.getElementById('localVideo').srcObject=null; document.getElementById('remoteVideo').srcObject=null; };
-function loadCalls(){
- onSnapshot(collection(db,'calls'), snap=>{
-  const box=document.getElementById('activeCalls'); if(!box) return; box.innerHTML='';
-  snap.forEach(d=>{
-   const c=d.data(); if(c.to===currentUser?.phone && c.status==='ringing'){
-    box.innerHTML+=`<div class="bg-green-50 border border-green-300 p-2 rounded flex justify-between items-center"><span><b>${c.fromName}</b> calling ${c.type}...</span><div class="flex gap-2"><button onclick="acceptCall('${d.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-xs">Accept</button><button onclick="rejectCall('${d.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-xs">Reject</button></div></div>`;
-    if(Notification) new Notification('Incoming call from '+c.fromName);
-   }
-  });
- });
-}
-window.acceptCall=async(id)=>{ await updateDoc(doc(db,'calls', id), {status:'accepted'}); try{ localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); document.getElementById('localVideo').srcObject=localStream; }catch(e){} showTab('live'); };
-window.rejectCall=async(id)=>{ await updateDoc(doc(db,'calls', id), {status:'rejected'}); };
-
-function loadAll(){ onSnapshot(query(collection(db,'questions'), orderBy('created','desc'), limit(10)), snap=>{const list=document.getElementById('qList'); if(!list) return; list.innerHTML=''; snap.forEach(d=>{list.innerHTML+=`<div class="bg-white p-2 rounded shadow mb-1 text-sm">${d.data().text} - <b>${d.data().name}</b></div>`;});}); onSnapshot(doc(db,'config','timetable'), snap=>{if(snap.exists()) document.getElementById('timetableView').textContent=snap.data().content;}); }
-window.postQuestion=async()=>{const text=document.getElementById('qText').value; if(!text||!currentUser) return; await addDoc(collection(db,'questions'), {text,name:currentUser.name,created:serverTimestamp()}); document.getElementById('qText').value='';};
-window.askAI=async()=>{const q=document.getElementById('aiInput').value; const chat=document.getElementById('aiChat'); chat.innerHTML+=`<div class="text-right"><span class="bg-green-600 text-white px-2 py-1 rounded text-xs">${q}</span></div>`; document.getElementById('aiInput').value=''; setTimeout(()=>{chat.innerHTML+=`<div><span class="bg-white border px-2 py-1 rounded text-xs">AI: I can help with ${q} - check Notes tab for Dr Okore notes.</span></div>`; chat.scrollTop=chat.scrollHeight;},500);};
-</script>
-</body></html>
+<!-- RIGHT SIDEBAR - Contacts
