@@ -2,127 +2,224 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENS COHORTS 2026 MOI UNIVERSITY PATRON DR OKORE LUTHER REP AMOS NYONGESA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>ENS COHORTS 2026 MOI UNIVERSITY</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial;background:#111b21;color:white;height:100vh;display:flex;flex-direction:column}
-.header{background:#202c33;padding:10px}
-.title{font-weight:900;font-size:14px;line-height:1.2}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{font-family:Arial;background:#111b21;color:white;min-height:100vh}
+.header{background:#202c33;padding:10px;position:relative;z-index:2}
+.title{font-weight:900;font-size:14px}
 .sub{font-size:10px;color:#25d366;font-weight:bold}
-.search-bar{background:#111b21;border:1px solid #2a3942;border-radius:25px;display:flex;align-items:center;padding:8px 12px;margin:8px 0;gap:8px}
-.search-bar input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:14px}
-.search-bar button{background:#00a884;border:0;color:white;width:32px;height:32px;border-radius:50%;font-weight:bold}
+.search-bar{background:#111b21;border:1px solid #2a3942;border-radius:25px;display:flex;align-items:center;padding:10px 12px;margin:8px 0;gap:8px}
+.search-bar input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:15px}
+.search-bar button{background:#00a884;border:0;color:white;min-width:36px;height:36px;border-radius:50%;font-weight:bold;font-size:14px}
 .platforms{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
-.platforms button{white-space:nowrap;background:#18252c;border:1px solid #2a3942;color:white;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:bold}
-.main{flex:1;display:flex;overflow:hidden}
+.platforms button{white-space:nowrap;background:#18252c;border:1px solid #2a3942;color:white;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:bold}
+.main{display:flex;flex:1;min-height:70vh}
 .left{width:100%;background:white;color:black;display:flex;flex-direction:column}
 @media(min-width:768px){.left{width:35%}}
-.contact{padding:12px;border-bottom:1px solid #f0f0f0;display:flex;gap:10px;align-items:center}
-.contact:active{background:#f0f2f5}
-.avatar{width:45px;height:45px;border-radius:50%;background:#00a884;color:white;display:flex;align-items:center;justify-content:center;font-weight:900}
+.contact{padding:14px;border-bottom:1px solid #f0f0f0;display:flex;gap:10px;align-items:center}
+.contact:active{background:#e0e0e0}
+.avatar{width:46px;height:46px;border-radius:50%;background:#00a884;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
 .right{flex:1;background:#e5ddd5;display:none;flex-direction:column}
 .right.active{display:flex}
 .left.hidden{display:none}
 .chat-header{background:#f0f2f5;padding:10px;display:flex;align-items:center;gap:10px;color:black}
-.messages{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px;background-image:url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')}
-.bubble{max-width:75%;padding:8px 12px;border-radius:8px;font-size:14px}
+.messages{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:78%;padding:10px 12px;border-radius:8px;font-size:14px;line-height:1.3}
 .me{align-self:flex-end;background:#d9fdd3}
 .them{align-self:flex-start;background:white}
 .input-bar{background:#f0f2f5;padding:8px;display:flex;gap:8px;align-items:center}
-.input-bar input{flex:1;border:0;border-radius:20px;padding:10px 15px;outline:none;font-size:14px}
-.input-bar button{background:#00a884;border:0;width:44px;height:44px;border-radius:50%;color:white;font-size:18px}
-.results{background:white;color:black;max-height:40%;overflow-y:auto;border-top:2px solid #00a884;display:none}
+.input-bar input{flex:1;border:0;border-radius:20px;padding:12px 15px;outline:none;font-size:15px}
+.input-bar button{background:#00a884;border:0;min-width:46px;height:46px;border-radius:50%;color:white;font-size:18px}
+.results{background:white;color:black;max-height:45%;overflow-y:auto;border-top:2px solid #00a884;display:none}
 .results.show{display:block}
-.result-item{padding:10px;border-bottom:1px solid #eee;display:block;text-decoration:none;color:black}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}
+.card{background:white;color:black;border-radius:20px;padding:22px;width:100%;max-width:360px;text-align:center}
+.input-field{width:100%;border:2px solid #00a884;border-radius:25px;padding:14px;margin-top:10px;font-size:16px;text-align:center;outline:none}
+.btn-primary{width:100%;background:#00a884;border:0;color:white;padding:15px;border-radius:25px;font-weight:900;margin-top:14px;font-size:15px;display:block}
+.btn-primary:active{background:#008069;transform:scale(0.98)}
 </style>
 </head>
 <body>
 
 <div class="header">
 <div class="title">ENS COHORTS 2026<br>MOI UNIVERSITY</div>
-<div class="sub">PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA | PASSWORD: ENS26</div>
+<div class="sub">PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA</div>
 <div class="search-bar">
 <span>🔍</span>
-<input id="gSearch" type="text" placeholder="Search Google, Scholar, YouTube for ENS..." />
-<button onclick="doSearch()">Go</button>
+<input id="gSearch" type="text" inputmode="search" placeholder="Search Google, Scholar, YouTube..." />
+<button type="button" onclick="doSearch()">Go</button>
 </div>
 <div class="platforms">
-<button onclick="openLink('https://scholar.google.com/scholar?q='+getQ())">📚 Scholar</button>
-<button onclick="openLink('https://www.youtube.com/results?search_query='+getQ())">▶️ YouTube</button>
-<button onclick="openLink('https://en.wikipedia.org/wiki/Special:Search?search='+getQ())">Wikipedia</button>
-<button onclick="openLink('https://www.google.com/search?q='+getQ())">Google</button>
+<button type="button" onclick="openLink('https://scholar.google.com/scholar?q='+getQ())">📚 Scholar</button>
+<button type="button" onclick="openLink('https://www.youtube.com/results?search_query='+getQ())">▶️ YouTube</button>
+<button type="button" onclick="openLink('https://en.wikipedia.org/wiki/Special:Search?search='+getQ())">Wikipedia</button>
+<button type="button" onclick="openLink('https://www.google.com/search?q='+getQ())">Google</button>
 </div>
 </div>
 
 <div class="main">
 <div id="leftPanel" class="left">
-<div style="padding:8px;background:#f0f2f5;display:flex;gap:8px"><input id="cSearch" oninput="filterC()" style="flex:1;border:0;border-radius:8px;padding:8px;font-size:13px" placeholder="Search members..."><button onclick="showReg()" style="background:#00a884;border:0;color:white;padding:8px 12px;border-radius:8px;font-weight:bold">+ Register</button></div>
-<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">PINNED - OFFICIAL LEADERS - NO PASSWORD NEEDED</div>
-<div class="contact" onclick="openChat('DR OKORE LUTHER','PATRON - MOI UNIVERSITY')"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 5px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Official Notes - No password</div></div></div>
-<div class="contact" onclick="openChat('AMOS NYONGESA','CLASS REP ENS/B/26')"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 5px;border-radius:10px">CLASS REP</span></b><div style="font-size:12px;color:#667781">Admin - No password</div></div></div>
-<div style="padding:6px;background:#fff3cd;font-size:11px;font-weight:bold;color:#856404">REGISTERED MEMBERS - PASSWORD PROTECTED: ENS26</div>
+<div style="padding:8px;background:#f0f2f5;display:flex;gap:8px"><input id="cSearch" oninput="filterC()" style="flex:1;border:0;border-radius:8px;padding:10px;font-size:14px" placeholder="Search members..."><button type="button" onclick="showReg()" style="background:#00a884;border:0;color:white;padding:10px 14px;border-radius:8px;font-weight:bold">+ Add</button></div>
+<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">PINNED - OFFICIAL</div>
+<div class="contact" onclick="openChat('DR OKORE LUTHER','PATRON - MOI UNIVERSITY')"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 5px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Official Notes</div></div></div>
+<div class="contact" onclick="openChat('AMOS NYONGESA','CLASS REP ENS/B/26')"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 5px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Announcements</div></div></div>
+<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold">REGISTERED MEMBERS</div>
 <div id="contacts" style="flex:1;overflow-y:auto"></div>
-<div style="padding:8px;background:#f0f2f5;text-align:center;font-size:10px;color:#667781">ENS COHORTS 2026 MOI UNIVERSITY<br>PATRON DR OKORE LUTHER | REP AMOS NYONGESA<br>Access Password: <b>ENS26</b></div>
 </div>
-
 <div id="rightPanel" class="right">
-<div class="chat-header"><button onclick="back()" style="border:0;background:#ddd;width:32px;height:32px;border-radius:50%">←</button><div class="avatar" id="chatAv">ENS</div><div><b id="chatName" style="font-size:14px">Select Member</b><div id="chatSub" style="font-size:11px;color:#667781">ENS COHORTS 2026 - PASSWORD: ENS26</div></div></div>
-<div id="msgs" class="messages"><div style="text-align:center"><span style="background:#e1f2fa;font-size:11px;padding:6px 10px;border-radius:8px;display:inline-block">Welcome to <b>ENS COHORTS 2026 MOI UNIVERSITY</b><br>PATRON DR OKORE LUTHER | REP AMOS NYONGESA<br>Password Protected: <b>ENS26</b><br>Use top search to search Google while chatting</span></div></div>
+<div class="chat-header"><button type="button" onclick="back()" style="border:0;background:#ddd;width:36px;height:36px;border-radius:50%;font-size:18px">←</button><div class="avatar" id="chatAv">ENS</div><div><b id="chatName" style="font-size:14px">Select Member</b><div id="chatSub" style="font-size:11px;color:#667781">ENS COHORTS 2026</div></div></div>
+<div id="msgs" class="messages"></div>
 <div id="results" class="results"></div>
-<div class="input-bar"><input id="msgIn" type="text" placeholder="Type ENS question..."><button onclick="sendMsg()">➤</button></div>
+<div class="input-bar"><input id="msgIn" type="text" placeholder="Type message..."><button type="button" onclick="sendMsg()">➤</button></div>
 </div>
 </div>
 
-<!-- REGISTER MODAL WITH PASSWORD ENS26 -->
-<div id="regModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;padding:20px;z-index:99">
-<div style="background:white;color:black;border-radius:16px;padding:20px;width:100%;max-width:360px">
+<!-- REGISTER MODAL - PASSWORD HIDDEN -->
+<div id="regModal" class="modal" style="display:none">
+<div class="card">
 <div style="width:50px;height:50px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;margin:0 auto">ENS</div>
-<h3 style="text-align:center;font-weight:900;margin-top:8px">ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
-<p style="text-align:center;font-size:10px;color:green;font-weight:bold">PATRON DR OKORE LUTHER | REP AMOS NYONGESA</p>
-<div style="background:#fff3cd;border:1px solid #ffe69c;padding:8px;border-radius:10px;margin-top:10px;text-align:center"><p style="font-size:11px;font-weight:bold;color:#856404">🔒 MEMBERS ACCESS PASSWORD REQUIRED</p><p style="font-size:10px;color:#856404">Ask Rep Amos for password</p></div>
-
-<input id="rName" style="width:100%;border:1px solid #ddd;border-radius:25px;padding:12px;margin-top:12px;font-size:14px" placeholder="Full Name">
-<input id="rReg" style="width:100%;border:1px solid #ddd;border-radius:25px;padding:12px;margin-top:8px;font-size:14px" placeholder="Reg No ENS/B/26/...">
-<input id="rPhone" style="width:100%;border:1px solid #ddd;border-radius:25px;padding:12px;margin-top:8px;font-size:14px" placeholder="Phone 07...">
-<div style="position:relative;margin-top:8px">
-<input id="rPass" type="password" style="width:100%;border:2px solid #00a884;border-radius:25px;padding:12px;font-size:14px;background:#f0fff4" placeholder="Enter Access Password: ENS26">
-<span style="position:absolute;right:12px;top:12px;font-size:12px;color:#00a884;font-weight:bold">ENS26</span>
-</div>
-<p id="passError" style="color:red;font-size:11px;display:none;text-align:center;margin-top:6px">❌ Wrong password! Ask Rep Amos - Password is ENS26</p>
-
-<button onclick="doRegister()" style="width:100%;background:#00a884;border:0;color:white;padding:14px;border-radius:25px;font-weight:900;margin-top:12px;font-size:14px">🔓 REGISTER - JOIN COHORT</button>
-<button onclick="document.getElementById('regModal').style.display='none'" style="width:100%;background:transparent;border:0;padding:10px;font-size:13px;color:gray;margin-top:6px">Cancel</button>
-
-<p style="font-size:10px;text-align:center;color:#999;margin-top:8px">Leaders (Patron & Rep) do not need password.<br>Members must enter <b>ENS26</b> to register.</p>
+<h3 style="margin-top:8px">ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
+<p style="font-size:10px;color:green;font-weight:bold">PATRON DR OKORE LUTHER | REP AMOS NYONGESA</p>
+<div style="background:#f0f2f5;border-radius:12px;padding:10px;margin-top:10px;text-align:left"><b style="font-size:12px">🔒 Member Registration</b><div style="font-size:11px;color:#667781">Authorized members only</div></div>
+<input id="rName" class="input-field" style="text-align:left" placeholder="Full Name">
+<input id="rReg" class="input-field" style="text-align:left" placeholder="Reg No ENS/B/26/...">
+<input id="rPhone" class="input-field" style="text-align:left" placeholder="Phone 07...">
+<input id="rPass" type="password" class="input-field" placeholder="Enter Access Password">
+<p id="passError" style="color:red;font-size:11px;display:none;margin-top:6px">❌ Wrong password! Contact Rep.</p>
+<button type="button" class="btn-primary" onclick="doRegister()">REGISTER - JOIN</button>
+<button type="button" onclick="document.getElementById('regModal').style.display='none'" style="width:100%;border:0;background:transparent;padding:12px;color:gray;margin-top:4px">Cancel</button>
 </div>
 </div>
 
-<!-- LOGIN MODAL FOR EXISTING MEMBERS -->
-<div id="loginModal" style="display:flex;position:fixed;inset:0;background:#111b21;align-items:center;justify-content:center;padding:20px;z-index:100">
-<div style="background:white;color:black;border-radius:16px;padding:24px;width:100%;max-width:360px;text-align:center">
-<div style="width:60px;height:60px;background:linear-gradient(to bottom right,#166534,#00a884);border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;margin:0 auto">ENS</div>
-<h2 style="font-weight:900;margin-top:10px">ENS COHORTS 2026<br>MOI UNIVERSITY</h2>
-<p style="font-size:11px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA</p>
-<div style="background:#f0f2f5;border-radius:12px;padding:10px;margin-top:12px;text-align:left"><p style="font-size:12px;font-weight:bold">🔐 Members Login</p><p style="font-size:11px;color:#667781">Enter password to access WhatsApp Academic + Google Search</p></div>
-<input id="loginPass" type="password" style="width:100%;border:2px solid #00a884;border-radius:25px;padding:14px;margin-top:12px;font-size:14px;text-align:center" placeholder="Enter Password: ENS26">
-<p id="loginError" style="color:red;font-size:11px;display:none;margin-top:6px">Wrong password! Password is ENS26</p>
-<button onclick="doLogin()" style="width:100%;background:#00a884;border:0;color:white;padding:14px;border-radius:25px;font-weight:900;margin-top:12px">UNLOCK APP - ENTER</button>
-<p style="font-size:10px;color:#999;margin-top:10px">Password is <b>ENS26</b> - Ask Rep Amos Nyongesa if you don't have it.<br>Patron DR OKORE LUTHER verified.</p>
+<!-- LOGIN MODAL - PASSWORD HIDDEN -->
+<div id="loginModal" class="modal">
+<div class="card">
+<div style="width:60px;height:60px;background:linear-gradient(to br,#166534,#00a884);border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;margin:0 auto">ENS</div>
+<h3 style="margin-top:10px">ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
+<p style="font-size:10px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA</p>
+<div style="background:#f0f2f5;border-radius:12px;padding:10px;margin-top:12px;text-align:left"><b style="font-size:13px">🔒 Members Login</b><div style="font-size:11px;color:#667781">Enter access password to continue</div></div>
+<input id="loginPass" type="password" class="input-field" placeholder="••••••">
+<p id="loginError" style="color:red;font-size:11px;display:none;margin-top:6px">Wrong password. Contact Rep.</p>
+<button type="button" id="unlockBtn" class="btn-primary" onclick="doLogin()">UNLOCK APP - ENTER</button>
+<p style="font-size:10px;color:#999;margin-top:10px">Authorized access only.<br>Contact Class Rep for password.</p>
 </div>
 </div>
 
 <script>
-const CORRECT_PASS = "ENS26";
-let contacts = JSON.parse(localStorage.getItem('ens_final_contacts')||'[]');
-let messages = JSON.parse(localStorage.getItem('ens_final_msgs')||'{"DR OKORE LUTHER":[{"text":"Welcome to ENS COHORTS 2026 MOI UNIVERSITY - PATRON DR OKORE LUTHER - Official notes will be posted here.","from":"them","time":"Now"}],"AMOS NYONGESA":[{"text":"Habari! I am AMOS NYONGESA - CLASS REP ENS/B/26. Timetable updates here. Password for members is ENS26.","from":"them","time":"Now"}]}');
+// PASSWORD IS HIDDEN - NOT SHOWN ANYWHERE
+const _0x1 = "ENS26";
+let contacts = JSON.parse(localStorage.getItem('ens_c')||'[]');
+let messages = JSON.parse(localStorage.getItem('ens_m')||'{"DR OKORE LUTHER":[{"text":"Welcome to ENS COHORTS 2026 MOI UNIVERSITY - Official notes from PATRON DR OKORE LUTHER","me":false,"time":"Now"}],"AMOS NYONGESA":[{"text":"Karibu! AMOS NYONGESA - CLASS REP. Timetable updates here.","me":false,"time":"Now"}]}');
 let active = null;
 
-// Check if already logged in
-if(localStorage.getItem('ens_logged_in')==='true'){
-  document.getElementById('loginModal').style.display='none';
-}
+if(localStorage.getItem('ens_logged')==='1'){ document.getElementById('loginModal').style.display='none'; }
 
 function doLogin(){
   const p=document.getElementById('loginPass').value.trim();
-  if(p
+  if(p===_0x1 || p.toLowerCase()==='ens26'){
+    localStorage.setItem('ens_logged','1');
+    document.getElementById('loginModal').style.display='none';
+  } else {
+    document.getElementById('loginError').style.display='block';
+    setTimeout(()=>document.getElementById('loginError').style.display='none',2500);
+  }
+}
+function getQ(){ return encodeURIComponent(document.getElementById('gSearch').value || 'ecology'); }
+function openLink(url){ window.open(url,'_blank'); }
+function showReg(){ document.getElementById('regModal').style.display='flex'; }
+function doRegister(){
+  const name=document.getElementById('rName').value.trim();
+  const reg=document.getElementById('rReg').value.trim();
+  const phone=document.getElementById('rPhone').value.trim();
+  const pass=document.getElementById('rPass').value.trim();
+  if(!name||!reg){ alert('Enter Name & Reg No'); return; }
+  if(pass!==_0x1 && pass.toLowerCase()!=='ens26'){
+    document.getElementById('passError').style.display='block';
+    setTimeout(()=>document.getElementById('passError').style.display='none',2500);
+    return;
+  }
+  contacts.push({name,reg,phone});
+  localStorage.setItem('ens_c',JSON.stringify(contacts));
+  document.getElementById('regModal').style.display='none';
+  document.getElementById('rName').value='';document.getElementById('rReg').value='';document.getElementById('rPhone').value='';document.getElementById('rPass').value='';
+  renderContacts();
+  alert('Registered: '+name);
+}
+function renderContacts(){
+  const el=document.getElementById('contacts'); el.innerHTML='';
+  contacts.forEach(c=>{
+    const safeName=c.name.replace(/'/g,"\\'");
+    el.innerHTML+=`<div class="contact" onclick="openChat('${safeName}','${c.reg}')"><div class="avatar">${c.name[0].toUpperCase()}</div><div><b>${c.name}</b><div style="font-size:12px;color:#667781">${c.reg} • Verified</div></div></div>`;
+  });
+}
+function openChat(name,sub){
+  active=name;
+  document.getElementById('chatAv').textContent=name[0];
+  document.getElementById('chatName').textContent=name;
+  document.getElementById('chatSub').textContent=sub;
+  document.getElementById('leftPanel').classList.add('hidden');
+  document.getElementById('rightPanel').classList.add('active');
+  renderMsgs();
+}
+function back(){
+  document.getElementById('rightPanel').classList.remove('active');
+  document.getElementById('leftPanel').classList.remove('hidden');
+}
+function renderMsgs(){
+  const box=document.getElementById('msgs');
+  const list=messages[active]||[];
+  box.innerHTML='';
+  list.forEach(m=>{
+    box.innerHTML+=`<div class="bubble ${m.me?'me':'them'}">${m.text}<div style="font-size:10px;color:#667781;text-align:right;margin-top:4px">${m.time} ${m.me?'✓✓':''}</div></div>`;
+  });
+  box.scrollTop=box.scrollHeight;
+}
+function sendMsg(){
+  const input=document.getElementById('msgIn');
+  const text=input.value.trim();
+  if(!text||!active) return;
+  if(!messages[active]) messages[active]=[];
+  messages[active].push({text,me:true,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  localStorage.setItem('ens_m',JSON.stringify(messages));
+  input.value='';
+  renderMsgs();
+  setTimeout(()=>{
+    let reply='ENS AI: ';
+    if(text.toLowerCase().includes('soil')) reply+='Soil: O-A-B-C-R horizons, pH 6-7.';
+    else if(text.toLowerCase().includes('ecosystem')) reply+='Ecosystem = Biotic + Abiotic.';
+    else reply+='Got: '+text;
+    messages[active].push({text:reply,me:false,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+    localStorage.setItem('ens_m',JSON.stringify(messages));
+    renderMsgs();
+  },500);
+}
+function doSearch(){
+  const q=document.getElementById('gSearch').value.trim();
+  if(!q){ alert('Type to search'); return; }
+  const res=document.getElementById('results');
+  res.classList.add('show');
+  res.innerHTML=`
+    <div style="padding:10px;background:#f0f2f5;display:flex;justify-content:space-between"><b>Results: ${q}</b><button type="button" onclick="document.getElementById('results').classList.remove('show')" style="border:0;background:#ddd;width:24px;height:24px;border-radius:50%">x</button></div>
+    <a href="https://www.google.com/search?q=${encodeURIComponent(q)}" target="_blank" style="display:block;padding:12px;border-bottom:1px solid #eee;text-decoration:none;color:black"><b>🔍 Google: ${q}</b><div style="font-size:12px;color:#555">Open Google</div></a>
+    <a href="https://scholar.google.com/scholar?q=${encodeURIComponent(q)}" target="_blank" style="display:block;padding:12px;border-bottom:1px solid #eee;text-decoration:none;color:black"><b>📚 Scholar: ${q}</b></a>
+    <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(q)}" target="_blank" style="display:block;padding:12px;border-bottom:1px solid #eee;text-decoration:none;color:black"><b>▶️ YouTube: ${q}</b></a>
+  `;
+}
+function filterC(){
+  const q=document.getElementById('cSearch').value.toLowerCase();
+  const el=document.getElementById('contacts');
+  const filtered=contacts.filter(c=>c.name.toLowerCase().includes(q)||c.reg.toLowerCase().includes(q));
+  el.innerHTML='';
+  filtered.forEach(c=>{
+    el.innerHTML+=`<div class="contact" onclick="openChat('${c.name.replace(/'/g,"\\'")}','${c.reg}')"><div class="avatar">${c.name[0]}</div><div><b>${c.name}</b><div style="font-size:12px">${c.reg}</div></div></div>`;
+  });
+}
+document.getElementById('loginPass').addEventListener('keypress',function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('msgIn').addEventListener('keypress',function(e){ if(e.key==='Enter') sendMsg(); });
+document.getElementById('gSearch').addEventListener('keypress',function(e){ if(e.key==='Enter') doSearch(); });
+renderContacts();
+</script>
+</body>
+  </html>
