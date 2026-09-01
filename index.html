@@ -1,56 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ENS/B/26 Official App</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENS/B/26</title>
 <script src="https://meet.jit.si/external_api.js"></script>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1b5e20">
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial;background:#eef6ee;margin:0;padding:0 0 80px 0;user-select:none;-webkit-user-select:none}
-.header{background:#1b5e20;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
-.ppic{width:44px;height:44px;border-radius:50%;border:2px solid #fff;object-fit:cover}
-.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:2px solid #1b5e20;z-index:100;overflow:auto}
-.bTab{flex:1;padding:10px 2px;text-align:center;font-size:10px;cursor:pointer;min-width:52px;font-weight:bold}
-.bTab.active{background:#1b5e20;color:#fff}
-.card{background:#fff;margin:8px;border-radius:12px;padding:12px;box-shadow:0 2px 6px #0001}
-.btn{background:#1b5e20;color:#fff;border:0;padding:13px;border-radius:10px;width:100%;font-weight:bold;margin:6px 0;cursor:pointer;font-size:15px}
-.btn2{background:#fff;color:#1b5e20;border:1.5px solid #1b5e20;padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer}
-.btnWa{background:#25D366;color:#fff;border:0;padding:8px 12px;border-radius:20px;font-size:12px;cursor:pointer;text-decoration:none;display:inline-block}
-.btnCall{background:#1565c0;color:#fff;border:0;padding:8px 12px;border-radius:20px;font-size:12px;cursor:pointer;text-decoration:none;display:inline-block}
-input,textarea,select{width:100%;padding:12px;margin:6px 0;border:1.5px solid #aaa;border-radius:10px;font-size:16px;background:#fff}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;display:none;padding:15px;overflow:auto}
-.modalBox{background:#fff;border-radius:16px;padding:18px;max-width:420px;margin:30px auto}
-.homeGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.homeCard{background:#fff;border-radius:16px;padding:0;text-align:center;box-shadow:0 3px 8px #0002;border-left:6px solid #1b5e20;overflow:hidden}
-.openBtn{border:0;padding:14px 10px;width:100%;background:transparent;cursor:pointer}
-.openBtnInner{background:#1b5e20;color:#fff;padding:7px 18px;border-radius:20px;font-size:12px;font-weight:bold;margin-top:8px;display:inline-block}
-#jitsi{width:100%;height:420px;display:none;border-radius:12px;margin-top:8px}
-.chatBox{height:220px;overflow:auto;background:#f0f4c3;padding:8px;border-radius:10px}
+body{margin:0;font-family:Arial;background:#e8f5e9;padding-bottom:70px}
+.header{background:#1b5e20;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.card{background:#fff;margin:8px;padding:14px;border-radius:12px;box-shadow:0 2px 4px #0002}
+.btn{background:#1b5e20;color:#fff;border:0;padding:14px;width:100%;border-radius:10px;font-weight:bold;margin:6px 0;font-size:16px}
+.btn2{padding:8px 14px;border-radius:20px;border:1px solid #1b5e20;background:#fff;color:#1b5e20}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+.gcard{background:#fff;border-radius:14px;padding:0;text-align:center;box-shadow:0 2px 6px #0002;border-left:6px solid #1b5e20}
+.page{display:none}
+#home{display:block}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:2px solid #1b5e20}
+.b{flex:1;padding:10px 2px;text-align:center;font-size:10px;font-weight:bold}
+.b.active{background:#1b5e20;color:#fff}
+input,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #999;border-radius:10px;font-size:16px;box-sizing:border-box}
 </style>
 </head>
 <body>
 
 <div class=header>
-<div style=display:flex;gap:10px;align-items:center>
-<img id=myPic class=ppic src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-<div><b id=myName>ENS/B/26</b><br><small id=myReg>Moi University - 11 Members</small></div>
-</div>
-<button class=btn2 style=background:#fff onclick=openModal('profileModal')>👤 Profile</button>
+<div><b>ENS/B/26</b><br><small>Moi University</small></div>
+<button class=btn2 onclick="alert('Profile: Amos Nyongesa ENS/B/01/26')">👤 Profile</button>
 </div>
 
-<div id=home>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#66bb6a);color:#fff;text-align:center>
-<h2 style=margin:5px>🌍 ENS/B/26 OFFICIAL</h2>
-<p>Moi University - Environmental Science</p>
-<small>Patron: Dr. Okore Luther | Rep: Amos Nyongesa</small>
-<p id=liveBanner style=background:#fff;color:#d32f2f;padding:10px;border-radius:20px;display:none;font-weight:bold;margin-top:10px>🔴 LIVE NOW - Tap to Join</p>
+<div id=home class=page>
+<div class=card style=background:#1b5e20;color:#fff;text-align:center><h2>🌍 ENS/B/26 OFFICIAL</h2><p>Moi University</p><p id=liveBanner style=background:yellow;color:red;padding:8px;border-radius:20px;display:none;font-weight:bold></p></div>
+
+<div class=grid>
+<div class=gcard style=border-color:#1b5e20><div style=padding:12px><div style=font-size:30px>💬</div><b>Q&A</b><br><small>Ask & Answer</small><br><br><button class=btn onclick="openPage('qa')">OPEN Q&A</button></div></div>
+<div class=gcard style=border-color:#1565c0><div style=padding:12px><div style=font-size:30px>📚</div><b>Notes</b><br><small>Class Notes</small><br><br><button class=btn style=background:#1565c0 onclick="openPage('notes')">OPEN NOTES</button></div></div>
+<div class=gcard style=border-color:#ff9800><div style=padding:12px><div style=font-size:30px>🕒</div><b>Timetable</b><br><small>Schedule</small><br><br><button class=btn style=background:#ff9800 onclick="openPage('timetable')">OPEN TIME</button></div></div>
+<div class=gcard style=border-color:#9c27b0><div style=padding:12px><div style=font-size:30px>🤖</div><b>AI Tutor</b><br><small>Ask Anything</small><br><br><button class=btn style=background:#9c27b0 onclick="openPage('ai')">OPEN AI</button></div></div>
+<div class=gcard style=border-color:#25D366><div style=padding:12px><div style=font-size:30px>💬</div><b>Chat</b><br><small>Group Chat</small><br><br><button class=btn style=background:#25D366 onclick="openPage('chat')">OPEN CHAT</button></div></div>
+<div class=gcard style=border-color:#1565c0><div style=padding:12px><div style=font-size:30px>📞</div><b>Calls</b><br><small>Video Call</small><br><br><button class=btn style=background:#1565c0 onclick="openPage('calls')">OPEN CALLS</button></div></div>
+<div class=gcard style=border-color:#d32f2f><div style=padding:12px><div style=font-size:30px>🎥</div><b>Live</b><br><small>Online Class</small><br><br><button class=btn style=background:#d32f2f onclick="openPage('live')">OPEN LIVE</button></div></div>
+<div class=gcard style=border-color:#1b5e20><div style=padding:12px><div style=font-size:30px>👥</div><b>Students</b><br><small>11 Members</small><br><br><button class=btn onclick="openPage('students')">OPEN CLASS</button></div></div>
 </div>
 
-<div class=homeGrid>
-<div class=homeCard style=border-color:#1b5e20><button class=openBtn onclick=showPage('qa')><div style=font-size:32px>💬</div><b>Q&A</b><br><small>Ask & Answer</small><br><span class=openBtnInner>OPEN</span></button></div>
-<div class=homeCard style=border-color:#1565c0><button class=openBtn onclick=showPage('notes')><div style=font-size:32px>📚</div><b>Notes</b><br><small>Class Notes</small><br><span class=openBtnInner style=background:#1565c0>OPEN</span></button></div>
-<div class=homeCard style=border-color:#ff9800><button class=openBtn onclick=showPage('timetable')><div style=font-size:32px>🕒</div><b>Timetable</b><br><small>Schedule</small><br><span class=openBtnInner style=background:#ff9800>OPEN</span></button></div>
-<div class=homeCard style=border-color:#9c27b0><button class=openBtn onclick=showPage('ai')><div style=font-size:32px>🤖</div><b>AI Tutor</b><br><small>Ask Anything</small><br><span class=openBtnInner style=background:#9c27b0>OPEN</span></button></div>
-<div class=homeCard style=border-color:#25D366><button class=openBtn onclick=showPage('chat')><div style=font-size:32px>💬</div><b>Chat</b
+<div class=card><b>👨‍🏫 Patron Corner - PIN ENS2026</b><br><button class=btn2 onclick="document.getElementById('patronBox').style.display='block'">Login Patron</button><div id=patronBox style=display:none;margin-top:10px><input id=patPin placeholder="PIN ENS2026" type=password><button class=btn onclick="if(patPin.value=='ENS2026'){alert('Welcome Patron Dr Okore!');openPage('patron');}else alert('Wrong PIN')">Login</button></div></div>
+<div class=card><b>📋 Rep Corner - PIN REP2026</b><br><button class=btn2 onclick="document.getElementById('repBox').style.display='block'">Login Rep</button><div id=repBox style=display:none;margin-top:10px><input id=rpPin placeholder="PIN REP2026" type=password><button class=btn onclick="if(rpPin.value=='REP2026'){alert('Welcome Rep!');openPage('timetable');document.getElementById('ttEdit').style.display='block'}else alert('Wrong PIN')">Login</button></div></div>
+</div>
+
+<div id=qa class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK HOME</button><h3>💬 Q&A Place</h3><input id=q placeholder="Your question..."><textarea id=qd placeholder="Details..."></textarea><button class=btn onclick="askQ()">POST QUESTION</button></div><div id=qList></div></div>
+
+<div id=notes class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>📚 Notes</h3><div id=nList></div></div><div class=card><h4>Patron Upload (PIN ENS2026)</h4><input id=nT placeholder="Title"><textarea id=nC placeholder="Link or notes"></textarea><input id=nP placeholder="PIN ENS2026" type=password><button class=btn onclick="addNote()">Upload</button></div></div>
+
+<div id=timetable class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>🕒 Timetable</h3><div id=ttView style=background:#fff8e1;padding:12px;border-radius:10px;min-height:80px;white-space:pre-wrap> No timetable yet. Rep login to paste. </div></div><div id=ttEdit class=card style=display:none><textarea id=ttInput placeholder="Paste timetable here..." style=height:120px></textarea><input id=ttP placeholder="Rep PIN REP2026" type=password><button class=btn onclick="saveTT()">Save Timetable</button></div></div>
+
+<div id=ai class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>🤖 AI Tutor</h3><input id=aiQ placeholder="Ask e.g. What is eutrophication?"><button class=btn style=background:#9c27b0 onclick="askAI()">Ask AI</button><div id=aiA></div></div></div>
+
+<div id=chat class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>💬 Group Chat</h3><div id=gChat style=height:220px;overflow:auto;background:#f0f4c3;padding:8px;border-radius:10px"></div><div style=display:flex;gap:5px;margin-top:8px><input id=cInput placeholder="Message..." style=flex:1><button class=btn2 style=background:#1b5e20;color:#fff;padding:12px onclick="sendC()">Send</button></div></div></div>
+
+<div id=calls class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>📞 Calls</h3><button class=btn style=background:#1565c0 onclick="startCall()">📹 Start Group Video Call</button><button class=btn style=background:#25D366 onclick="window.open('https://wa.me/?text=Join call https://meet.jit.si/ENS26-'+Date.now())">📲 Invite WhatsApp</button></div></div>
+
+<div id=live class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>🎥 Live Lessons</h3><p id=liveS>🔴 No live</p><p id=liveT></p><button class=btn id=joinB style=display:none;background:#d32f2f onclick="joinLive()">JOIN LIVE NOW</button></div><div class=card><h4>Start Live (Patron)</h4><input id=liveTitle placeholder="Topic"><input id=livePin placeholder="PIN ENS2026" type=password><button class=btn style=background:#d32f2f onclick="goLive()">🔴 GO LIVE</button><button class=btn style=background:#333 onclick="endLive()">End</button></div><div id=jitsi style=width:100%;height:400px;display:none></div></div>
+
+<div id=students class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>👥 Students</h3><input id=sName placeholder="Your Name"><input id=sReg placeholder="Reg No e.g. ENS/B/01/26"><input id=sPhone placeholder="WhatsApp 07..."><button class=btn onclick="regStud()">Register Me</button><p id=sCount></p></div><div id=sList></div></div>
+
+<div id=patron class=page><div class=card><button class=btn2 onclick="openPage('home')">⬅️ BACK</button><h3>👨‍🏫 Patron Place</h3><p>Welcome Dr. Okore Luther!</p><button class=btn onclick="openPage('notes')">📚 Upload Notes</button><button class=btn style=background:#d32f2f onclick="openPage('live')">🎥 Start Live</button><button class=btn onclick="openPage('qa')">💬 Answer Q&A</button></div></div>
+
+<div class=bottom>
+<div class=b active id=b_home onclick="openPage('home')">🏠<br>Home</div>
+<div class=b id=b_qa onclick="openPage('qa')">💬<br>Q&A</div>
+<div class=b id=b_notes onclick="openPage('notes')">📚<br>Notes</div>
+<div class=b id=b_live onclick="openPage('live')">🎥<br>Live</div>
+<div class=b id=b_chat onclick="openPage('chat')">💬<br>Chat</div>
+<div class=b id=b_students onclick="openPage('students')">👥<br>Class</div>
+</div>
+
+<script>
+// SUPER SIMPLE NAVIGATION - NO ERRORS
+function openPage(p){
+var pages=['home','qa','notes','timetable','ai','chat','calls','live','students','patron'];
+for(var i=0;i<pages.length;i++){var el=document.getElementById(pages[i]);if(el)el.style.display='none';var b=document.getElementById('b_'+pages[i]);if(b)b.classList.remove('active');}
+document.getElementById(p).style.display='block';
+var bp=document.getElementById('b_'+p);if(bp)bp.classList.add('active');
+if(p=='home'){var h=document.getElementById('b_home');if(h)h.classList.add('active');}
+window.scrollTo(0,0);
+if(p=='qa')loadQ();if(p=='notes')loadN();if(p=='timetable')loadTT();if(p=='students')loadS();if(p=='chat')loadC();if(p=='live')loadLive();
+}
+
+let qs=JSON.parse(localStorage.getItem('qs')||'[]');
+let notes=JSON.parse(localStorage.getItem('ns')||'[]');
+let studs=JSON.parse(localStorage.getItem('st')||'[]');
+let chat=JSON.parse(localStorage.getItem('ch')||'[]');
+let live=JSON.parse(localStorage.getItem('lv')||'{"on":false,"title":"","room":""}');
+let tt=localStorage.getItem('tt')||'No timetable yet. Rep should paste.';
+
+function askQ(){if(!q.value)return;qs.unshift({q:q.value,d:qd.value,ans:[]});localStorage.setItem('qs',JSON.stringify(qs));q.value=qd.value='';loadQ();alert('Posted!')}
+function loadQ(){qList.innerHTML=qs.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><br><small>${x.d||''}</small><div>${x.ans.map(a=>`<div style=background:#e8f5e9;padding:6px;margin:4px 0;border-radius:8px><b>${a.n}:</b> ${a.t}</div>`).join('')}</div><input id=a${i} placeholder=Answer...><button class=btn2 onclick="ans(${i})">Answer</button></div>`).join('')||'<div class=card>No questions</div>'}
+function ans(i){var t=document.getElementById('a'+i).value;if(!t)return;qs[i].ans.push({n:'Student',t:t});localStorage.setItem('qs',JSON.stringify(qs));loadQ()}
+
+function addNote(){if(nP.value!='ENS2026')return alert('Wrong PIN ENS2026');if(!nT.value)return;notes.unshift({t:nT.value,c:nC.value,d:new Date().toLocaleDateString()});localStorage.setItem('ns',JSON.stringify(notes));nT.value=nC.value=nP.value='';loadN();alert('Uploaded')}
+function loadN(){nList.innerHTML=notes.map(n=>`<div class=card style=border-left:5px solid #1565c0><b>${n.t}</b><br><small>${n.d}</small><p>${n.c.includes('http')?`<a href="${n.c}" target=_blank style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none>📥 OPEN</a>`:n.c}</p></div>`).join('')||'<div class=card>No notes yet</div>'}
+
+function saveTT(){if(ttP.value!='REP2026'&&ttP.value!='ENS2026')return alert('Wrong PIN REP2026');tt=ttInput.value;localStorage.setItem('tt',tt);loadTT();alert('Timetable saved!');if(confirm('Share to WhatsApp?'))window.open('https://wa.me/?text='+encodeURIComponent('🕒 Timetable: '+tt+' https://amoswairene37-del.github.io/Ecolern/'))}
+function loadTT(){ttView.innerText=tt;if(tt.includes('http'))ttView.innerHTML=`<a href="${tt}" target=_blank style=background:#1b5e20;color:#fff;padding:10px 15px;border-radius:20px;text-decoration:none>📥 OPEN TIMETABLE</a><br><br>${tt}`}
+
+function askAI(){var qq=aiQ.value.toLowerCase();var db={eutrophication:"Eutrophication is excess nutrients -> algae bloom -> low oxygen -> fish die. Control: reduce fertilizer.",pollution:"Pollution is harmful substances in environment. Types: air, water, soil. Control: 3Rs.",ecology:"Ecology studies organisms and environment interactions.",climate:"Climate change is long-term warming due to CO2. Solution: renewable energy.",biodiversity:"Biodiversity is variety of life. Protect via protected areas."};var k=Object.keys(db).find(x=>qq.includes(x));aiA.innerHTML=`<div class=card style=background:#f3e5f5><b>🤖 AI:</b><br>${k?db[k]:"For '"+aiQ.value+"' check Notes tab or ask in Q&A. Environmental Science is study of environment and solutions."}</div>`}
+
+function loadC(){gChat.innerHTML=chat.map(m=>`<div style=background:${m.n=='Me'?'#dcf8c6':'#fff'};padding:6px;margin:4px 0;border-radius:8px><b>${m.n}:</b> ${m.t}</div>`).join('');gChat.scrollTop=9999}
+function sendC(){if(!cInput.value)return;chat.push({n:'Me',t:cInput.value});localStorage.setItem('ch',JSON.stringify(chat));cInput.value='';loadC()}
+
+function regStud(){if(!sName.value)return alert('Enter name');studs.unshift({name:sName.value,reg:sReg.value,phone:sPhone.value});localStorage.setItem('st',JSON.stringify(studs));sName.value=sReg.value=sPhone.value='';loadS();alert('Registered!')}
+function loadS(){sCount.innerText=studs.length+' Registered';sList.innerHTML=studs.map(s=>`<div class=card style=display:flex;gap:10px;align-items:center><div style=width:40px;height:40px;background:#1b5e20;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold>${s.name.charAt(0)}</div><div style=flex:1><b>${s.name}</b><br><small>${s.reg}</small><br><small>${s.phone}</small></div><div>${s.phone?`<a href="https://wa.me/${s.phone.replace(/[^0-9]/g,'').replace(/^0/,'254')}" target=_blank style=background:#25D366;color:#fff;padding:6px 10px;border-radius:15px;text-decoration:none;font-size:11px>WhatsApp</a><br><a href="tel:${s.phone}" style=background:#1565c0;color:#fff;padding:6px 10px;border-radius:15px;text-decoration:none;font-size:11px">Call</a>`:''}</div></div>`).join('')||'<div class=card>No students</div>';var sc=document.getElementById('liveBanner');if(sc&&studs.length>0){}}
+
+function loadLive(){liveS.innerText=live.on?'🟢 LIVE: '+live.title:'🔴 No live';liveT.innerText=live.title;joinB.style.display=live.on?'block':'none';var bn=document.getElementById('liveBanner');if(live.on){bn.style.display='block';bn.innerText='🔴 LIVE NOW: '+live.title+' - Tap to Join';bn.onclick=function(){openPage('live')}}else bn.style.display='none'}
+function goLive(){if(livePin.value!='ENS2026')return alert('Wrong PIN ENS2026');live={on:true,title:liveTitle.value||'Live Class',room:'ENS26-'+Date.now()};localStorage.setItem('lv',JSON.stringify(live));loadLive();joinLive();if(confirm('Send WhatsApp alert?'))window.open('https://wa.me/?text='+encodeURIComponent('🔴 LIVE NOW: '+live.title+' Join https://amoswairene37-del.github.io/Ecolern/'))}
+function endLive(){live={on:false,title:'',room:''};localStorage.setItem('lv',JSON.stringify(live));document.getElementById('jitsi').style.display='none';loadLive()}
+function joinLive(){if(!live.on)return;document.getElementById('jitsi').style.display='block';new JitsiMeetExternalAPI('meet.jit.si',{roomName:live.room,width:'100%',height:400,parentNode:document.getElementById('jitsi'),userInfo:{displayName:'Student'}})}
+function startCall(){var room='ENS26-'+Date.now();document.getElementById('jitsi').style.display='block';openPage('live');setTimeout(()=>{new JitsiMeetExternalAPI('meet.jit.si',{roomName:room,width:'100%',height:400,parentNode:document.getElementById('jitsi')})},500);if(confirm('Share call to WhatsApp?'))window.open('https://wa.me/?text='+encodeURIComponent('📞 Group Call: https://meet.jit.si/'+room))}
+
+loadQ();loadN();loadTT();loadS();loadC();loadLive();
+</script>
+</body>
+</html>
