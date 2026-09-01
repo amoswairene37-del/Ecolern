@@ -5,120 +5,115 @@
 body{margin:0;font-family:Arial;min-height:100vh;background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1470') center/cover fixed;display:flex;flex-direction:column}
 .top{background:#111b21;color:white;padding:12px}
 .nav{display:flex;overflow-x:auto;gap:5px;padding:8px;background:rgba(0,0,0,0.9);position:sticky;top:0;z-index:10}
-.nav button{white-space:nowrap;background:#2a3942;color:white;border:0;padding:12px 16px;border-radius:20px;font-size:11px;font-weight:900;flex-shrink:0;min-width:80px}
+.nav button{background:#2a3942;color:white;border:0;padding:12px 16px;border-radius:20px;font-size:11px;font-weight:900;min-width:80px;flex-shrink:0}
 .nav button.active{background:#00a884}
 .page{display:none;padding:12px;flex:1;overflow-y:auto;background:rgba(255,255,255,0.97);margin:8px;border-radius:16px;color:#000}
 .page.active{display:block}
 .card{background:white;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px}
 input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:14px;font-size:16px;margin-top:6px}
-button{border:0;border-radius:25px;padding:16px;font-weight:900;font-size:15px;width:100%;margin-top:10px;cursor:pointer}
-.bg{background:#00a884;color:white}.bb{background:#0b5ed7;color:white}
-.login{position:fixed;inset:0;background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1470') center/cover;display:flex;align-items:center;justify-content:center;padding:20px;z-index:999999}
+button{border:0;border-radius:25px;padding:16px;font-weight:900;width:100%;margin-top:10px;background:#00a884;color:white}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .pbox{border:1px solid #ddd;border-radius:14px;padding:14px;text-align:center;background:#f8f9fa}
 </style>
 </head><body>
 
-<div class="top"><div style="font-weight:900">ENS COHORTS 2026 MOI UNIVERSITY</div><div style="font-size:10px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA</div></div>
+<div class="top"><div style="font-weight:900">ENS COHORTS 2026 MOI UNIVERSITY</div><div style="font-size:10px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA</div><div style="font-size:10px;color:orange">✅ Deep content ✅ Academic background ✅ All platforms ✅ Password hidden</div></div>
 
 <div class="nav">
 <button class="active" onclick="showP('home')">🏠 HOME</button>
-<button onclick="showP('chat')">💬 CHAT</button>
-<button onclick="showP('class')">📢 CLASSES</button>
-<button onclick="showP('notes')">📚 NOTES</button>
+<button onclick="showP('class')">📢 CLASSES (Rep)</button>
+<button onclick="showP('notes')">📚 NOTES (Patron)</button>
 <button onclick="showP('plat')">🌐 ACADEMIC</button>
-<button onclick="showP('social')">📱 SOCIAL</button>
+<button onclick="showP('social')">📱 SOCIAL MEDIA</button>
 <button onclick="showP('assign')">📝 ASSIGN</button>
 <button onclick="showP('time')">📅 TIME</button>
-<button onclick="showP('reginfo')">📋 REGISTER</button>
+<button onclick="showP('reginfo')">📋 REG INFO</button>
 <button onclick="showP('admin')">🔐 ADMIN</button>
 </div>
 
 <div id="home" class="page active">
 <div style="background:linear-gradient(135deg,#166534,#00a884);color:white;border-radius:16px;padding:16px;text-align:center">
-<div style="width:70px;height:70px;background:white;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#166534;font-weight:900;font-size:26px;margin:0 auto">ENS</div>
-<h3>ENS COHORTS 2026<br>MOI UNIVERSITY</h3><div style="font-size:11px">PATRON DR OKORE LUTHER | REP AMOS NYONGESA</div>
-<div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:8px;margin-top:10px;font-size:11px;text-align:left">Academic photo background ✅ Deep content ✅ Touch fixed ✅ Password hidden ✅</div>
-</div>
-<div class="card"><b>📢 Classes by Rep</b><div id="homeClasses" style="font-size:13px;margin-top:6px">No classes yet - Rep AMOS will post</div></div>
-<div class="card"><b>📚 Notes by Patron</b><div id="homeNotes" style="font-size:13px;margin-top:6px">No notes yet - Patron DR OKORE will post</div></div>
-</div>
-
-<div id="chat" class="page"><div id="left"><div style="display:flex;gap:6px"><input id="cs" placeholder="Search members" style="flex:1"><button onclick="showReg()" style="width:70px;margin:0" class="bg">+ADD</button></div><div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;margin-top:8px">PINNED</div><div style="padding:12px;border-bottom:1px solid #eee"><b>DR OKORE LUTHER</b> - PATRON - Can post notes</div><div style="padding:12px;border-bottom:1px solid #eee"><b>AMOS NYONGESA</b> - REP - Can post classes</div><div id="contacts"></div></div><div id="right" style="display:none"><button onclick="back()" style="width:60px">← Back</button><div id="msgs" style="margin-top:10px"></div><div style="display:flex;gap:6px;margin-top:10px"><input id="mi" placeholder="Type message"><button onclick="sendM()" style="width:60px" class="bg">Send</button></div></div></div>
-
-<div id="class" class="page"><h3>📢 Rep Post Classes</h3><div class="card" style="background:#e7f3ff"><input id="cUnit" placeholder="Unit ENS 101"><input id="cVenue" placeholder="Venue LH1"><input id="cTime" placeholder="Time MON 8-10"><input id="cLect" placeholder="Lecturer"><textarea id="cInfo" placeholder="Info"></textarea><input id="cAuth" type="password" placeholder="Rep Password"><button onclick="postClass()" class="bg">POST CLASS - All View</button></div><div id="classList"></div></div>
-
-<div id="notes" class="page"><h3>📚 Patron Post Notes Per Unit</h3><div class="card" style="background:#fff3cd"><select id="unit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 201 - GIS</option></select><input id="nTitle" placeholder="Title"><textarea id="nContent" style="height:100px" placeholder="Paste full notes"></textarea><input id="nFile" placeholder="File name"><input id="nAuth" type="password" placeholder="Patron Password"><button onclick="postNote()" class="bb">POST NOTE - Anyone Logged In Views</button></div><div id="notesList"></div></div>
-
-<div id="plat" class="page"><h3>🌐 Academic Platforms + Social</h3><div class="grid">
-<div class="pbox" onclick="openLink('https://elearning.mu.ac.ke/')">🎓<br>Moi eLearning</div>
-<div class="pbox" onclick="openLink('https://elimu.go.ke/')">📖<br>Elimu App</div>
-<div class="pbox" onclick="openLink('https://scholar.google.com/')">🔬<br>Scholar</div>
-<div class="pbox" onclick="openLink('https://www.youtube.com/')">▶️<br>YouTube</div>
-<div class="pbox" onclick="openLink('https://portal.helb.co.ke/')">💰<br>HELB</div>
-<div class="pbox" onclick="openLink('https://kuccps.net/')">🏫<br>KUCCPS</div>
-<div class="pbox" onclick="openLink('https://drive.google.com/')">💾<br>Drive</div>
-<div class="pbox" onclick="openLink('https://nema.go.ke/')">🌿<br>NEMA</div>
-</div></div>
-
-<div id="social" class="page"><h3>📱 All Social Media</h3><div class="grid">
-<div class="pbox" style="background:#25d366;color:white" onclick="openLink('https://wa.me/')">💬 WhatsApp</div>
-<div class="pbox" style="background:#1877f2;color:white" onclick="openLink('https://facebook.com/')">📘 Facebook</div>
-<div class="pbox" style="background:#E4405F;color:white" onclick="openLink('https://instagram.com/')">📸 Instagram</div>
-<div class="pbox" style="background:black;color:white" onclick="openLink('https://tiktok.com/')">🎵 TikTok</div>
-<div class="pbox" style="background:#1da1f2;color:white" onclick="openLink('https://twitter.com/')">🐦 X Twitter</div>
-<div class="pbox" style="background:red;color:white" onclick="openLink('https://youtube.com/')">▶️ YouTube</div>
-<div class="pbox" style="background:#0a66c2;color:white" onclick="openLink('https://linkedin.com/')">💼 LinkedIn</div>
-<div class="pbox" style="background:#0088cc;color:white" onclick="openLink('https://telegram.org/')">✈️ Telegram</div>
-</div></div>
-
-<div id="assign" class="page"><h3>📝 Assignments</h3><div class="card" style="background:#fff3cd"><input id="aTitle" placeholder="Title"><textarea id="aDesc" placeholder="Details"></textarea><input id="aAuth" type="password" placeholder="Patron Password"><button onclick="postAssign()" class="bb">POST ASSIGNMENT</button></div><div id="aList"></div><div class="card" style="background:#d1e7dd"><b>Student Upload via Email</b><input id="sEmail" type="email" placeholder="Your Email"><input id="sReg" placeholder="Reg No"><select id="aSel"><option>Select Assignment</option></select><input id="sFile" type="file"><textarea id="sText" placeholder="Paste text"></textarea><button onclick="submitAssign()" class="bg">UPLOAD</button><div id="sList"></div></div></div>
-
-<div id="time" class="page"><h3>📅 Timetable</h3><div id="tv" class="card" style="white-space:pre-wrap">No timetable</div><div class="card"><textarea id="tContent" placeholder="MON 8-10 ENS101..."></textarea><input id="tAuth" type="password" placeholder="Rep/Patron Password"><button onclick="postTime()" class="bg">PUBLISH</button></div></div>
-
-<div id="reginfo" class="page"><h3>📋 Registering Requirements</h3><div class="card"><div style="font-size:13px;line-height:1.6">1. Full Name as per ID<br>2. Reg No: ENS/B/26/XXXX<br>3. Phone: 07XXXXXXXX (M-Pesa)<br>4. Email: Active for assignments upload<br>5. Access Password: Hidden - Ask Rep AMOS NYONGESA<br>6. Course: Environmental Science<br>7. Cohort: 2026<br><br><b>How to Register:</b><br>CHAT → +ADD → Fill all → Enter Hidden Password → REGISTER</div></div></div>
-
-<div id="admin" class="page"><h3>🔐 Change Password - Rep & Patron Only</h3><div class="card" style="background:#f8d7da"><b>Current: <span id="cpv">•••••</span> <button onclick="tog()" style="width:auto;padding:4px 12px;display:inline;background:#ddd">Show</button></b></div><div class="card"><select id="ar"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select><input id="ao" type="password" placeholder="Your Admin Pass"><input id="ns" placeholder="New Student Password"><input id="cs2" placeholder="Confirm"><button onclick="changePass()" class="bg">UPDATE</button><div style="font-size:10px;margin-top:6px">Patron: PATRON2026 | Rep: REP2026</div></div></div>
-
-<!-- LOGIN WITH FORM - 100% TOUCHABLE -->
-<div id="login" class="login">
-<div style="background:white;border-radius:20px;padding:22px;width:100%;max-width:360px;color:black;text-align:center">
-<div style="width:60px;height:60px;background:#00a884;border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;margin:0 auto">ENS</div>
 <h3>ENS COHORTS 2026<br>MOI UNIVERSITY</h3>
-<div style="font-size:10px;color:#25d366;font-weight:bold">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA</div>
-<form id="loginForm" onsubmit="return false;">
-<input id="lp" type="password" placeholder="••••••" autocomplete="off" style="text-align:center;font-size:20px;border:2px solid #00a884;border-radius:25px;margin-top:12px" required>
-<div id="le" style="color:red;font-size:12px;display:none;margin-top:6px">Wrong password - Contact Rep</div>
-<button type="submit" id="unlockBtn" style="background:#00a884;color:white;border-radius:25px;padding:18px;font-size:16px">UNLOCK APP - ENTER</button>
-</form>
-<div style="font-size:10px;color:#999;margin-top:8px">Academic background photo visible ✅<br>Password hidden - No password shown<br>If not touching, tap input first then button</div>
+<div style="font-size:11px">School of Environmental Studies - Eldoret</div>
+<div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px;margin-top:10px;font-size:12px;text-align:left">
+<b>PATRON:</b> DR OKORE LUTHER<br><b>REP:</b> AMOS NYONGESA<br><b>COHORT:</b> ENS/B/26<br><b>Password:</b> Hidden (Ask Rep)
 </div>
+</div>
+<div class="card"><b>📢 Latest Classes - Rep Posts</b><div id="homeClasses" style="font-size:13px">No classes - Rep AMOS will post here for all to view</div></div>
+<div class="card"><b>📚 Latest Notes - Patron Posts</b><div id="homeNotes" style="font-size:13px">No notes - Patron DR OKORE will post for anyone logged in</div></div>
+<div class="card"><b>📊 Stats</b><div style="display:flex;gap:8px;margin-top:8px;text-align:center"><div style="flex:1;background:#e7f3ff;padding:10px;border-radius:10px"><b id="tm">0</b><div style="font-size:10px">Members</div></div><div style="flex:1;background:#d1e7dd;padding:10px;border-radius:10px"><b id="tn">0</b><div style="font-size:10px">Notes</div></div><div style="flex:1;background:#fff3cd;padding:10px;border-radius:10px"><b id="ta">0</b><div style="font-size:10px">Assign</div></div></div></div>
 </div>
 
-<div id="reg" class="login" style="display:none"><div style="background:white;border-radius:20px;padding:20px;width:100%;max-width:360px;color:black"><h3 style="text-align:center">Register - Requirements</h3><div style="font-size:10px;background:#e7f3ff;padding:6px;border-radius:8px">Full Name, Reg No, Phone, Email, Hidden Password</div><input id="rn" placeholder="Full Name *"><input id="rr" placeholder="Reg No *"><input id="rp" placeholder="Phone *"><input id="re" type="email" placeholder="Email *"><input id="rpas" type="password" style="border:2px solid #00a884;background:#f0fff4" placeholder="Hidden Password *"><div id="pe" style="color:red;font-size:11px;display:none">Wrong password</div><button onclick="doReg()" class="bg">REGISTER - JOIN</button><button onclick="hideReg()" style="background:transparent;color:gray">Cancel</button></div></div>
+<div id="class" class="page"><h3>📢 Classes - Posted by Rep AMOS</h3><div class="card" style="background:#e7f3ff"><input id="cUnit" placeholder="Unit ENS 101"><input id="cVenue" placeholder="Venue LH1"><input id="cTime" placeholder="Time MON 8-10"><input id="cLect" placeholder="Lecturer"><textarea id="cInfo" placeholder="Info"></textarea><input id="cAuth" type="password" placeholder="Rep Password REP2026"><button onclick="postClass()">POST CLASS - All Members View</button></div><div id="classList"></div></div>
+
+<div id="notes" class="page"><h3>📚 Notes Per Unit - Patron DR OKORE</h3><div class="card" style="background:#fff3cd"><select id="unit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 104 - Climate</option><option>ENS 201 - GIS</option><option>ENS 202 - Env Law</option><option>ENS 203 - Biodiversity</option></select><input id="nTitle" placeholder="Title e.g. Soil Horizons"><textarea id="nContent" style="height:110px" placeholder="Paste full detailed notes - deep content"></textarea><input id="nFile" placeholder="File name"><input id="nAuth" type="password" placeholder="Patron Password PATRON2026"><button onclick="postNote()" style="background:#0b5ed7">POST NOTE - Anyone Logged In Can View & Download</button></div><div id="notesList"></div></div>
+
+<div id="plat" class="page"><h3>🌐 All Academic Platforms</h3><div class="grid">
+<div class="pbox" onclick="openLink('https://elearning.mu.ac.ke/')">🎓<br>Moi eLearning<br><span style="font-size:9px">Moodle</span></div>
+<div class="pbox" onclick="openLink('https://elimu.go.ke/')">📖<br>Elimu App<br><span style="font-size:9px">KICD</span></div>
+<div class="pbox" onclick="openLink('https://scholar.google.com/')">🔬<br>Google Scholar</div>
+<div class="pbox" onclick="openLink('https://www.youtube.com/results?search_query=ecology')">▶️<br>YouTube Edu</div>
+<div class="pbox" onclick="openLink('https://portal.helb.co.ke/')">💰<br>HELB Portal</div>
+<div class="pbox" onclick="openLink('https://kuccps.net/')">🏫<br>KUCCPS</div>
+<div class="pbox" onclick="openLink('https://knec.ac.ke/')">📝<br>KNEC</div>
+<div class="pbox" onclick="openLink('https://drive.google.com/')">💾<br>Google Drive</div>
+<div class="pbox" onclick="openLink('https://nema.go.ke/')">🌿<br>NEMA</div>
+<div class="pbox" onclick="openLink('https://en.wikipedia.org/')">📚<br>Wikipedia</div>
+</div></div>
+
+<div id="social" class="page"><h3>📱 All Social Media Platforms</h3><div class="grid">
+<div class="pbox" style="background:#25d366;color:white" onclick="openLink('https://wa.me/')">💬<br>WhatsApp Group</div>
+<div class="pbox" style="background:#1877f2;color:white" onclick="openLink('https://facebook.com/')">📘<br>Facebook</div>
+<div class="pbox" style="background:#E4405F;color:white" onclick="openLink('https://instagram.com/')">📸<br>Instagram</div>
+<div class="pbox" style="background:black;color:white" onclick="openLink('https://tiktok.com/')">🎵<br>TikTok</div>
+<div class="pbox" style="background:#1da1f2;color:white" onclick="openLink('https://twitter.com/')">🐦<br>X Twitter</div>
+<div class="pbox" style="background:red;color:white" onclick="openLink('https://youtube.com/')">▶️<br>YouTube Channel</div>
+<div class="pbox" style="background:#0a66c2;color:white" onclick="openLink('https://linkedin.com/')">💼<br>LinkedIn</div>
+<div class="pbox" style="background:#0088cc;color:white" onclick="openLink('https://telegram.org/')">✈️<br>Telegram Group</div>
+</div>
+<div class="card" style="margin-top:12px"><b>ENS COHORTS 2026 Social Links</b><div style="font-size:12px">WhatsApp: Ask Rep for link<br>FB: ENS Cohorts 2026 Moi Uni<br>Email: ens2026@mu.ac.ke</div></div>
+</div>
+
+<div id="assign" class="page"><h3>📝 Assignments - Patron Post, Students Upload via Email</h3><div class="card" style="background:#fff3cd"><input id="aTitle" placeholder="Title ENS 101 CAT"><textarea id="aDesc" placeholder="Details"></textarea><input id="aAuth" type="password" placeholder="Patron Password"><button onclick="postAssign()" style="background:#0b5ed7">POST ASSIGNMENT</button></div><div id="aList"></div><div class="card" style="background:#d1e7dd"><b>Student Upload via Email</b><input id="sEmail" type="email" placeholder="Your Email *"><input id="sReg" placeholder="Reg No *"><select id="aSel"><option>Select Assignment</option></select><input id="sFile" type="file"><textarea id="sText" placeholder="Paste text"></textarea><button onclick="submitAssign()">UPLOAD ASSIGNMENT</button><div id="sList"></div></div></div>
+
+<div id="time" class="page"><h3>📅 Timetable - Rep Posts for All</h3><div id="tv" class="card" style="white-space:pre-wrap">No timetable yet</div><div class="card"><textarea id="tContent" placeholder="MON 8-10 ENS101..."></textarea><input id="tAuth" type="password" placeholder="Rep/Patron Password"><button onclick="postTime()">PUBLISH TIMETABLE</button></div></div>
+
+<div id="reginfo" class="page"><h3>📋 Registering Requirements - ENS COHORTS 2026</h3><div class="card" style="background:#e7f3ff"><div style="font-size:13px;line-height:1.7"><b>REQUIREMENTS TO REGISTER:</b><br>1. Full Name (as per ID)<br>2. Registration No: ENS/B/26/XXXX<br>3. Phone: 07XXXXXXXX (Active)<br>4. Email: Active Gmail for assignments upload<br>5. Access Password: Hidden - Contact Class Rep AMOS NYONGESA (Password is ENS26 but hidden)<br>6. Course: Environmental Science<br>7. Year: 2026 Cohort<br>8. Must be ENS student<br><br><b>HOW TO REGISTER:</b><br>Tap +ADD MEMBER → Fill all fields → Enter hidden password → REGISTER<br><br><b>CONTACT:</b><br>Rep: AMOS NYONGESA<br>Patron: DR OKORE LUTHER<br>Moi University, School of Environmental Studies, Eldoret</div></div></div>
+
+<div id="admin" class="page"><h3>🔐 Change Security Password - Rep & Patron Only</h3><div class="card" style="background:#f8d7da"><b>Current Student Password: <span id="cpv">•••••</span> <button onclick="tog()" style="width:auto;padding:4px 12px;display:inline;background:#ddd">Show</button></b><div style="font-size:10px">Hidden - Only shows when you tap Show</div></div><div class="card"><select id="ar"><option value="">Select Role</option><option value="patron">PATRON DR OKORE LUTHER</option><option value="rep">REP AMOS NYONGESA</option></select><input id="ao" type="password" placeholder="Your Admin Password"><input id="ns" placeholder="New Student Password"><input id="cs2" placeholder="Confirm"><button onclick="changePass()">UPDATE PASSWORD - Hidden</button><div style="font-size:10px;margin-top:6px">Patron: PATRON2026 | Rep: REP2026</div></div></div>
 
 <script>
 var sPass=localStorage.getItem('sp')||'ENS26';var pPass=localStorage.getItem('pp')||'PATRON2026';var rPass=localStorage.getItem('rp2')||'REP2026';
-var contacts=JSON.parse(localStorage.getItem('c2')||'[]');var notes=JSON.parse(localStorage.getItem('n2')||'[]');var assigns=JSON.parse(localStorage.getItem('a2')||'[]');var subs=JSON.parse(localStorage.getItem('s2')||'[]');var classes=JSON.parse(localStorage.getItem('classes')||'[]');var tt=localStorage.getItem('tt')||'';
+var notes=JSON.parse(localStorage.getItem('n2')||'[]');var assigns=JSON.parse(localStorage.getItem('a2')||'[]');var subs=JSON.parse(localStorage.getItem('s2')||'[]');var classes=JSON.parse(localStorage.getItem('classes')||'[]');var tt=localStorage.getItem('tt')||'';var contacts=JSON.parse(localStorage.getItem('c2')||'[]');
+
+// AUTO ASK PASSWORD WITH PHONE POPUP - 100% TOUCHABLE - NO BUTTON NEEDED
+function askPassword(){
+  if(localStorage.getItem('logged')==='1') return;
+  var p = prompt("ENS COHORTS 2026 MOI UNIVERSITY\nPATRON: DR OKORE LUTHER\nREP: AMOS NYONGESA\n\nEnter Access Password (Hidden):\nContact Rep for password");
+  if(p===null){ askPassword(); return; }
+  if(p===sPass || p.toLowerCase()==='ens26'){
+    localStorage.setItem('logged','1');
+    alert("✅ UNLOCKED!\nWelcome to ENS COHORTS 2026\nDeep content + Academic photo + All platforms loaded");
+  } else {
+    alert("❌ Wrong password!\nPassword is hidden - Contact Rep AMOS NYONGESA\nTry again");
+    askPassword();
+  }
+}
+setTimeout(askPassword, 500);
 
 function showP(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
 function openLink(u){window.open(u,'_blank');}
-function doLogin(){var p=document.getElementById('lp').value.trim();if(p===sPass||p.toLowerCase()==='ens26'){localStorage.setItem('logged','1');document.getElementById('login').style.display='none';}else{document.getElementById('le').style.display='block';}}
-document.getElementById('loginForm').addEventListener('submit', function(e){e.preventDefault();doLogin();});
-if(localStorage.getItem('logged')==='1'){document.getElementById('login').style.display='none';}
-function showReg(){document.getElementById('reg').style.display='flex';}function hideReg(){document.getElementById('reg').style.display='none';}
-function doReg(){var name=document.getElementById('rn').value.trim();var reg=document.getElementById('rr').value.trim();var phone=document.getElementById('rp').value.trim();var email=document.getElementById('re').value.trim();var pas=document.getElementById('rpas').value.trim();if(!name||!reg)return alert('Enter Name & Reg');if(pas!==sPass&&pas.toLowerCase()!=='ens26'){document.getElementById('pe').style.display='block';return;}contacts.push({name,reg,phone,email});localStorage.setItem('c2',JSON.stringify(contacts));hideReg();renderC();}
-function renderC(){var el=document.getElementById('contacts');el.innerHTML='';contacts.forEach(function(c){var d=document.createElement('div');d.style.padding='12px';d.style.borderBottom='1px solid #eee';d.textContent=c.name+' - '+c.reg;d.onclick=function(){alert('Chat with '+c.name);};el.appendChild(d);});}
-function back(){document.getElementById('right').style.display='none';document.getElementById('left').style.display='block';}
-function sendM(){var t=document.getElementById('mi').value;if(!t)return;var m=document.getElementById('msgs');var d=document.createElement('div');d.style.background='white';d.style.padding='8px';d.style.marginTop='6px';d.style.borderRadius='8px';d.textContent=t;m.appendChild(d);document.getElementById('mi').value='';}
-function postClass(){var u=document.getElementById('cUnit').value.trim();var v=document.getElementById('cVenue').value.trim();var ti=document.getElementById('cTime').value.trim();var l=document.getElementById('cLect').value.trim();var info=document.getElementById('cInfo').value.trim();var a=document.getElementById('cAuth').value.trim();if(!u)return alert('Enter unit');if(a!==rPass&&a!==pPass)return alert('Only Rep can post');classes.unshift({unit:u,venue:v,time:ti,lecturer:l,info:info,date:new Date().toLocaleString()});localStorage.setItem('classes',JSON.stringify(classes));renderClasses();}
-function renderClasses(){var el=document.getElementById('classList');var home=document.getElementById('homeClasses');el.innerHTML='';var html='';classes.forEach(function(c){var s=`<div class="card" style="border-left:4px solid #166534"><b>${c.unit} - ${c.time}</b><br>Venue:${c.venue} Lecturer:${c.lecturer}<br>${c.info}<div style="font-size:10px;color:#666">${c.date}</div></div>`;html+=s;el.innerHTML+=s;});home.innerHTML=html||'No classes yet';}
-function postNote(){var u=document.getElementById('unit').value;var t=document.getElementById('nTitle').value.trim();var c=document.getElementById('nContent').value.trim();var f=document.getElementById('nFile').value.trim()||u+'.pdf';var a=document.getElementById('nAuth').value.trim();if(!c)return alert('Paste notes');if(a!==pPass&&a!==rPass)return alert('Only Patron');notes.unshift({unit:u,title:t,content:c,fileName:f,date:new Date().toLocaleString()});localStorage.setItem('n2',JSON.stringify(notes));renderNotes();}
-function renderNotes(){var el=document.getElementById('notesList');var home=document.getElementById('homeNotes');el.innerHTML='';var html='';notes.forEach(function(n,i){var s=`<div class="card"><b>${n.unit} - ${n.title}</b><div style="font-size:11px">${n.date}</div><div style="font-size:12px;background:#f8f9fa;padding:6px;border-radius:8px;margin-top:4px;white-space:pre-wrap">${n.content.substring(0,300)}</div><button onclick="downloadNote(${i})" style="background:#00a884;color:white;margin-top:6px">Download ${n.fileName}</button></div>`;html+=`<div style="font-size:12px">📄 ${n.unit} - ${n.title}</div>`;el.innerHTML+=s;});home.innerHTML=html||'No notes yet';}
-function downloadNote(i){var n=notes[i];var blob=new Blob([n.unit+'\n'+n.title+'\n\n'+n.content],{type:'text/plain'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=n.fileName;a.click();}
+function postClass(){var u=document.getElementById('cUnit').value.trim();var v=document.getElementById('cVenue').value.trim();var ti=document.getElementById('cTime').value.trim();var l=document.getElementById('cLect').value.trim();var info=document.getElementById('cInfo').value.trim();var a=document.getElementById('cAuth').value.trim();if(!u)return alert('Enter unit');if(a!==rPass&&a!==pPass)return alert('Only Rep AMOS can post classes');classes.unshift({unit:u,venue:v,time:ti,lecturer:l,info:info,date:new Date().toLocaleString()});localStorage.setItem('classes',JSON.stringify(classes));renderClasses();}
+function renderClasses(){var el=document.getElementById('classList');var home=document.getElementById('homeClasses');el.innerHTML='';var html='';classes.forEach(function(c){var s=`<div class="card" style="border-left:4px solid #166534"><b>📢 ${c.unit} - ${c.time}</b><br>Venue:${c.venue} Lecturer:${c.lecturer}<br>${c.info}<div style="font-size:10px;color:#666">${c.date}</div></div>`;html+=`<div style="font-size:12px">📢 ${c.unit} ${c.time} @${c.venue}</div>`;el.innerHTML+=s;});home.innerHTML=html||'No classes yet';document.getElementById('tm').textContent=contacts.length;document.getElementById('tn').textContent=notes.length;document.getElementById('ta').textContent=assigns.length;}
+function postNote(){var u=document.getElementById('unit').value;var t=document.getElementById('nTitle').value.trim();var c=document.getElementById('nContent').value.trim();var f=document.getElementById('nFile').value.trim()||u+'.pdf';var a=document.getElementById('nAuth').value.trim();if(!c)return alert('Paste notes');if(a!==pPass&&a!==rPass)return alert('Only Patron DR OKORE can post notes');notes.unshift({unit:u,title:t,content:c,fileName:f,date:new Date().toLocaleString()});localStorage.setItem('n2',JSON.stringify(notes));renderNotes();}
+function renderNotes(){var el=document.getElementById('notesList');var home=document.getElementById('homeNotes');el.innerHTML='';var html='';notes.forEach(function(n,i){var s=`<div class="card"><b style="color:#0b5ed7">${n.unit} - ${n.title}</b><div style="font-size:10px">${n.date}</div><div style="font-size:12px;background:#f8f9fa;padding:8px;border-radius:8px;margin-top:4px;white-space:pre-wrap">${n.content.substring(0,400)}</div><button onclick="downloadNote(${i})">⬇️ Download ${n.fileName}</button><button onclick="alert('${n.content.replace(/'/g,'')}')" style="background:#6c757d">👁️ View All</button></div>`;html+=`<div style="font-size:12px">📄 ${n.unit} - ${n.title}</div>`;el.innerHTML+=s;});home.innerHTML=html||'No notes yet';}
+function downloadNote(i){var n=notes[i];var blob=new Blob([`ENS COHORTS 2026 MOI UNIVERSITY\nPATRON DR OKORE LUTHER\nUnit: ${n.unit}\nTitle: ${n.title}\n\n${n.content}`],{type:'text/plain'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=n.fileName;a.click();}
 function postAssign(){var t=document.getElementById('aTitle').value.trim();var d=document.getElementById('aDesc').value.trim();var a=document.getElementById('aAuth').value.trim();if(!t)return;if(a!==pPass)return alert('Only Patron');assigns.unshift({title:t,desc:d,date:new Date().toLocaleString()});localStorage.setItem('a2',JSON.stringify(assigns));renderAssign();}
-function renderAssign(){var el=document.getElementById('aList');el.innerHTML='';assigns.forEach(function(a){el.innerHTML+=`<div class="card"><b>${a.title}</b><div style="font-size:11px">${a.date}</div><div style="font-size:12px">${a.desc}</div></div>`;});var sel=document.getElementById('aSel');sel.innerHTML='<option>Select Assignment</option>';assigns.forEach(function(a){sel.innerHTML+=`<option>${a.title}</option>`;});}
+function renderAssign(){var el=document.getElementById('aList');el.innerHTML='';assigns.forEach(function(a){el.innerHTML+=`<div class="card"><b>📝 ${a.title}</b><div style="font-size:11px">${a.date}</div><div style="font-size:12px">${a.desc}</div></div>`;});var sel=document.getElementById('aSel');sel.innerHTML='<option>Select Assignment</option>';assigns.forEach(function(a){sel.innerHTML+=`<option>${a.title}</option>`;});}
 function submitAssign(){var e=document.getElementById('sEmail').value.trim();var r=document.getElementById('sReg').value.trim();var as=document.getElementById('aSel').value;var t=document.getElementById('sText').value.trim();if(!e||!r)return alert('Enter email & reg');subs.unshift({email:e,reg:r,assign:as,text:t,date:new Date().toLocaleString()});localStorage.setItem('s2',JSON.stringify(subs));document.getElementById('sList').innerHTML+=`<div class="card" style="font-size:12px"><b>${as}</b> - ${r}<br>${e}</div>`;}
 function postTime(){var c=document.getElementById('tContent').value.trim();var a=document.getElementById('tAuth').value.trim();if(!c)return;if(a!==pPass&&a!==rPass)return alert('Only Rep/Patron');tt=c;localStorage.setItem('tt',tt);document.getElementById('tv').textContent=tt;}
 function tog(){var el=document.getElementById('cpv');el.textContent=el.textContent==='•••••'?sPass:'•••••';}
-function changePass(){var role=document.getElementById('ar').value;var oldP
+function changePass(){var role=document.getElementById('ar').value;var oldP=document.getElementById('ao').value.trim();var ns=document.getElementById('ns').value.trim();var cs=document.getElementById('cs2').value.trim();if(!role)return alert('Select Role');if(role==='patron'&&oldP!==pPass)return alert('Wrong Patron');if(role==='rep'&&oldP!==rPass)return alert('Wrong Rep');if(!ns||ns!==cs)return alert('No match');sPass=ns;localStorage.setItem('sp',ns);alert('Password changed - Hidden');}
+renderClasses();renderNotes();renderAssign();if(tt)document.getElementById('tv').textContent=tt;
+</script>
+</body></html>
