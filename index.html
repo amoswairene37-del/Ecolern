@@ -1,174 +1,66 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ENS COHORTS 2026 - MOI UNIVERSITY</title>
+<title>ENS COHORTS 2026 MOI UNIVERSITY | PATRON DR OKORE LUTHER | CLASS REP AMOS NYONGESA</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-body{background:#f8fafc; -webkit-tap-highlight-color: transparent;}
-.enovate-card{background:white;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,0.05); touch-action: manipulation;}
-button{ touch-action: manipulation; cursor:pointer; -webkit-tap-highlight-color: transparent; }
-.page{ display:none; }.page.active{ display:block; }
-.nav-btn.active{ background:#166534!important; color:white!important; }
-</style>
-</head><body>
+<style>body{background:#111b21;font-family:'Segoe UI',sans-serif}.wa-bg{background:#efeae2}.chat-bg{background-color:#e5ddd5;background-image:url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')}.scroll::-webkit-scrollbar{width:5px}.scroll::-webkit-scrollbar-thumb{background:#8696a0;border-radius:10px}button{touch-action:manipulation}</style>
+</head><body class="h-screen flex flex-col">
 
-<!-- HEADER - No overlap now -->
-<div class="bg-gradient-to-r from-green-800 to-green-600 text-white p-4">
-<div class="flex items-center gap-3"><div class="w-12 h-12 bg-yellow-400 rounded-xl flex items-center justify-center text-green-900 font-black text-xl">ENS</div><div><h1 class="font-black text-[17px]">ENS COHORTS 2026</h1><p class="text-[11px] opacity-90">MOI UNIVERSITY - School of Environmental Studies</p></div></div>
-<div class="mt-3 grid grid-cols-2 gap-2">
-<div class="bg-white/20 rounded-xl p-2.5"><p class="text-[10px] opacity-70">PATRON</p><p class="text-[13px] font-black"><i class="fa fa-user-tie"></i> DR. OKORE LUTHER</p><p class="text-[11px]">Lecturer, ENS Dept</p></div>
-<div class="bg-yellow-400 text-green-900 rounded-xl p-2.5"><p class="text-[10px] opacity-70">CLASS REP</p><p class="text-[13px] font-black"><i class="fa fa-user-graduate"></i> AMOS NYONGESA</p><p class="text-[11px]">ENS/B/26</p></div>
+<div class="bg-[#202c33] text-white p-2.5 flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3"><div class="w-11 h-11 bg-yellow-400 rounded-full flex items-center justify-center text-green-900 font-black text-[16px]">ENS</div><div><h1 class="font-black text-[14px] leading-tight">ENS COHORTS 2026<br>MOI UNIVERSITY</h1><p class="text-[10px] text-[#25d366] font-bold">PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA</p></div></div>
+<div class="text-[#aebac1]"><i class="fa fa-ellipsis-v"></i></div>
+</div>
+<div class="bg-[#111b21] rounded-full flex items-center px-3 py-2 gap-2 border border-[#2a3942]">
+<i class="fa fa-search text-[#8696a0] text-sm"></i>
+<input id="googleSearch" class="flex-1 bg-transparent outline-none text-sm text-white placeholder-[#8696a0]" placeholder="Search Google, Scholar, YouTube for ENS..." onkeypress="if(event.key==='Enter') doGoogleSearch()">
+<button onclick="doGoogleSearch()" class="bg-[#00a884] text-white w-7 h-7 rounded-full text-xs"><i class="fa fa-arrow-right"></i></button>
+</div>
+<div class="flex gap-1.5 overflow-x-auto">
+<button onclick="searchPlatform('scholar')" class="whitespace-nowrap bg-[#18252c] border border-[#2a3942] text-white px-3 py-1.5 rounded-full text-[11px] font-bold"><i class="fa fa-graduation-cap"></i> Google Scholar</button>
+<button onclick="searchPlatform('youtube')" class="whitespace-nowrap bg-[#18252c] border border-[#2a3942] text-white px-3 py-1.5 rounded-full text-[11px] font-bold"><i class="fa fa-youtube text-red-500"></i> YouTube</button>
+<button onclick="searchPlatform('wikipedia')" class="whitespace-nowrap bg-[#18252c] border border-[#2a3942] text-white px-3 py-1.5 rounded-full text-[11px] font-bold">Wikipedia</button>
+<button onclick="searchPlatform('drive')" class="whitespace-nowrap bg-[#18252c] border border-[#2a3942] text-white px-3 py-1.5 rounded-full text-[11px] font-bold">Drive Notes</button>
+<button onclick="searchPlatform('maps')" class="whitespace-nowrap bg-[#18252c] border border-[#2a3942] text-white px-3 py-1.5 rounded-full text-[11px] font-bold">GIS Maps</button>
 </div>
 </div>
 
-<!-- NAV - NOW TOUCHABLE -->
-<div class="bg-white mx-3 mt-3 rounded-2xl p-2 shadow">
-<button onclick="showPage('dashboard')" id="btn-dashboard" class="nav-btn active w-full text-left px-4 py-3.5 rounded-xl text-[15px] font-bold flex items-center gap-3"><i class="fa fa-th-large w-6"></i> Dashboard</button>
-<button onclick="showPage('members')" id="btn-members" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-users w-6"></i> Registered Members <span id="memberCount" class="bg-green-600 text-white text-xs px-2.5 py-0.5 rounded-full ml-auto">0</span></button>
-<button onclick="showPage('courses')" id="btn-courses" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-book-open w-6"></i> Courses</button>
-<button onclick="showPage('library')" id="btn-library" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-folder w-6"></i> Library & Past Papers</button>
-<button onclick="showPage('assignments')" id="btn-assignments" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-tasks w-6"></i> Assignments</button>
-<button onclick="showPage('timetable')" id="btn-timetable" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-calendar w-6"></i> Timetable</button>
-<button onclick="showPage('ai')" id="btn-ai" class="nav-btn w-full text-left px-4 py-3.5 rounded-xl text-[15px] flex items-center gap-3 mt-1"><i class="fa fa-robot w-6 text-purple-600"></i> AI Tutor - Ask ENS</button>
+<div class="flex flex-1 overflow-hidden">
+
+<div id="chatListPanel" class="w-full md:w-[35%] bg-white flex flex-col">
+<div class="p-3 flex gap-2"><div class="flex-1 bg-[#f0f2f5] rounded-lg flex items-center px-3 py-2.5 gap-2"><i class="fa fa-search text-[#667781] text-xs"></i><input id="contactSearch" oninput="filterContacts()" class="bg-transparent outline-none text-sm w-full" placeholder="Search members - ENS/B/26"></div><button onclick="showRegister()" class="w-10 h-10 bg-[#00a884] text-white rounded-full"><i class="fa fa-plus"></i></button></div>
+<div class="px-3 py-1.5 bg-[#f0f2f5] text-[#008069] text-[12px] font-bold">PINNED - OFFICIAL</div>
+<div onclick="openChat('ENS COHORTS 2026 OFFICIAL','PATRON DR OKORE LUTHER - MOI UNIVERSITY','OL')" class="flex gap-3 p-3 hover:bg-[#f5f6f6] cursor-pointer bg-[#f0f2f5]/50"><div class="w-12 h-12 bg-blue-700 rounded-full flex items-center justify-center text-white font-black">OL</div><div class="flex-1"><div class="flex justify-between"><b class="text-[15px]">DR OKORE LUTHER <span class="bg-blue-600 text-white text-[9px] px-1.5 py-0.5 rounded-full">PATRON</span></b><span class="text-[11px] text-[#667781]">Pinned</span></div><div class="text-[13px] text-[#667781] truncate">PATRON - ENS COHORTS 2026 MOI UNIVERSITY • Official Notes</div></div></div>
+<div onclick="openChat('AMOS NYONGESA - CLASS REP','ENS COHORTS 2026 MOI UNIVERSITY','AN')" class="flex gap-3 p-3 hover:bg-[#f5f6f6] cursor-pointer bg-[#f0f2f5]/50 border-b"><div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-black">AN</div><div class="flex-1"><div class="flex justify-between"><b class="text-[15px]">AMOS NYONGESA <span class="bg-green-700 text-white text-[9px] px-1.5 py-0.5 rounded-full">CLASS REP</span></b><span class="text-[11px] text-[#667781]">Pinned</span></div><div class="text-[13px] text-[#667781] truncate">CLASS REP - ENS COHORTS 2026 • Timetable & Announcements</div></div></div>
+<div class="px-3 py-1 bg-[#f0f2f5] text-[#667781] text-[11px] font-bold">REGISTERED MEMBERS - ENS/B/26 - TAP TO CHAT</div>
+<div id="contactsList" class="flex-1 overflow-y-auto scroll"></div>
+<div class="p-2 bg-[#f0f2f5] text-center text-[10px] text-[#667781]">ENS COHORTS 2026 MOI UNIVERSITY<br>PATRON DR OKORE LUTHER | CLASS REP AMOS NYONGESA</div>
 </div>
 
-<!-- CONTENT -->
-<div class="p-3 pb-20">
-
-<!-- DASHBOARD -->
-<div id="page-dashboard" class="page active space-y-4">
-<div class="enovate-card p-5 bg-gradient-to-br from-green-700 to-green-500 text-white rounded-2xl"><h2 class="font-bold text-xl">Welcome, <span id="dashName">Guest</span></h2><p class="text-sm opacity-90">ENS/B/26 2026 Cohort - Moi University</p><div class="mt-4 grid grid-cols-3 gap-2 text-center"><div class="bg-white/20 rounded-xl p-3"><div class="font-black text-xl" id="dashMembers">0</div><div class="text-[11px]">Members</div></div><div class="bg-white/20 rounded-xl p-3"><div class="font-black text-xl" id="dashNotes">0</div><div class="text-[11px]">Notes</div></div><div class="bg-yellow-400 text-green-900 rounded-xl p-3"><div class="font-black text-xl" id="dashAssign">0</div><div class="text-[11px]">Assignments</div></div></div></div>
-
-<div class="enovate-card p-4 border-2 border-dashed border-green-400 bg-green-50">
-<h3 class="font-black text-sm"><i class="fa fa-user-plus text-green-600"></i> REGISTER AS MEMBER - ENS/B/26</h3>
-<p class="text-xs text-gray-600 mt-1">Tap to register - You will appear in Members list</p>
-<input id="regName" class="w-full border rounded-full px-4 py-3 mt-3 text-sm" placeholder="Full Name">
-<input id="regNo" class="w-full border rounded-full px-4 py-3 mt-2 text-sm" placeholder="Reg No ENS/B/26/...">
-<input id="regPhone" class="w-full border rounded-full px-4 py-3 mt-2 text-sm" placeholder="Phone 07...">
-<button onclick="registerMember()" class="w-full bg-green-700 text-white py-3.5 rounded-full font-black text-sm mt-3">REGISTER NOW</button>
+<div id="chatPanel" class="hidden md:flex flex-1 flex-col">
+<div class="bg-[#f0f2f5] p-2.5 flex justify-between items-center">
+<div class="flex items-center gap-3"><button onclick="backToList()" class="md:hidden w-8 h-8 bg-gray-200 rounded-full"><i class="fa fa-arrow-left text-sm"></i></button><div id="chatAvatar" class="w-10 h-10 bg-[#00a884] rounded-full flex items-center justify-center font-black text-white">ENS</div><div><b id="chatName" class="text-[15px]">ENS COHORTS 2026 MOI UNIVERSITY</b><div id="chatSub" class="text-[11px] text-[#667781]">PATRON DR OKORE LUTHER | CLASS REP AMOS NYONGESA • Tap contact to chat</div></div></div>
+<div class="flex gap-4 text-[#54656f]"><i class="fa fa-video"></i><i class="fa fa-phone"></i></div>
 </div>
-
-<div class="enovate-card p-4"><h3 class="font-bold text-sm">Recent Posts</h3><div id="recentFeed" class="mt-3 space-y-2 text-sm text-gray-500">No posts yet - Dr Okore will post notes here</div></div>
+<div id="messages" class="flex-1 overflow-y-auto chat-bg p-3 space-y-1 scroll">
+<div class="flex justify-center my-2"><span class="bg-[#e1f2fa] text-[#54656f] text-[11px] px-3 py-1.5 rounded-lg shadow text-center">Welcome to <b>ENS COHORTS 2026 MOI UNIVERSITY</b><br>PATRON: DR OKORE LUTHER | CLASS REP: AMOS NYONGESA<br>🔒 Academic WhatsApp + Google Search</span></div>
 </div>
-
-<!-- MEMBERS -->
-<div id="page-members" class="page">
-<div class="enovate-card p-4">
-<h3 class="font-black">Registered Members</h3>
-<div class="mt-3 space-y-2">
-<div class="bg-blue-50 border border-blue-200 rounded-xl p-3 flex justify-between"><div><b class="text-sm">DR. OKORE LUTHER</b><div class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full inline-block">PATRON</div></div><span class="text-green-600 text-xs">✓ Verified</span></div>
-<div class="bg-green-50 border border-green-200 rounded-xl p-3 flex justify-between"><div><b class="text-sm">AMOS NYONGESA</b><div class="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full inline-block">REP ENS/B/26</div></div><span class="text-green-600 text-xs">✓ Verified</span></div>
+<div id="searchResults" class="hidden bg-white border-t max-h-[45%] overflow-y-auto p-2">
+<div class="flex justify-between items-center mb-2"><b class="text-sm"><i class="fa fa-google text-blue-500"></i> Google for: <span id="searchQuery" class="text-[#00a884]"></span></b><button onclick="document.getElementById('searchResults').classList.add('hidden')" class="w-7 h-7 bg-gray-100 rounded-full"><i class="fa fa-times text-xs"></i></button></div>
+<div id="searchResultsList" class="space-y-2"></div>
 </div>
-<div class="mt-5"><h4 class="font-bold text-sm">Other Students (<span id="memberCount2">0</span>)</h4><div id="membersList" class="mt-2 space-y-2"></div></div>
+<div class="bg-[#f0f2f5] p-2 flex items-center gap-2">
+<button class="text-[#54656f] text-xl px-1"><i class="fa fa-face-smile"></i></button>
+<div class="flex-1 bg-white rounded-full flex items-center px-4 py-2.5"><input id="msgInput" class="flex-1 outline-none text-[14px]" placeholder="Type ENS question... e.g. What is GIS?" onkeypress="if(event.key==='Enter') sendMessage()"></div>
+<button onclick="sendMessage()" class="w-11 h-11 bg-[#00a884] text-white rounded-full flex items-center justify-center"><i class="fa fa-paper-plane text-sm"></i></button>
 </div>
 </div>
 
-<!-- OTHER PAGES -->
-<div id="page-courses" class="page"><div class="enovate-card p-4"><b>ENS 101 - Ecology</b><p class="text-xs text-gray-500">Dr Okore Luther</p></div><div class="enovate-card p-4 mt-2"><b>ENS 102 - Soil Science</b><p class="text-xs text-gray-500">Dr Okore Luther</p></div><div class="enovate-card p-4 mt-2"><b>ENS 201 - GIS</b><p class="text-xs text-gray-500">GIS & Remote Sensing</p></div></div>
-<div id="page-library" class="page"><div class="enovate-card p-4"><h3 class="font-bold">Library & Past Papers</h3><input id="libSearch" oninput="filterLib()" class="w-full border rounded-full px-4 py-2 mt-3 text-sm" placeholder="Search..."><div id="libraryList" class="mt-3 text-sm text-gray-500">No notes yet</div></div></div>
-<div id="page-assignments" class="page"><div class="enovate-card p-4"><h3 class="font-bold">Assignments</h3><div id="assignList" class="mt-3 text-sm text-gray-500">No assignments - Dr Okore will post</div></div><div class="enovate-card p-4 mt-3 bg-yellow-50"><h4 class="font-bold text-sm">Post Assignment (Patron Only)</h4><input id="assignTitle" class="w-full border rounded-xl p-2 mt-2 text-sm" placeholder="Title"><textarea id="assignDesc" class="w-full border rounded-xl p-2 mt-2 text-sm" placeholder="Details"></textarea><button onclick="postAssign()" class="mt-2 bg-green-700 text-white px-4 py-2 rounded-full text-sm w-full">Publish</button></div></div>
-<div id="page-timetable" class="page"><div class="enovate-card p-4"><h3 class="font-bold">Timetable</h3><div id="timetableView" class="mt-3 bg-gray-50 p-3 rounded-xl text-sm whitespace-pre-wrap">No timetable - Rep Amos will upload</div></div><div class="enovate-card p-4 mt-3 bg-blue-50"><h4 class="font-bold text-sm">Update Timetable (Rep Only)</h4><textarea id="timeContent" class="w-full border rounded-xl p-3 mt-2 text-sm h-32" placeholder="MON 8-10 ENS 101..."></textarea><button onclick="postTime()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm w-full">Publish Timetable</button></div></div>
-<div id="page-ai" class="page"><div class="enovate-card p-4"><h3 class="font-bold"><i class="fa fa-robot text-purple-600"></i> ENS AI Tutor</h3><div id="aiChat" class="mt-3 h-64 overflow-y-auto bg-gray-50 p-3 rounded-xl text-sm space-y-2"><div class="bg-white p-2 rounded-xl">Ask me: What is ecosystem? Soil pH? GIS?</div></div><div class="flex gap-2 mt-3"><input id="aiInput" class="flex-1 border rounded-full px-4 py-3 text-sm" placeholder="Ask ENS question..."><button onclick="askAI()" class="bg-purple-600 text-white w-12 h-12 rounded-full"><i class="fa fa-paper-plane"></i></button></div></div></div>
+<div id="googleFramePanel" class="hidden flex-1 flex-col bg-white">
+<div class="bg-[#202c33] text-white p-2 flex justify-between items-center"><span id="frameTitle" class="text-sm font-bold">ENS COHORTS 2026 - Google Academic</span><button onclick="closeFrame()" class="text-sm bg-[#00a884] px-4 py-1.5 rounded-full font-bold">Back to WhatsApp</button></div>
+<iframe id="googleFrame" class="flex-1 w-full border-0" src=""></iframe>
+</div>
 
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = { apiKey:"AIzaSyDummyReplaceWithRealKey", authDomain:"ecolern-2691b.firebaseapp.com", projectId:"ecolern-2691b", storageBucket:"ecolern-2691b.appspot.com", messagingSenderId:"123", appId:"1:123:web:abc" };
-let db;
-try{ const app=initializeApp(firebaseConfig); db=getFirestore(app); window.db=db; window.collection=collection; window.addDoc=addDoc; window.query=query; window.orderBy=orderBy; window.onSnapshot=onSnapshot; window.serverTimestamp=serverTimestamp; window.doc=doc; window.setDoc=setDoc; }catch(e){ console.log("Firebase init waiting for real key"); }
-</script>
-
-<script>
-// FIXED: Make functions global and touchable
-window.showPage = function(p){
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  document.getElementById('page-'+p).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('btn-'+p).classList.add('active');
-  window.scrollTo(0,0);
-}
-
-window.registerMember = async function(){
-  const name=document.getElementById('regName').value.trim();
-  const regNo=document.getElementById('regNo').value.trim();
-  const phone=document.getElementById('regPhone').value.trim();
-  if(!name||!regNo){ alert('Please enter Name and Reg No'); return; }
-  const member={name, regNo, phone, role:'member', joined: new Date().toLocaleDateString()};
-  // Save locally first (works even without Firebase)
-  let members=JSON.parse(localStorage.getItem('ens_members')||'[]');
-  members.push(member);
-  localStorage.setItem('ens_members', JSON.stringify(members));
-  localStorage.setItem('ens_current_user', JSON.stringify(member));
-  document.getElementById('dashName').textContent=name.split(' ')[0];
-  alert('Registered! '+name+' added to members');
-  loadMembers();
-  // Try Firebase if available
-  try{ if(window.db) await window.setDoc(window.doc(window.db,'members', regNo), {...member, joined: window.serverTimestamp()}); }catch(e){}
-}
-
-function loadMembers(){
-  let members=JSON.parse(localStorage.getItem('ens_members')||'[]');
-  document.getElementById('memberCount').textContent=members.length+2;
-  document.getElementById('memberCount2').textContent=members.length;
-  document.getElementById('dashMembers').textContent=members.length+2;
-  const list=document.getElementById('membersList');
-  list.innerHTML='';
-  members.forEach(m=>{
-    list.innerHTML+=`<div class="enovate-card p-3 flex justify-between items-center"><div><b class="text-sm">${m.name}</b><div class="text-xs text-gray-500">${m.regNo} ${m.phone||''}</div></div><span class="text-[10px] bg-gray-100 px-2 py-1 rounded-full">MEMBER</span></div>`;
-  });
-  // Load from Firebase too
-  try{
-    if(window.db){
-      window.onSnapshot(window.collection(window.db,'members'), snap=>{
-        snap.forEach(d=>{
-          const m=d.data(); if(m.role==='patron'||m.role==='rep') return;
-        });
-      });
-    }
-  }catch(e){}
-}
-
-window.postAssign = async function(){
-  const title=document.getElementById('assignTitle').value;
-  const desc=document.getElementById('assignDesc').value;
-  if(!title) return alert('Enter title');
-  let posts=JSON.parse(localStorage.getItem('ens_posts')||'[]');
-  posts.unshift({text: title+" - "+desc, type:'assignment', name:'DR. OKORE LUTHER', role:'PATRON'});
-  localStorage.setItem('ens_posts', JSON.stringify(posts));
-  alert('Assignment posted!');
-  document.getElementById('assignList').innerHTML=`<div class="enovate-card p-3 border-l-4 border-red-500"><b class="text-sm">${title}</b><p class="text-xs mt-1">${desc}</p></div>`+document.getElementById('assignList').innerHTML;
-}
-
-window.postTime = function(){
-  const c=document.getElementById('timeContent').value;
-  localStorage.setItem('ens_timetable', c);
-  document.getElementById('timetableView').textContent=c;
-  alert('Timetable published!');
-}
-
-window.askAI = function(){
-  const q=document.getElementById('aiInput').value;
-  if(!q) return;
-  const chat=document.getElementById('aiChat');
-  chat.innerHTML+=`<div class="text-right"><span class="bg-green-600 text-white px-3 py-2 rounded-2xl text-sm inline-block">${q}</span></div>`;
-  document.getElementById('aiInput').value='';
-  let ans="ENS AI: ";
-  if(q.toLowerCase().includes('soil')) ans+="Soil has horizons O-A-B-C-R. pH 6-7 best. Texture triangle sand-silt-clay.";
-  else if(q.toLowerCase().includes('ecosystem')) ans+="Ecosystem = Biotic + Abiotic. Energy flow Sun→Producers→Consumers→Decomposers.";
-  else if(q.toLowerCase().includes('gis')) ans+="GIS = Geographic Info System. Buffering = zone around feature. Overlay = combine layers.";
-  else ans+="I am ENS COHORTS 2026 AI Tutor by Dr Okore Luther. Ask about Ecology, Soil, GIS, Environmental Law.";
-  setTimeout(()=>{ chat.innerHTML+=`<div><span class="bg-white border px-3 py-2 rounded-2xl text-sm inline-block">${ans}</span></div>`; chat.scrollTop=chat.scrollHeight; },500);
-}
-
-// Init
-loadMembers();
-const saved=localStorage.getItem('ens_current_user');
-if(saved){ const u=JSON.parse(saved); document.getElementById('dashName').textContent=u.name.split(' ')[0]; }
-const tt=localStorage.getItem('ens_timetable'); if(tt) document.getElementById('timetableView').textContent=tt;
-const posts=JSON.parse(localStorage.getItem('ens_posts')||'[]');
-if(posts.length>0){ document.getElementById('recentFeed').innerHTML=posts.map(p=>`<div class="border-b py-2"><b class="text-sm">${p.name}</b> <span class="text-[10px] bg-green-100 px-2 py-0.5 rounded-full">${p.type}</span><div class="text-xs text-gray-600">${p.text}</div></div>`).join(''); }
-
-</script>
-</body></html>
+<div id="registerModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl w-full max-w-sm p-5"><div class="w-12 h-12 bg-green-700 rounded-full flex items-center justify-center text-white font-black mx-auto">ENS</div><h3 class="font-black text-center mt-2">ENS COHORTS 2026<br>MOI UNIVERSITY</h3><p class="text-[11px] text-center text-gray-500">PATRON DR OKORE LUTHER | CLASS REP AMOS NYONGESA</p><p class="text-xs text-center mt-2 font-bold">Register as Member</p><input id="regNameM" class="w-full border rounded-full px-4 py-3 mt-3 text-sm" placeholder="Full Name"><input id="regNoM" class="w-full border rounded-full px-4 py-3 mt-2 text-sm" placeholder="Reg No ENS/B/26/..."><input id="regPhoneM" class="w-full border rounded-full px-4 py-3 mt-2 text-sm" placeholder="Phone 07..."><button onclick="registerFromModal()" class="w-full bg-[#00a884] text-white py-3.5 rounded-full font-black mt-4">JOIN COHORT</button><button onclick="document.getElementById('registerModal').classList.add('hidden')" class="w-full mt-2 text-sm text-gray-500 py
