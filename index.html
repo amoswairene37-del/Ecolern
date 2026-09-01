@@ -2,23 +2,31 @@
 <title>ENS/B/26 Moi University</title>
 <script src="https://meet.jit.si/external_api.js"></script>
 <link rel="manifest" href="manifest.json">
-<style>body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
-.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
-.btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:3px 0}
-.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:11px;margin:2px}
-input,textarea,select{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
+<meta name="theme-color" content="#1b5e20">
+<style>
+body{font-family:Arial;background:#e8f5e9;margin:0;padding:8px}
+.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0;box-shadow:0 2px 6px #0001}
+.btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:4px 0}
+.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 12px;border-radius:20px;font-size:11px;margin:2px}
+.btnWa{background:#25D366;color:#fff;padding:6px 12px;border-radius:20px;border:0;font-size:11px;margin:2px}
+.btnCall{background:#1565c0;color:#fff;padding:6px 12px;border-radius:20px;border:0;font-size:11px;margin:2px}
+input,textarea,select{width:94%;padding:9px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
 .tabs{display:flex;overflow:auto;position:sticky;top:0;background:#e8f5e9;z-index:5;padding:5px 0}
-.tab{padding:10px 6px;text-align:center;background:#fff;margin:1px;border-radius:8px;cursor:pointer;flex:1;font-size:10px;min-width:60px}
+.tab{padding:9px 4px;text-align:center;background:#fff;margin:1px;border-radius:8px;cursor:pointer;flex:1;font-size:9px;min-width:52px}
 .tab.active{background:#1b5e20;color:#fff}
-.ppic{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20}
-.header{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:8px;border-radius:12px;margin-bottom:8px}
-#jitsi{width:100%;height:420px;display:none;border-radius:12px;margin-top:10px}
+.ppic{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20}
+.header{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:8px;border-radius:12px;margin-bottom:6px}
+#jitsi{width:100%;height:420px;display:none;border-radius:12px;margin-top:8px}
+.chatbox{height:250px;overflow:auto;background:#f9fbe7;padding:8px;border-radius:10px;border:1px solid #ddd}
+.msg{padding:6px 10px;margin:4px 0;border-radius:12px;max-width:85%}
+.msg.me{background:#dcf8c6;margin-left:auto}
+.msg.other{background:#fff}
 </style></head><body>
 
 <div class=header>
 <div style=display:flex;align-items:center;gap:8px>
 <img id=myPic class=ppic src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-<div><b id=myNameTxt>ENS/B/26</b><br><small>Moi University</small></div>
+<div><b id=myNameTxt>ENS/B/26</b><br><small id=myRegTxt>Moi University</small></div>
 </div>
 <button class=btn2 onclick="document.getElementById('profileBox').style.display='block'">👤 Profile</button>
 </div>
@@ -29,58 +37,61 @@ input,textarea,select{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;b
 <div class=tab id=t3 onclick="show('notes')">📚 Notes</div>
 <div class=tab id=t4 onclick="show('past')">📝 Papers</div>
 <div class=tab id=t5 onclick="show('live')">🎥 LIVE</div>
+<div class=tab id=t6 onclick="show('class')">👥 Class</div>
 </div>
 
-<div id=profileBox class=card style=display:none;background:#fff3cd><h3>👤 My Profile</h3>
-<p>Your name and photo will show when you answer questions</p>
-<input id=pName placeholder="Your full name e.g. Amos Nyongesa">
+<div id=profileBox class=card style=display:none;background:#fff3cd>
+<h3>👤 My Profile & Registration</h3>
+<input id=pName placeholder="Full Name e.g. Amos Nyongesa">
+<input id=pReg placeholder="Reg No e.g. ENS/B/01/24">
+<input id=pPhone placeholder="WhatsApp No e.g. 0712345678">
 <input type=file id=pFile accept="image/*">
-<img id=preview style=width:80px;height:80px;border-radius:50%;display:none;margin:8px 0>
-<button class=btn onclick=saveProfile()>Save Profile</button>
+<img id=preview style=width:70px;height:70px;border-radius:50%;display:none;margin:6px 0>
+<button class=btn onclick=saveProfile()>Save & Register</button>
 <button class=btn2 onclick="document.getElementById('profileBox').style.display='none'">Close</button>
-<p><small>Photos for: Dr. Okore, Amos, Caleb, Calvin, Cythia, Dominic, Edwin, Jane, Kelvin, Phidel, Wilfrida</small></p>
 </div>
 
 <div id=qa><div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=ask()>POST QUESTION</button></div><input id=s placeholder="🔍 Search..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc><div id=list></div></div>
-<div id=ai style=display:none><div class=card><h3>🤖 AI Tutor (Optional)</h3><label><input type=checkbox id=aiOn checked> AI Enabled</label><input id=aiQ placeholder="Ask AI..."><button class=btn onclick=askAI() style=background:#ff9800>Ask AI</button><div id=aiAns></div></div><div id=aiHistory></div></div>
-<div id=notes style=display:none><div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Upload</h3><select id=nType><option value=note>📚 Notes</option><option value=past>📝 Past Paper</option></select><input id=nTitle placeholder="Title"><textarea id=nContent placeholder="Notes or Drive link"></textarea><input id=nPin placeholder="PIN ENS2026" type=password><button class=btn onclick=postNote()>POST AS PATRON</button></div><div id=notesList></div></div>
+
+<div id=ai style=display:none><div class=card><h3>🤖 AI Tutor</h3><input id=aiQ placeholder="Ask AI..."><button class=btn onclick=askAI() style=background:#ff9800>Ask AI</button><div id=aiAns></div></div></div>
+
+<div id=notes style=display:none><div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Upload - PIN ENS2026</h3><select id=nType><option value=note>📚 Notes</option><option value=past>📝 Past Paper</option></select><input id=nTitle placeholder="Title"><textarea id=nContent placeholder="Notes or Drive link https://"></textarea><input id=nPin placeholder="PIN" type=password><button class=btn onclick=postNote()>POST</button></div><div id=notesList></div></div>
+
 <div id=past style=display:none><div id=pastList></div></div>
-<div id=live style=display:none><div class=card><div style=background:linear-gradient(135deg,#1565c0,#1b5e20);color:#fff;padding:15px;border-radius:12px;text-align:center><h3>🎥 LIVE CLASS</h3><p id=liveStatus>🔴 No live</p><p id=liveTopic></p><button class=btn style=background:#fff;color:#1565c0;display:none id=joinBtn onclick=joinLive()>JOIN LIVE</button><button class=btn2 style=color:#fff;border-color:#fff onclick="document.getElementById('patronLive').style.display='block'">Patron: Start</button></div></div><div id=patronLive class=card style=display:none><input id=liveTitle placeholder="Topic"><input id=livePin placeholder="PIN" type=password><button class=btn onclick=startLive()>GO LIVE</button><button class=btn style=background:#d32f2f onclick=endLive()>END</button></div><div id=jitsi></div></div>
+
+<div id=live style=display:none>
+<div class=card><div style=background:linear-gradient(135deg,#1565c0,#1b5e20);color:#fff;padding:12px;border-radius:12px;text-align:center><h3>🎥 LIVE CLASS</h3><p id=liveStatus>🔴 No live</p><p id=liveTopic></p><button class=btn style=background:#fff;color:#1565c0;display:none id=joinBtn onclick=joinLive()>JOIN LIVE NOW</button><button class=btn2 style=color:#fff;border-color:#fff onclick="document.getElementById('patronLive').style.display='block'">Patron: Start Live</button></div></div>
+<div id=patronLive class=card style=display:none><input id=liveTitle placeholder="Topic e.g. ENS 110"><input id=livePin placeholder="PIN ENS2026" type=password><button class=btn onclick=startLive()>GO LIVE + Notify WhatsApp</button><button class=btn style=background:#d32f2f onclick=endLive()>END LIVE</button></div>
+<div id=jitsi></div>
+</div>
+
+<div id=class style=display:none>
+<div class=card style=background:linear-gradient(135deg,#1b5e20,#66bb6a);color:#fff><h3>👥 ENS/B/26 Class Members</h3><p id=totalStudents>0 Registered</p><button class=btn style=background:#fff;color:#1b5e20 onclick="document.getElementById('profileBox').style.display='block'">+ Register / Update Me</button><button class=btnWa onclick=startGroupCall()>📞 Group Video Call</button></div>
+
+<div class=card><h3>💬 Class Group Chat</h3><div id=groupChat class=chatbox></div><div style=display:flex;gap:4px;margin-top:6px><input id=chatInput placeholder="Message class..." style=flex:1><button class=btn2 style=background:#1b5e20;color:#fff;padding:10px 15px;border-radius:8px onclick=sendChat()>Send</button></div></div>
+
+<div id=studentsList></div>
+</div>
 
 <script>
-let qs=JSON.parse(localStorage.getItem('ensFinalV6')||'[]');
-let notes=JSON.parse(localStorage.getItem('ensNotesV6')||'[]');
-let live=JSON.parse(localStorage.getItem('ensLiveV6')||'{"on":false,"title":"","room":""}');
-let myProfile=JSON.parse(localStorage.getItem('myProf')||'{"name":"","pic":""}');
-let aiDB={eutrophication:"Eutrophication is excess nutrients causing algal bloom.",ecology:"Ecology studies organism-environment interactions.",pollution:"Pollution is harmful contaminants."}
-function show(t){['qa','ai','notes','past','live'].forEach(x=>{document.getElementById(x).style.display=x==t?'block':'none';document.getElementById('t'+(['qa','ai','notes','past','live'].indexOf(x)+1)).className=x==t?'tab active':'tab'});if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past');if(t=='live')renderLive()}
-function loadProfile(){if(myProfile.name){document.getElementById('myNameTxt').innerText=myProfile.name;document.getElementById('pName').value=myProfile.name}if(myProfile.pic){document.getElementById('myPic').src=myProfile.pic}}
+let qs=JSON.parse(localStorage.getItem('ensQ')||'[]');
+let notes=JSON.parse(localStorage.getItem('ensN')||'[]');
+let live=JSON.parse(localStorage.getItem('ensL')||'{"on":false,"title":"","room":""}');
+let myProfile=JSON.parse(localStorage.getItem('myProf')||'{"name":"","reg":"","phone":"","pic":""}');
+let students=JSON.parse(localStorage.getItem('ensStudents')||'[]');
+let gChat=JSON.parse(localStorage.getItem('ensGChat')||'[]');
+
+function show(t){['qa','ai','notes','past','live','class'].forEach(x=>{document.getElementById(x).style.display=x==t?'block':'none';document.getElementById('t'+(['qa','ai','notes','past','live','class'].indexOf(x)+1)).className=x==t?'tab active':'tab'});if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past');if(t=='live')renderLive();if(t=='class'){renderStudents();renderGroupChat()}}
+function loadProfile(){if(myProfile.name){document.getElementById('myNameTxt').innerText=myProfile.name;document.getElementById('pName').value=myProfile.name;document.getElementById('myRegTxt').innerText=myProfile.reg||'Moi University'}if(myProfile.reg)document.getElementById('pReg').value=myProfile.reg;if(myProfile.phone)document.getElementById('pPhone').value=myProfile.phone;if(myProfile.pic)document.getElementById('myPic').src=myProfile.pic}
 document.getElementById('pFile').onchange=function(e){let r=new FileReader();r.onload=function(){document.getElementById('preview').src=r.result;document.getElementById('preview').style.display='block';document.getElementById('preview').dataset.url=r.result};r.readAsDataURL(e.target.files[0])}
-function saveProfile(){let name=document.getElementById('pName').value||'Student';let pic=document.getElementById('preview').dataset.url||myProfile.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';myProfile={name:name,pic:pic};localStorage.setItem('myProf',JSON.stringify(myProfile));loadProfile();alert('Profile saved! Your photo will show on answers.');document.getElementById('profileBox').style.display='none'}
-function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><br><small>${x.d}</small><div>${x.ans.map(v=>`<div style=background:${v.role=='patron'?'#e3f2fd':'#f1f8e9'};padding:6px;border-radius:8px;margin:4px 0;display:flex;gap:6px><img src="${v.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" style=width:30px;height:30px;border-radius:50%><div><b>${v.role=='patron'?'👨‍🏫 Dr. Okore - PATRON':v.name||'Student'}</b><br>${v.text}</div></div>`).join('')}</div><select id=r${i} style=width:60%><option value=student>As Student</option><option value=patron>As Patron PIN</option><option value=ai>As AI</option></select><input id=a${i} placeholder=Answer...><input id=p${i} placeholder=PIN style=display:none><button class=btn onclick=ans(${i})>Submit</button></div>`).join('')||'No Q yet';document.querySelectorAll('select').forEach(s=>s.onchange=function(){document.getElementById('p'+this.id.replace('r','')).style.display=this.value=='patron'?'block':'none'})}
-function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ensFinalV6',JSON.stringify(qs));q.value=d.value='';render()}
-function ans(i){let role=document.getElementById('r'+i).value;let txt=document.getElementById('a'+i).value;if(!txt)return;if(role=='patron'&&document.getElementById('p'+i).value!=='ENS2026')return alert('Wrong PIN');qs[i].ans.push({role:role,text:txt,name:myProfile.name||'Student',pic:myProfile.pic});localStorage.setItem('ensFinalV6',JSON.stringify(qs));render()}
-function postNote(){if(nPin.value!=='ENS2026')return alert('Wrong PIN');if(!nTitle.value||!nContent.value)return;notes.unshift({title:nTitle.value,content:nContent.value,type:nType.value,date:new Date().toLocaleDateString()});localStorage.setItem('ensNotesV6',JSON.stringify(notes));nTitle.value=nContent.value=nPin.value='';alert('Posted');renderNotes(nType.value=='past'?'past':'note');show(nType.value=='past'?'past':'notes')}
-function renderNotes(f){let fil=notes.filter(n=>n.type==f);let target=f=='past'?'pastList':'notesList';document.getElementById(target).innerHTML=fil.map(n=>`<div class=card style=border-left:5px solid ${f=='past'?'#d32f2f':'#1565c0'}><b>${n.title}</b><br><small>${n.date}</small><p>${n.content.includes('http')?`<a href="${n.content}" target=_blank style=background:#1b5e20;color:#fff;padding:10px 15px;border-radius:25px;text-decoration:none;display:inline-block>📥 DOWNLOAD</a>`:n.content}</p></div>`).join('')||'No items'}
-function renderLive(){document.getElementById('liveStatus').innerText=live.on?'🟢 LIVE: '+live.title:'🔴 No live class';document.getElementById('liveTopic').innerText=live.title;document.getElementById('joinBtn').style.display=live.on?'block':'none'}
-function startLive(){if(document.getElementById('livePin').value!=='ENS2026')return alert('Wrong PIN');live={on:true,title:document.getElementById('liveTitle').value||'Live Class',room:'ENS-B26-'+Date.now()};localStorage.setItem('ensLiveV6',JSON.stringify(live));renderLive();joinLive()}
-function endLive(){live={on:false,title:'',room:''};localStorage.setItem('ensLiveV6',JSON.stringify(live));document.getElementById('jitsi').style.display='none';renderLive()}
-function joinLive(){if(!live.on)return;document.getElementById('jitsi').style.display='block';new JitsiMeetExternalAPI('meet.jit.si',{roomName:live.room,width:'100%',height:420,parentNode:document.getElementById('jitsi'),userInfo:{displayName:myProfile.name||'Student'}})}
-function askAI(){let qq=document.getElementById('aiQ').value.toLowerCase();let k=Object.keys(aiDB).find(k=>qq.includes(k));let a=k?aiDB[k]:'AI: Check notes section for '+qq;document.getElementById('aiAns').innerHTML=`<div class=card style=background:#fff8e1>${a}</div>`}
-function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
-loadProfile();render();renderLive();
-</script></body></html>
-loadProfile();render();renderLive();
-// AUTO CHECK EVERY 10 SECONDS FOR LIVE
-setInterval(()=>{
-let latest = JSON.parse(localStorage.getItem('ensLiveV6')||'{"on":false}');
-if(latest.on && !live.on && latest.time > (Date.now()-60000)){
-live=latest;
-renderLive();
-if(confirm('🔴 LIVE CLASS STARTED: '+live.title+' - Join now?')){show('live');joinLive()}
-// play beep
-let audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');audio.play().catch(()=>{});
+function saveProfile(){
+let name=document.getElementById('pName').value||'Student';let reg=document.getElementById('pReg').value||'';let phone=document.getElementById('pPhone').value||'';let pic=document.getElementById('preview').dataset.url||myProfile.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+myProfile={name,reg,phone,pic};localStorage.setItem('myProf',JSON.stringify(myProfile));
+// Add to students directory
+let idx=students.findIndex(s=>s.reg==reg && reg!='');
+if(idx>=0){students[idx]=myProfile}else{students.unshift(myProfile)}
+localStorage.setItem('ensStudents',JSON.stringify(students));
+loadProfile();renderStudents();
+alert('Registered! You appear in Class tab now.');document.getElementById('profileBox').style.display='none'
 }
-},10000);
-// Ask for notification permission on load
-if('Notification' in window){Notification.requestPermission()}
+function render(a=qs){list
