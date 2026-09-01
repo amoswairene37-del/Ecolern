@@ -1,48 +1,77 @@
 <!DOCTYPE html><html><head><meta name=viewport content="width=device-width,initial-scale=1">
-<title>ENS/B/26 Moi University Official</title>
+<title>ENS/B/26 Moi University - Official</title>
 <script src="https://meet.jit.si/external_api.js"></script>
 <style>body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
-.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
+.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0;box-shadow:0 1px 3px #0002}
 .btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:3px 0}
-.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:12px;margin:2px}
+.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:11px;margin:2px}
 input,textarea,select{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
-.tab{padding:8px;text-align:center;background:#fff;margin:1px;border-radius:8px;cursor:pointer;flex:1;font-size:11px}
+.tabs{display:flex;overflow:auto;position:sticky;top:0;background:#e8f5e9;z-index:5;padding:5px 0}
+.tab{padding:10px 6px;text-align:center;background:#fff;margin:1px;border-radius:8px;cursor:pointer;flex:1;font-size:10px;min-width:60px}
 .tab.active{background:#1b5e20;color:#fff}
-.badge{font-size:10px;padding:2px 6px;border-radius:10px;color:#fff}
-.patronAns{background:#e3f2fd;border-left:4px solid #1565c0;padding:8px;border-radius:8px;margin:4px 0}
+.badge{font-size:10px;padding:2px 6px;border-radius:10px;color:#fff;margin-left:4px}
+.patronBox{background:#e3f2fd;border-left:5px solid #1565c0}
+.aiBox{background:#fff8e1;border-left:5px solid #ff9800}
 .liveBox{background:linear-gradient(135deg,#1565c0,#1b5e20);color:#fff;padding:15px;border-radius:12px;text-align:center}
-#jitsi{width:100%;height:400px;display:none;border-radius:12px;margin-top:10px}
+#jitsi{width:100%;height:420px;display:none;border-radius:12px;margin-top:10px;border:2px solid #1b5e20}
+.ans{padding:7px;border-radius:8px;margin:4px 0}
 </style></head><body>
-<h2 style=text-align:center;color:#1b5e20;margin:5px>🌿 ENS/B/26 OFFICIAL</h2>
-<div style=display:flex><div class="tab active" onclick="showTab('qa')" id=t1>💬 Q&A</div><div class=tab onclick="showTab('notes')" id=t2>📚 Notes</div><div class=tab onclick="showTab('past')" id=t3>📝 Papers</div><div class=tab onclick="showTab('live')" id=t4>🎥 Live Class</div></div>
+<h2 style=text-align:center;color:#1b5e20;margin:4px>🌿 ENS/B/26 MOI UNIVERSITY</h2>
+<div class=tabs>
+<div class="tab active" id=t1 onclick="show('qa')">💬 Q&A</div>
+<div class=tab id=t2 onclick="show('ai')">🤖 AI Answers</div>
+<div class=tab id=t3 onclick="show('notes')">📚 Notes</div>
+<div class=tab id=t4 onclick="show('past')">📝 Past Papers</div>
+<div class=tab id=t5 onclick="show('live')">🎥 LIVE</div>
+</div>
 
-<div id=qaSec><div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=ask()>POST</button><label style=font-size:12px><input type=checkbox id=aiToggle checked onchange="aiOn=this.checked"> AI Tutor Optional (ON)</label></div><input id=s placeholder="🔍 Search..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc><div id=list></div></div>
+<!-- Q&A TAB - Patron + Students -->
+<div id=qa><div class=card><input id=q placeholder="Type question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=ask()>POST QUESTION</button></div><input id=s placeholder="🔍 Search questions..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc><div id=list></div></div>
 
-<div id=notesSec style=display:none><div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Upload Center</h3><select id=nType><option value=note>📚 Class Notes</option><option value=past>📝 Past Paper</option><option value=assignment>📌 Assignment</option></select><input id=nTitle placeholder="Title e.g. EMG 101 Week 5"><textarea id=nContent placeholder="Paste notes OR Google Drive PDF link..."></textarea><input id=nPin placeholder="Patron PIN: ENS2026" type=password><button class=btn onclick=postNote()>📤 POST AS PATRON</button></div><div id=notesList></div></div>
+<!-- AI TUTOR TAB - Optional Space -->
+<div id=ai style=display:none>
+<div class=card aiBox><h3>🤖 AI Tutor Space (Optional)</h3><p><small>AI helps when Patron is offline. Patron can turn OFF during exams.</small></p>
+<label><input type=checkbox id=aiOn checked> AI Tutor Enabled for Students</label>
+<input id=aiQ placeholder="Ask AI: e.g. What is eutrophication?"><button class=btn onclick=askAI() style=background:#ff9800>Ask AI Tutor</button>
+<div id=aiAns style=margin-top:10px></div>
+</div>
+<div class=card><h4>🤖 Recent AI Answers</h4><div id=aiHistory></div></div>
+</div>
 
-<div id=pastSec style=display:none><div id=pastList></div></div>
+<!-- NOTES TAB -->
+<div id=notes style=display:none><div class=card patronBox><h3>👨‍🏫 Patron - Post Notes / Papers / Live</h3><select id=nType><option value=note>📚 Class Notes</option><option value=past>📝 Past Paper</option><option value=assignment>📌 Assignment</option></select><input id=nTitle placeholder="Title"><textarea id=nContent placeholder="Paste notes text OR Google Drive PDF link"></textarea><input id=nPin placeholder="Patron PIN: ENS2026" type=password><button class=btn onclick=postNote()>📤 POST AS DR. OKORE</button></div><div id=notesList></div></div>
 
-<div id=liveSec style=display:none>
-<div class=card><div class=liveBox><h3>🎥 ENS/B/26 LIVE CLASS</h3><p id=liveStatus>🔴 No live class now</p><p id=liveTopic></p><button class=btn style=background:#fff;color:#1565c0 id=joinBtn onclick=joinLive()>📱 JOIN LIVE CLASS NOW</button><button class=btn2 onclick="document.getElementById('patronLive').style.display='block'" style=color:#fff;border-color:#fff>Patron: Start Class</button></div></div>
-<div id=patronLive class=card style=display:none;background:#fff3cd><h4>Patron: Start Live Class</h4><input id=liveTitle placeholder="Topic e.g. EMG 101 - Ecology Chapter 5"><input id=livePin placeholder="PIN ENS2026" type=password><button class=btn onclick=startLive()>🔴 START LIVE VIDEO CLASS</button><button class=btn onclick=endLive() style=background:#d32f2f>⏹️ END CLASS</button></div>
+<!-- PAST PAPERS TAB -->
+<div id=past style=display:none><div class=card style=border-left:5px solid #d32f2f><h3>📝 Past Papers - By Patron</h3><p>All past papers posted by Dr. Okore Luther</p></div><div id=pastList></div></div>
+
+<!-- LIVE CLASS TAB -->
+<div id=live style=display:none>
+<div class=card><div class=liveBox><h3>🎥 LIVE ONLINE CLASS</h3><p id=liveStatus>🔴 No live class now</p><h4 id=liveTopic></h4><button class=btn style=background:#fff;color:#1565c0;display:none id=joinBtn onclick=joinLive()>📱 JOIN LIVE VIDEO CLASS</button><button class=btn2 style=color:#fff;border-color:#fff;margin-top:10px onclick="document.getElementById('patronLive').style.display='block'">👨‍🏫 Patron: Start Live Class</button></div></div>
+<div id=patronLive class=card style=display:none;background:#fff3cd><h4>Start Live Class (Patron Only)</h4><input id=liveTitle placeholder="Topic: e.g. EMG 101 Chapter 5"><input id=livePin placeholder="PIN ENS2026" type=password><button class=btn onclick=startLive()>🔴 GO LIVE NOW</button><button class=btn style=background:#d32f2f onclick=endLive()>⏹ END CLASS</button></div>
 <div id=jitsi></div>
-<div class=card><h4>📅 Upcoming Classes</h4><div id=schedule>Patron will schedule here.</div></div>
+<div class=card><h4>📋 Class Members (11)</h4>• Dr. Okore Luther - Patron<br>• Amos Nyongesa - Class Rep<br>• Caleb, Calvin, Cythia, Dominic, Edwin, Jane, Kelvin, Phidel, Wilfrida<br><br><button class=btn2 onclick=shareWA()>📱 Share App to Class WhatsApp</button></div>
 </div>
 
 <script>
-let qs=JSON.parse(localStorage.getItem('ens26final')||'[]');
-let notes=JSON.parse(localStorage.getItem('ensNotesPro')||'[]');
-let live=JSON.parse(localStorage.getItem('ensLive')||'{"on":false,"title":"","link":""}');
-let aiOn=true;
-function showTab(t){['qa','notes','past','live'].forEach(x=>{document.getElementById(x+'Sec').style.display=x==t?'block':'none';document.getElementById('t'+(['qa','notes','past','live'].indexOf(x)+1)).className=x==t?'tab active':'tab'});if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past');if(t=='live')renderLive()}
-function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><p>${x.d}</p><div>${x.ans.map(v=>`<div class=${v.role=='patron'?'patronAns':''} style=background:${v.role=='ai'?'#fff3cd':'#f1f8e9'};padding:6px;border-radius:6px;margin:3px 0><b>${v.role=='patron'?'👨‍🏫 Dr. Okore Luther <span class=badge style=background:#1565c0>VERIFIED PATRON</span>':v.role=='ai'?'🤖 AI Tutor <span class=badge style=background:#ff9800>OPTIONAL</span>':'✅ Student'}:</b> ${v.text}</div>`).join('')}</div><select id=r${i}><option value=student>As Student</option><option value=patron>As Patron (PIN)</option>${aiOn?'<option value=ai>As AI Tutor</option>':''}</select><input id=a${i} placeholder=Answer...><input id=p${i} placeholder="PIN if Patron" style=display:none><button class=btn onclick=ans(${i})>Submit</button></div>`).join('')||'No Q yet';document.querySelectorAll('select').forEach(s=>s.onchange=function(){let idx=this.id.replace('r','');document.getElementById('p'+idx).style.display=this.value=='patron'?'block':'none'})}
-function renderNotes(f){let fil=f?notes.filter(n=>n.type==f):notes;let target=f=='past'?'pastList':'notesList';document.getElementById(target).innerHTML=fil.map(n=>`<div class=card style=border-left:4px solid ${n.type=='past'?'#d32f2f':'#1565c0'}><b>${n.type=='past'?'📝 PAST PAPER:':'📚'} ${n.title}</b> <span class=badge style=background:${n.type=='past'?'#d32f2f':'#1565c0'}>${n.type.toUpperCase()}</span><br><small>${n.date} - Patron</small><p>${n.content.includes('http')?`<a href="${n.content}" target=_blank style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none;display:inline-block>📥 DOWNLOAD PDF</a><br><small>${n.content}</small>`:n.content}</p></div>`).join('')||'<p style=text-align:center>No '+f+' yet.</p>'}
-function renderLive(){document.getElementById('liveStatus').innerText=live.on?'🟢 LIVE NOW!':'🔴 No live class now';document.getElementById('liveTopic').innerText=live.title||'';document.getElementById('joinBtn').style.display=live.on?'block':'none';document.getElementById('joinBtn').innerText=live.on?'📱 JOIN: '+live.title:'Join';document.getElementById('schedule').innerHTML=live.on?`🔴 <b>${live.title}</b> is LIVE! Click JOIN above.`: 'No class scheduled. Patron will start when ready.'}
-function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ens26final',JSON.stringify(qs));q.value=d.value='';render()}
-function ans(i){let role=document.getElementById('r'+i).value;let text=document.getElementById('a'+i).value;if(!text)return;if(role=='patron'){let pin=document.getElementById('p'+i).value;if(pin!=='ENS2026'){alert('Wrong PIN!');return}}qs[i].ans.push({role:role,text:text});localStorage.setItem('ens26final',JSON.stringify(qs));render()}
-function postNote(){if(nPin.value!=='ENS2026'){alert('Wrong PIN!');return}if(!nTitle.value||!nContent.value){alert('Fill all');return}notes.unshift({title:nTitle.value,content:nContent.value,type:nType.value,date:new Date().toLocaleDateString()});localStorage.setItem('ensNotesPro',JSON.stringify(notes));nTitle.value=nContent.value=nPin.value='';alert('Posted!');renderNotes(nType.value=='past'?'past':'note');showTab(nType.value=='past'?'past':'notes')}
-function startLive(){if(document.getElementById('livePin').value!=='ENS2026'){alert('Wrong PIN!');return}let title=document.getElementById('liveTitle').value||'ENS/B/26 Live Class';live={on:true,title:title,link:'ENS-B-26-Moi-'+Date.now()};localStorage.setItem('ensLive',JSON.stringify(live));document.getElementById('patronLive').style.display='none';renderLive();joinLive();alert('Live Class Started! Students will see JOIN button.')}
-function endLive(){live={on:false,title:'',link:''};localStorage.setItem('ensLive',JSON.stringify(live));document.getElementById('jitsi').style.display='none';document.getElementById('jitsi').innerHTML='';renderLive();alert('Class Ended')}
-function joinLive(){if(!live.on){alert('No live class');return}document.getElementById('jitsi').style.display='block';let domain='meet.jit.si';let options={roomName:live.link,width:'100%',height:400,parentNode:document.getElementById('jitsi'),configOverwrite:{},interfaceConfigOverwrite:{},userInfo:{displayName:prompt('Enter your name:','Student ENS/B/26')||'Student'}};new JitsiMeetExternalAPI(domain,options)}
+let qs=JSON.parse(localStorage.getItem('ensFinalV5')||'[]');
+let notes=JSON.parse(localStorage.getItem('ensNotesV5')||'[]');
+let aiHist=JSON.parse(localStorage.getItem('ensAI')||'[]');
+let live=JSON.parse(localStorage.getItem('ensLiveV5')||'{"on":false,"title":"","room":""}');
+let aiDB={carrying:"Carrying capacity is maximum population environment can support.",eutrophication:"Eutrophication is excess nutrients causing algal bloom and oxygen depletion in water.",ecology:"Ecology is study of interactions between organisms and environment.",pollution:"Pollution is introduction of harmful contaminants.",biodiversity:"Biodiversity is variety of life in ecosystem.",climate:"Climate change is long-term shift in temperatures and weather patterns.",gis:"GIS is system capturing spatial data.",conservation:"Conservation is protection of natural resources."}
+function show(t){['qa','ai','notes','past','live'].forEach(x=>{document.getElementById(x).style.display=x==t?'block':'none';document.getElementById('t'+(['qa','ai','notes','past','live'].indexOf(x)+1)).className=x==t?'tab active':'tab'});if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past');if(t=='ai')renderAI();if(t=='live')renderLive()}
+function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><br><small>${x.d}</small><div>${x.ans.map(v=>`<div class=ans ${v.role=='patron'?'patronBox':''} style=background:${v.role=='patron'?'#e3f2fd':v.role=='ai'?'#fff8e1':'#f1f8e9'}><b>${v.role=='patron'?'👨‍🏫 PATRON ANSWER <span class=badge style=background:#1565c0>Dr. Okore VERIFIED</span>':v.role=='ai'?'🤖 AI ANSWER <span class=badge style=background:#ff9800>OPTIONAL</span>':'✅ STUDENT ANSWER'}</b><br>${v.text}</div>`).join('')}</div><div style=margin-top:8px;border-top:1px solid #eee;padding-top:6px><b>Answer as:</b><select id=r${i} style=width:60%><option value=student>Student</option><option value=patron>Patron (Dr. Okore - PIN)</option><option value=ai>AI Tutor (Optional)</option></select><input id=a${i} placeholder="Your answer..."><input id=p${i} placeholder="Patron PIN" style=display:none><button class=btn onclick=ans(${i})>Submit Answer</button></div></div>`).join('')||'<p style=text-align:center>No questions yet. Be first!</p>';document.querySelectorAll('select').forEach(s=>s.onchange=function(){let id=this.id.replace('r','');document.getElementById('p'+id).style.display=this.value=='patron'?'block':'none'})}
+function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ensFinalV5',JSON.stringify(qs));q.value=d.value='';render()}
+function ans(i){let role=document.getElementById('r'+i).value;let txt=document.getElementById('a'+i).value;if(!txt)return;if(role=='patron'){if(document.getElementById('p'+i).value!=='ENS2026'){alert('Wrong Patron PIN!');return}}if(role=='ai'&&!document.getElementById('aiOn').checked){alert('AI Tutor is disabled by Patron');return}qs[i].ans.push({role:role,text:txt});localStorage.setItem('ensFinalV5',JSON.stringify(qs));if(role=='ai'){aiHist.unshift({q:qs[i].q,a:txt,date:new Date().toLocaleDateString()});localStorage.setItem('ensAI',JSON.stringify(aiHist))}render()}
+function askAI(){let qq=document.getElementById('aiQ').value.toLowerCase();if(!qq)return;let k=Object.keys(aiDB).find(k=>qq.includes(k));let a=k?aiDB[k]:`AI: In ENS/B/26, ${qq} relates to environmental science. Key points: definition, causes, effects, mitigation. Refer to notes section.`;document.getElementById('aiAns').innerHTML=`<div class=card aiBox><b>🤖 AI Answer:</b><br>${a}<br><br><button class=btn2 onclick="useAI('${a.replace(/'/g,'')}')">Use this answer in Q&A</button></div>`;aiHist.unshift({q:qq,a:a,date:new Date().toLocaleDateString()});localStorage.setItem('ensAI',JSON.stringify(aiHist));renderAI()}
+function renderAI(){document.getElementById('aiHistory').innerHTML=aiHist.map(h=>`<div style=background:#fff8e1;padding:6px;border-radius:6px;margin:4px 0><b>Q: ${h.q}</b><br>AI: ${h.a}<br><small>${h.date}</small></div>`).join('')||'No AI answers yet.'}
+function useAI(t){show('qa');q.value='AI Generated Answer';d.value=t;alert('Go to Q&A and post it!')}
+function postNote(){if(nPin.value!=='ENS2026'){alert('Only Patron can post! PIN is ENS2026');return}if(!nTitle.value||!nContent.value)return alert('Fill title and content');notes.unshift({title:nTitle.value,content:nContent.value,type:nType.value,date:new Date().toLocaleDateString()});localStorage.setItem('ensNotesV5',JSON.stringify(notes));nTitle.value=nContent.value=nPin.value='';alert((nType.value=='past'?'Past Paper':'Note')+' posted!');renderNotes(nType.value=='past'?'past':'note');show(nType.value=='past'?'past':'notes')}
+function renderNotes(f){let fil=notes.filter(n=>n.type==f);let target=f=='past'?'pastList':'notesList';document.getElementById(target).innerHTML=fil.map(n=>`<div class=card style=border-left:5px solid ${f=='past'?'#d32f2f':'#1565c0'}><b>${f=='past'?'📝':'📚'} ${n.title}</b> <span class=badge style=background:${f=='past'?'#d32f2f':'#1565c0'}>${n.type.toUpperCase()} - PATRON</span><br><small>${n.date}</small><p>${n.content.includes('http')?`<a href="${n.content}" target=_blank style=background:#1b5e20;color:#fff;padding:10px 15px;border-radius:25px;text-decoration:none;display:inline-block>📥 DOWNLOAD / VIEW PDF</a><br><small>${n.content}</small>`:n.content}</p><button class=btn2 onclick="window.open('https://wa.me/?text='+encodeURIComponent('📚 '+n.title+' - '+n.content+' - ENS/B/26 App'))">Share on WhatsApp</button></div>`).join('')||`<p style=text-align:center>No ${f=='past'?'past papers':'notes'} yet.</p>`}
+function renderLive(){document.getElementById('liveStatus').innerText=live.on?'🟢 LIVE NOW!':'🔴 No live class now';document.getElementById('liveTopic').innerText=live.title||'';document.getElementById('joinBtn').style.display=live.on?'block':'none';document.getElementById('joinBtn').innerText=live.on?'📱 JOIN: '+live.title:'JOIN'}
+function startLive(){if(document.getElementById('livePin').value!=='ENS2026')return alert('Wrong PIN');let title=document.getElementById('liveTitle').value||'ENS/B/26 Live Class';live={on:true,title:title,room:'ENS-B26-MOI-'+Date.now()};localStorage.setItem('ensLiveV5',JSON.stringify(live));document.getElementById('patronLive').style.display='none';renderLive();joinLive()}
+function endLive(){live={on:false,title:'',room:''};localStorage.setItem('ensLiveV5',JSON.stringify(live));document.getElementById('jitsi').style.display='none';document.getElementById('jitsi').innerHTML='';renderLive()}
+function joinLive(){if(!live.on)return alert('No live class');document.getElementById('jitsi').style.display='block';new JitsiMeetExternalAPI('meet.jit.si',{roomName:live.room,width:'100%',height:420,parentNode:document.getElementById('jitsi'),userInfo:{displayName:prompt('Your name:','ENS/B/26 Student')||'Student'}})}
 function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
-render();renderLive
+function shareWA(){window.open("https://wa.me/?text=🌿 ENS/B/26 Official App - Q&A + Notes + Past Papers + Live Class 🎥 "+encodeURIComponent("https://amoswairene37-del.github.io/Ecolern/"))}
+render();renderLive();
+</script></body></html>
