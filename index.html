@@ -4,45 +4,57 @@
 .card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
 .btn{background:#1b5e20;color:#fff;padding:10px;border:0;border-radius:8px;width:100%;font-weight:bold;margin:3px 0}
 .btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:6px 10px;border-radius:20px;font-size:12px;margin:2px}
-input,textarea{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
+input,textarea,select{width:94%;padding:8px;margin:4px 0;border:1px solid #ccc;border-radius:8px}
 h2{color:#1b5e20;text-align:center;margin:5px}
-#tutor{background:#fff3cd;border-left:4px solid #ff9800;padding:10px;border-radius:8px;margin:8px 0;display:none}
+.patronAns{background:#e3f2fd!important;border-left:4px solid #1565c0;padding:8px;border-radius:8px}
+.aiAns{background:#fff3cd!important;border-left:4px solid #ff9800;padding:8px;border-radius:8px}
+.tab{padding:10px;text-align:center;background:#fff;margin:2px;border-radius:8px;cursor:pointer;flex:1;font-size:12px}
+.tab.active{background:#1b5e20;color:#fff}
+.badge{font-size:11px;padding:2px 6px;border-radius:10px;color:#fff;margin-left:5px}
+.b-patron{background:#1565c0}.b-ai{background:#ff9800}.b-past{background:#d32f2f}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;z-index:9}
 .modal div{background:#fff;margin:20px;padding:15px;border-radius:12px;max-height:80%;overflow:auto}
 </style></head><body>
-<h2>🌿 ENS/B/26</h2><p style=text-align:center;margin:0>Moi University - Environmental Science<br><small>Class Q&A Platform 2026</small></p>
-<div style=text-align:center>
-<button class=btn2 onclick="document.getElementById('clist').style.display='block'">👥 Class List (11)</button>
-<button class=btn2 onclick=askAI()>🤖 AI Tutor</button>
-<button class=btn2 onclick=shareWA()>📱 Share</button>
-</div>
-<div id=tutor></div>
-<div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea>
-<button class=btn onclick=ask()>POST QUESTION</button>
-<button class=btn2 onclick=autoAns() style=width:100%;background:#fff3cd;color:#333>✨ Get AI Answer</button>
-</div>
-<input id=s placeholder="🔍 Search..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc>
+<h2>🌿 ENS/B/26</h2><p style=text-align:center;margin:0>Moi University</p>
+<div style=display:flex><div class="tab active" id=tab1 onclick="showTab('qa')">💬 Q&A</div><div class=tab id=tab2 onclick="showTab('notes')">📚 Notes (<span id=ncount>0</span>)</div><div class=tab id=tab3 onclick="showTab('past')">📝 Past Papers (<span id=pcount>0</span>)</div></div>
+
+<div id=qaSection>
+<div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=ask()>POST QUESTION</button></div>
+<input id=s placeholder="🔍 Search Q&A..." oninput=filter() style=width:97%;padding:8px;border-radius:8px;border:1px solid #ccc>
 <div id=list></div>
-<div id=clist class=modal onclick="if(event.target==this)this.style.display='none'"><div>
-<h3>ENS/B/26 Class List 2026</h3><p id=cn></p><textarea id=newName placeholder="Add name"></textarea>
-<button class=btn onclick=addStudent()>Add Student</button><button class=btn onclick="document.getElementById('clist').style.display='none'">Close</button>
-<p><small>Tip: To delete, tap ✕ next to name</small></p>
-</div></div>
+</div>
+
+<div id=notesSection style=display:none>
+<div class=card style=background:#e3f2fd><h3>👨‍🏫 Post by Patron</h3>
+<select id=nType><option value=note>📚 Class Notes</option><option value=past>📝 Past Paper</option><option value=assignment>📌 Assignment</option></select>
+<input id=nTitle placeholder="Title e.g. EMG 101 Week 5 or EMG 101 Past Paper 2023">
+<textarea id=nContent placeholder="Paste notes OR paste Google Drive link for PDF..."></textarea>
+<input id=nPin placeholder="Patron PIN: ENS2026" type=password>
+<button class=btn onclick=postNote()>📤 POST AS PATRON</button>
+<small>How to add PDF: Upload PDF to Google Drive → Get share link → Paste link above</small>
+</div>
+<div id=notesList></div>
+</div>
+
+<div id=pastSection style=display:none>
+<div id=pastList></div>
+</div>
+
+<div style=text-align:center;margin:10px><button class=btn2 onclick="document.getElementById('clist').style.display='block'">👥 Class List</button><button class=btn2 onclick=shareWA()>📱 Share App</button></div>
+
+<div id=clist class=modal onclick="if(event.target==this)this.style.display='none'"><div><h3>ENS/B/26 - 11 Members</h3><p>• Dr. Okore Luther - Patron<br>• Amos Nyongesa - Class Rep<br>• Caleb<br>• Calvin<br>• Cythia<br>• Dominic<br>• Edwin<br>• Jane<br>• Kelvin<br>• Phidel<br>• Wilfrida</p><button class=btn onclick="document.getElementById('clist').style.display='none'">Close</button></div></div>
+
 <script>
-let qs=JSON.parse(localStorage.getItem('ens26')||'[]');
-let students=["Dr. Okore Luther - Lecturer (Patron)","Amos Nyongesa - ENS/B/26 - Class Rep","Caleb - ENS/B/26","Calvin - ENS/B/26","Cythia - ENS/B/26","Dominic - ENS/B/26","Edwin - ENS/B/26","Jane - ENS/B/26","Kelvin - ENS/B/26","Phidel - ENS/B/26","Wilfrida - ENS/B/26"];
-let aiDB={carrying:"Carrying capacity is max population environment can sustain.",eutrophication:"Eutrophication is excess nutrients causing algal bloom and oxygen loss.",ecology:"Ecology studies organism-environment interactions.",pollution:"Pollution is harmful contaminants in environment.",biodiversity:"Biodiversity is variety of life.",climate:"Climate change is long-term weather shift.",gis:"GIS captures and analyzes spatial data.",conservation:"Conservation is protecting resources.",environmental:"Environmental Science solves environmental problems using science."}
-function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><p>${x.d}</p><small>${x.ans.length} answers</small><div>${x.ans.map(v=>`<p style=background:#f1f8e9;padding:6px;border-radius:6px>✅ ${v}</p>`).join('')}</div><input id=a${i} placeholder=Answer...><button class=btn onclick=ans(${i}) style=margin-top:5px>Submit Answer</button><button class=btn2 onclick="shareQ('${x.q.replace(/'/g,'')}')">Share on WhatsApp</button></div>`).join('')||'<p style=text-align:center>No questions yet.</p>';document.getElementById('cn').innerHTML=students.map((s,i)=>`• ${s} <span onclick="delStu(${i})" style=color:red;cursor:pointer>✕</span><br>`).join('')}
-function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[],date:new Date().toLocaleDateString()});localStorage.setItem('ens26',JSON.stringify(qs));q.value=d.value='';render()}
-function ans(i){let v=document.getElementById('a'+i).value;if(!v)return;qs[i].ans.push(v);localStorage.setItem('ens26',JSON.stringify(qs));render()}
+let qs=JSON.parse(localStorage.getItem('ens26v3')||'[]');
+let notes=JSON.parse(localStorage.getItem('ensNotesFinal')||'[]');
+let aiDB={carrying:"Carrying capacity is max population environment can sustain.",eutrophication:"Eutrophication is excess nutrients causing algal bloom.",ecology:"Ecology studies organism-environment interactions."}
+function showTab(t){document.getElementById('qaSection').style.display=t=='qa'?'block':'none';document.getElementById('notesSection').style.display=t=='notes'?'block':'none';document.getElementById('pastSection').style.display=t=='past'?'block':'none';document.getElementById('tab1').className=t=='qa'?'tab active':'tab';document.getElementById('tab2').className=t=='notes'?'tab active':'tab';document.getElementById('tab3').className=t=='past'?'tab active':'tab';if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past')}
+function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><p>${x.d}</p><div>${x.ans.map(v=>`<div class=${v.role=='patron'?'patronAns':'stuAns'} style=margin:5px 0><b>${v.role=='patron'?'👨‍🏫 Dr. Okore <span class=badge style=background:#1565c0>PATRON</span>':'✅ Student'}:</b> ${v.text}</div>`).join('')}</div><div style=margin-top:10px><select id=r${i}><option value=student>As Student</option><option value=patron>As Patron (PIN)</option></select><input id=a${i} placeholder=Answer...><input id=p${i} placeholder="PIN" style=display:none><button class=btn onclick=ans(${i})>Submit Answer</button></div></div>`).join('')||'<p style=text-align:center>No questions yet.</p>';document.querySelectorAll('select').forEach(s=>s.onchange=function(){let idx=this.id.replace('r','');document.getElementById('p'+idx).style.display=this.value=='patron'?'block':'none'})}
+function renderNotes(filterType){let filtered=filterType?notes.filter(n=>n.type==filterType):notes;document.getElementById('ncount').innerText=notes.filter(n=>n.type=='note'||n.type=='assignment').length;document.getElementById('pcount').innerText=notes.filter(n=>n.type=='past').length;let html=filtered.map((n,i)=>`<div class=card style="${n.type=='past'?'border-left:4px solid #d32f2f':'border-left:4px solid #1565c0'}"><b>${n.type=='past'?'📝 PAST PAPER:':'📚'} ${n.title}</b> <span class=badge style=background:${n.type=='past'?'#d32f2f':'#1565c0'}>${n.type.toUpperCase()}</span><br><small>By Dr. Okore - ${n.date}</small><p>${n.content.includes('http')?`<a href="${n.content}" target="_blank" style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none;display:inline-block;margin:5px 0>📥 DOWNLOAD / OPEN PDF</a><br><small>${n.content}</small>`:n.content}</p><button class=btn2 onclick="window.open('https://wa.me/?text='+encodeURIComponent('📚 ${n.title}: ${n.content} - From ENS/B/26 App https://amoswairene37-del.github.io/Ecolern/'))">Share on WhatsApp</button></div>`).join('');if(filterType=='note'){document.getElementById('notesList').innerHTML=html||'<p style=text-align:center>No notes yet.</p>'}else{document.getElementById('pastList').innerHTML=html||'<p style=text-align:center>No past papers yet. Patron will upload soon.</p>';if(filterType=='past')document.getElementById('notesList').innerHTML=''}}
+function ask(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ens26v3',JSON.stringify(qs));q.value=d.value='';render()}
+function ans(i){let role=document.getElementById('r'+i).value;let text=document.getElementById('a'+i).value;if(!text)return;if(role=='patron'){let pin=document.getElementById('p'+i).value;if(pin!=='ENS2026'&&pin!=='okore'){alert('Wrong Patron PIN!');return}}qs[i].ans.push({role:role,text:text});localStorage.setItem('ens26v3',JSON.stringify(qs));render()}
+function postNote(){if(nPin.value!=='ENS2026'&&nPin.value!=='okore'){alert('Wrong PIN! Only Dr. Okore can post. PIN is ENS2026');return}if(!nTitle.value||!nContent.value){alert('Fill title and link/text');return}notes.unshift({title:nTitle.value,content:nContent.value,type:nType.value,date:new Date().toLocaleDateString()});localStorage.setItem('ensNotesFinal',JSON.stringify(notes));nTitle.value=nContent.value=nPin.value='';alert((nType.value=='past'?'Past Paper':'Note')+' posted!');renderNotes(nType.value=='past'?'past':'note');showTab(nType.value=='past'?'past':'notes')}
 function filter(){render(qs.filter(x=>x.q.toLowerCase().includes(s.value.toLowerCase())))}
-function autoAns(){let txt=q.value.toLowerCase();if(!txt){alert('Type question');return}let k=Object.keys(aiDB).find(k=>txt.includes(k));let a=k?aiDB[k]:"In ENS, focus on definition, causes, effects, mitigation. Check EMG notes.";let t=document.getElementById('tutor');t.style.display='block';t.innerHTML=`<b>🤖 AI:</b><br>${a}<br><button class=btn2 onclick="useAI()">Use as Answer</button>`;window.aiTemp=a}
-function useAI(){qs.unshift({q:q.value,d:d.value,ans:[window.aiTemp],date:new Date().toLocaleDateString()});localStorage.setItem('ens26',JSON.stringify(qs));document.getElementById('tutor').style.display='none';q.value=d.value='';render()}
-function askAI(){let t=document.getElementById('tutor');t.style.display='block';t.innerHTML=`<b>🤖 ENS AI Tutor</b><br><input id=aiQ placeholder=Topic... style=width:90%><button class=btn onclick=doAI()>Ask</button>`}
-function doAI(){let v=document.getElementById('aiQ').value.toLowerCase();let k=Object.keys(aiDB).find(k=>v.includes(k));let a=k?aiDB[k]:"Topic "+v+" is key for ENS/B/26. Check lecture notes.";document.getElementById('tutor').innerHTML=`<b>🤖 Answer:</b> ${a}<br><button class=btn2 onclick="document.getElementById('tutor').style.display='none'">Close</button>`}
-function shareWA(){window.open("https://wa.me/?text=Join ENS/B/26 App 🌿 "+encodeURIComponent("https://amoswairene37-del.github.io/Ecolern/"))}
-function shareQ(q){window.open("https://wa.me/?text=ENS/B/26 Q: "+encodeURIComponent(q)+" https://amoswairene37-del.github.io/Ecolern/")}
-function addStudent(){let v=document.getElementById('newName').value;if(!v)return;students.push(v);document.getElementById('newName').value='';render()}
-function delStu(i){if(confirm('Delete '+students[i]+'?')){students.splice(i,1);render()}}
-render();
+function shareWA(){window.open("https://wa.me/?text=ENS/B/26 Moi App 🌿 "+encodeURIComponent("https://amoswairene37-del.github.io/Ecolern/"))}
+render();renderNotes();
 </script></body></html>
