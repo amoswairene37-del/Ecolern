@@ -1,147 +1,115 @@
-itsi></div>
-<div class=card><h3>📅 How Live Works</h3><p>1. Patron Dr. Okore clicks Start Live<br>2. App sends WhatsApp message to all students<br>3. Students get notification + beep<br>4. Tap JOIN LIVE NOW</p></div>
-</div>
-
-<!-- CLASS DIRECTORY -->
-<div id=class style=display:none>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#66bb6a);color:#fff><h3>👥 Class Directory - ENS/B/26</h3><p id=totalStudents>0 Registered</p><button class=btn style=background:#fff;color:#1b5e20 onclick="document.getElementById('profileBox').style.display='block'">+ Register / Update My Profile</button><button class=btnWa onclick=startGroupCall() style=background:#fff;color:#1b5e20;width:100%;margin-top:6px>📞 Start Group Video Call (All Students)</button></div>
-<div class=card><h3>💬 Class Group Chat (In-App)</h3><div id=groupChat class=chatbox></div><div style=display:flex;gap:5px;margin-top:8px><input id=chatInput placeholder="Message all..." style=flex:1><button class=btn style=width:auto;padding:10px 18px;background:#25D366 onclick=sendChat()>Send</button></div></div>
-<div id=studentsList></div>
-</div>
-
-<script>
-// STORAGE
-let qs=JSON.parse(localStorage.getItem('ensQvFinal')||'[]');
-let materials=JSON.parse(localStorage.getItem('ensMvFinal')||'[]'); // notes, assign, past
-let live=JSON.parse(localStorage.getItem('ensLvFinal')||'{"on":false,"title":"","room":"","time":0}');
-let myProfile=JSON.parse(localStorage.getItem('myProfFinal')||'{"name":"","reg":"","phone":"","pic":""}');
-let students=JSON.parse(localStorage.getItem('ensStudentsFinal')||'[]');
-let gChat=JSON.parse(localStorage.getItem('ensGChatFinal')||'[]');
-let notifs=JSON.parse(localStorage.getItem('ensNotifFinal')||'[]');
-
-let aiDB={eutrophication:"Eutrophication: Excess nutrients (N,P) cause algal blooms, oxygen depletion.",ecology:"Ecology: Study of interactions between organisms & environment.",pollution:"Pollution: Harmful substances contaminating environment. Types: air, water, soil.",biodiversity:"Biodiversity: Variety of life forms in an ecosystem.",climate:"Climate Change: Long-term shift in global weather patterns due to greenhouse gases."};
-
-function show(t){
-['notif','qa','ai','notes','assign','past','live','class'].forEach(x=>{
-document.getElementById(x).style.display=x==t?'block':'none';
-let idx=['notif','qa','ai','notes','assign','past','live','class'].indexOf(x)+1;
-document.getElementById('t'+idx).className=x==t?'tab active':'tab';
-});
-if(t=='notes')renderMat('note');if(t=='assign')renderMat('assign');if(t=='past')renderMat('past');
-if(t=='live')renderLive();if(t=='class'){renderStudents();renderGroupChat()}
-if(t=='notif')renderNotif();
-buildPatronForms();
-}
-function buildPatronForms(){
-let html=(type,label)=>`<div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Post ${label} - PIN ENS2026</h3><input id="${type}Title" placeholder="Title e.g. ${label} 1"><textarea id="${type}Content" placeholder="Description or Google Drive link https://"></textarea><input id="${type}Date" type=date><input id="${type}Pin" placeholder="PIN" type=password><button class=btn onclick="postMat('${type}')">POST ${label.toUpperCase()}</button></div>`;
-document.getElementById('patronPostNotes').innerHTML=html('note','Notes');
-document.getElementById('patronPostAssign').innerHTML=html('assign','Assignment');
-document.getElementById('patronPostPast').innerHTML=html('past','Past Paper');
-}
-function loadProfile(){if(myProfile.name){document.getElementById('myNameTxt').innerText=myProfile.name;document.getElementById('myRegTxt').innerText=(myProfile.reg||'')+' • ENS/B/26';document.getElementById('pName').value=myProfile.name}if(myProfile.reg)document.getElementById('pReg').value=myProfile.reg;if(myProfile.phone)document.getElementById('pPhone').value=myProfile.phone;if(myProfile.pic)document.getElementById('myPic').src=myProfile.pic}
-document.getElementById('pFile').onchange=e=>{let r=new FileReader();r.onload=()=>{document.getElementById('preview').src=r.result;document.getElementById('preview').style.display='block';document.getElementById('preview').dataset.url=r.result};r.readAsDataURL(e.target.files[0])}
-function saveProfile(){
-let name=pName.value||'Student';let reg=pReg.value||'';let phone=pPhone.value||'';let pic=document.getElementById('preview').dataset.url||myProfile.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-.slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;transition:.4s;border-radius:50%}
-input:checked+.slider{background:#1b5e20}input:checked+.slider:before{transform:translateX(20px)}
+<!DOCTYPE html><html><head><meta name=viewport content="width=device-width,initial-scale=1">
+<title>ENS/B/26 Moi University</title>
+<script src="https://meet.jit.si/external_api.js"></script>
+<link rel="manifest" href="manifest.json">
+<style>
+body{font-family:Arial;background:#e8f5e9;margin:0;padding:8px}
+.card{background:#fff;padding:12px;border-radius:12px;margin:8px 0}
+.btn{background:#1b5e20;color:#fff;padding:12px;border:0;border-radius:10px;width:100%;font-weight:bold;margin:5px 0;touch-action:manipulation;cursor:pointer}
+.btn2{background:#fff;color:#1b5e20;border:1px solid #1b5e20;padding:8px 12px;border-radius:20px;font-size:12px;margin:2px;cursor:pointer}
+.ppic{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #1b5e20}
+.header{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px;border-radius:12px}
+.tabs{display:flex;overflow:auto;position:sticky;top:0;background:#e8f5e9;z-index:10;padding:6px 0}
+.tab{padding:10px 5px;text-align:center;background:#fff;margin:2px;border-radius:10px;flex:1;font-size:10px;min-width:55px;cursor:pointer}
+.tab.active{background:#1b5e20;color:#fff}
+#profileBox{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:999;display:none;overflow:auto;padding:20px}
+#profileInner{background:#fff3cd;padding:15px;border-radius:15px;max-width:400px;margin:20px auto}
+input,textarea,select{width:92%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:10px;font-size:16px}
+#jitsi{width:100%;height:400px;display:none;border-radius:12px}
 </style></head><body>
 
 <div class=header>
-<div style=display:flex;align-items:center;gap:9px>
+<div style=display:flex;align-items:center;gap:8px>
 <img id=myPic class=ppic src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-<div><b id=myNameTxt>ENS/B/26</b><br><small id=myRegTxt>Moi University • Patron Dr. Okore Luther</small></div>
+<div><b id=myNameTxt>ENS/B/26</b><br><small id=myRegTxt>Moi University</small></div>
 </div>
-<button class=btn2 onclick="document.getElementById('profileBox').style.display='block'">👤</button>
+<button class=btn2 onclick="openProfile()">👤 Profile</button>
 </div>
 
 <div class=tabs>
-<div class=tab active id=t1 onclick="show('notif')">🔔<br>Alerts<span id=badgeNotif class=badge style=display:none>0</span></div>
-<div class=tab id=t2 onclick="show('qa')">💬<br>Q&A</div>
-<div class=tab id=t3 onclick="show('ai')">🤖<br>AI</div>
-<div class=tab id=t4 onclick="show('notes')">📚<br>Notes</div>
-<div class=tab id=t5 onclick="show('assign')">📝<br>Assign</div>
-<div class=tab id=t6 onclick="show('past')">📄<br>Papers</div>
-<div class=tab id=t7 onclick="show('live')">🎥<br>LIVE</div>
-<div class=tab id=t8 onclick="show('class')">👥<br>Class</div>
+<div class="tab active" id=t1 onclick="showTab('qa')">💬 Q&A</div>
+<div class=tab id=t2 onclick="showTab('ai')">🤖 AI</div>
+<div class=tab id=t3 onclick="showTab('notes')">📚 Notes</div>
+<div class=tab id=t4 onclick="showTab('past')">📝 Papers</div>
+<div class=tab id=t5 onclick="showTab('live')">🎥 LIVE</div>
+<div class=tab id=t6 onclick="showTab('class')">👥 Class</div>
 </div>
 
-<div id=profileBox class=card style=display:none;background:#fff3cd>
-<h3>👤 Register - ENS/B/26</h3>
-<input id=pName placeholder="Full Name e.g. Amos Nyongesa">
-<input id=pReg placeholder="Reg No e.g. ENS/B/01/24">
-<input id=pPhone placeholder="WhatsApp e.g. 0712345678">
-<input type=file id=pFile accept="image/*">
-<img id=preview style=width:80px;height:80px;border-radius:50%;display:none;margin:8px 0>
-<button class=btn onclick=saveProfile()>Save & Register</button>
-<button class=btn2 onclick="document.getElementById('profileBox').style.display='none'">Close</button>
-<small>Members: Amos, Caleb, Calvin, Cythia, Dominic, Edwin, Jane, Kelvin, Phidel, Wilfrida, Dr. Okore</small>
+<div id=profileBox onclick="if(event.target==this)closeProfile()">
+<div id=profileInner>
+<h3>👤 My Profile & Registration</h3>
+<p><small>Photo auto-resized to fit</small></p>
+<input id=pName placeholder="Full Name e.g. Amos Nyongesa" value="Amos nyongesa">
+<input id=pReg placeholder="Reg No e.g. ENS/B/01/24" value="ENS/B/01/26">
+<input id=pPhone placeholder="WhatsApp No e.g. 0118456256" value="0118456256">
+<input type=file id=pFile accept="image/*" style=width:95%>
+<div id=previewWrap style=text-align:center;display:none><img id=preview style=width:90px;height:90px;border-radius:50%;margin:8px 0;border:3px solid #1b5e20><br><small>Preview</small></div>
+<button class=btn onclick=saveProfile()>✅ Save & Register</button>
+<button class=btn2 onclick=closeProfile() style=width:100%;padding:12px>Close</button>
+<div id=saveStatus style=text-align:center;margin-top:8px;color:green></div>
+</div>
 </div>
 
-<!-- NOTIFICATIONS TAB -->
-<div id=notif>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#43a047);color:#fff><h3>🔔 Notifications & Alerts</h3><p>Get alerts for LIVE, Assignments, Notes</p><button class=btn style=background:#fff;color:#1b5e20 onclick="Notification.requestPermission().then(()=>alert('Notifications enabled!'))">🔔 Enable Notifications</button></div>
-<div id=notifList></div>
-</div>
-
-<!-- Q&A -->
-<div id=qa style=display:none><div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=ask()>POST QUESTION</button></div><input id=s placeholder="🔍 Search questions..." oninput=filter() style=width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;margin:6px 0><div id=list></div></div>
-
-<!-- AI TUTOR -->
-<div id=ai style=display:none>
-<div class=card><div style=display:flex;justify-content:space-between;align-items:center><h3>🤖 AI Tutor</h3><label class=switch><input type=checkbox id=aiOn checked onchange=toggleAI()><span class=slider></span></label></div><small id=aiStatus>AI is ON - Optional</small><input id=aiQ placeholder="Ask AI anything..."><button class=btn onclick=askAI() style=background:#ff9800>Ask AI</button><div id=aiAns></div></div>
-<div id=aiHistory></div>
-</div>
-
-<!-- NOTES / ASSIGNMENTS / PAPERS - PATRON POST -->
-<div id=notes style=display:none><div id=patronPostNotes></div><div id=notesList></div></div>
-<div id=assign style=display:none><div id=patronPostAssign></div><div id=assignList></div></div>
-<div id=past style=display:none><div id=patronPostPast></div><div id=pastList></div></div>
-
-<!-- LIVE -->
-<div id=live style=display:none>
-<div class=card><div style=background:linear-gradient(135deg,#b71c1c,#1b5e20);color:#fff;padding:14px;border-radius:14px;text-align:center><h3>🎥 LIVE ONLINE LESSONS</h3><p id=liveStatus>🔴 No live class now</p><h4 id=liveTopic></h4><button class=btn style=background:#fff;color:#b71c1c;display:none;font-size:18px;padding:14px id=joinBtn onclick=joinLive()>🔴 JOIN LIVE NOW</button><button class=btn2 style=color:#fff;border-color:#fff;margin-top:8px onclick="document.getElementById('patronLive').style.display='block'">Patron: Start Live</button></div></div>
-<div id=patronLive class=card style=display:none;background:#ffebee><h3>👨‍🏫 Start Live (PIN ENS2026)</h3><input id=liveTitle placeholder="Topic e.g. ENS 110 Principles of Ecology"><input id=livePin placeholder="PIN" type=password><button class=btn onclick=startLive()>🚀 GO LIVE + Notify All Students</button><button class=btn style=background:#d32f2f onclick=endLive()>END LIVE</button></div>
-<div id=jitsi></div>
-<div class=card><h3>📅 How Live Works</h3><p>1. Patron Dr. Okore clicks Start Live<br>2. App sends WhatsApp message to all students<br>3. Students get notification + beep<br>4. Tap JOIN LIVE NOW</p></div>
-</div>
-
-<!-- CLASS DIRECTORY -->
-<div id=class style=display:none>
-<div class=card style=background:linear-gradient(135deg,#1b5e20,#66bb6a);color:#fff><h3>👥 Class Directory - ENS/B/26</h3><p id=totalStudents>0 Registered</p><button class=btn style=background:#fff;color:#1b5e20 onclick="document.getElementById('profileBox').style.display='block'">+ Register / Update My Profile</button><button class=btnWa onclick=startGroupCall() style=background:#fff;color:#1b5e20;width:100%;margin-top:6px>📞 Start Group Video Call (All Students)</button></div>
-<div class=card><h3>💬 Class Group Chat (In-App)</h3><div id=groupChat class=chatbox></div><div style=display:flex;gap:5px;margin-top:8px><input id=chatInput placeholder="Message all..." style=flex:1><button class=btn style=width:auto;padding:10px 18px;background:#25D366 onclick=sendChat()>Send</button></div></div>
-<div id=studentsList></div>
-</div>
+<div id=qa><div class=card><input id=q placeholder="Ask question..."><textarea id=d placeholder="Details..."></textarea><button class=btn onclick=askQ()>POST QUESTION</button></div><input id=s placeholder="🔍 Search..." oninput=filterQ() style=width:95%;padding:10px;border-radius:10px;border:1px solid #ccc;margin:5px 0><div id=list></div></div>
+<div id=ai style=display:none><div class=card><h3>🤖 AI Tutor</h3><input id=aiQ placeholder="Ask AI..."><button class=btn onclick=askAI() style=background:#ff9800>Ask AI</button><div id=aiAns></div></div></div>
+<div id=notes style=display:none><div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Upload</h3><select id=nType><option value=note>📚 Notes</option><option value=past>📝 Past Paper</option></select><input id=nTitle placeholder="Title"><textarea id=nContent placeholder="Drive link or notes"></textarea><input id=nPin placeholder="PIN ENS2026" type=password><button class=btn onclick=postNote()>POST AS PATRON</button></div><div id=notesList></div></div>
+<div id=past style=display:none><div id=pastList></div></div>
+<div id=live style=display:none><div class=card><div style=background:#1565c0;color:#fff;padding:15px;border-radius:12px;text-align:center><h3>🎥 LIVE CLASS</h3><p id=liveStatus>🔴 No live</p><p id=liveTopic></p><button class=btn style=background:#fff;color:#1565c0;display:none id=joinBtn onclick=joinLive()>JOIN LIVE NOW</button><button class=btn2 style=color:#fff;border-color:#fff onclick="document.getElementById('patronLive').style.display='block'">Patron Start</button></div></div><div id=patronLive class=card style=display:none><input id=liveTitle placeholder="Topic"><input id=livePin placeholder="PIN ENS2026" type=password><button class=btn onclick=startLive()>GO LIVE + WhatsApp</button><button class=btn style=background:#d32f2f onclick=endLive()>END</button></div><div id=jitsi></div></div>
+<div id=class style=display:none><div class=card><h3>👥 Class Members</h3><p id=totalStudents></p><button class=btn onclick=openProfile()>+ Register</button></div><div id=studentsList></div><div class=card><h3>💬 Group Chat</h3><div id=groupChat style=height:200px;overflow:auto;background:#f9fbe7;padding:8px;border-radius:10px></div><div style=display:flex;gap:5px;margin-top:5px><input id=chatInput placeholder="Message..." style=flex:1><button class=btn2 style=background:#1b5e20;color:#fff onclick=sendChat()>Send</button></div></div></div>
 
 <script>
-// STORAGE
-let qs=JSON.parse(localStorage.getItem('ensQvFinal')||'[]');
-let materials=JSON.parse(localStorage.getItem('ensMvFinal')||'[]'); // notes, assign, past
-let live=JSON.parse(localStorage.getItem('ensLvFinal')||'{"on":false,"title":"","room":"","time":0}');
-let myProfile=JSON.parse(localStorage.getItem('myProfFinal')||'{"name":"","reg":"","phone":"","pic":""}');
-let students=JSON.parse(localStorage.getItem('ensStudentsFinal')||'[]');
-let gChat=JSON.parse(localStorage.getItem('ensGChatFinal')||'[]');
-let notifs=JSON.parse(localStorage.getItem('ensNotifFinal')||'[]');
+let qs=JSON.parse(localStorage.getItem('ensQ2')||'[]');
+let notes=JSON.parse(localStorage.getItem('ensN2')||'[]');
+let live=JSON.parse(localStorage.getItem('ensL2')||'{"on":false,"title":"","room":""}');
+let myProfile=JSON.parse(localStorage.getItem('myProf2')||'{"name":"","reg":"","phone":"","pic":""}');
+let students=JSON.parse(localStorage.getItem('ensStudents2')||'[]');
+let gChat=JSON.parse(localStorage.getItem('ensGChat2')||'[]');
+let tempPic="";
 
-let aiDB={eutrophication:"Eutrophication: Excess nutrients (N,P) cause algal blooms, oxygen depletion.",ecology:"Ecology: Study of interactions between organisms & environment.",pollution:"Pollution: Harmful substances contaminating environment. Types: air, water, soil.",biodiversity:"Biodiversity: Variety of life forms in an ecosystem.",climate:"Climate Change: Long-term shift in global weather patterns due to greenhouse gases."};
+function openProfile(){document.getElementById('profileBox').style.display='block'}
+function closeProfile(){document.getElementById('profileBox').style.display='none'}
+function showTab(t){['qa','ai','notes','past','live','class'].forEach(x=>{document.getElementById(x).style.display=x==t?'block':'none';document.getElementById('t'+(['qa','ai','notes','past','live','class'].indexOf(x)+1)).className=x==t?'tab active':'tab'});if(t=='notes')renderNotes('note');if(t=='past')renderNotes('past');if(t=='live')renderLive();if(t=='class'){renderStudents();renderGChat()} closeProfile()}
 
-function show(t){
-['notif','qa','ai','notes','assign','past','live','class'].forEach(x=>{
-document.getElementById(x).style.display=x==t?'block':'none';
-let idx=['notif','qa','ai','notes','assign','past','live','class'].indexOf(x)+1;
-document.getElementById('t'+idx).className=x==t?'tab active':'tab';
+function loadProf(){if(myProfile.name){document.getElementById('myNameTxt').innerText=myProfile.name;document.getElementById('pName').value=myProfile.name;document.getElementById('myRegTxt').innerText=myProfile.reg||'Moi University'}if(myProfile.reg)document.getElementById('pReg').value=myProfile.reg;if(myProfile.phone)document.getElementById('pPhone').value=myProfile.phone;if(myProfile.pic){document.getElementById('myPic').src=myProfile.pic;tempPic=myProfile.pic;document.getElementById('preview').src=myProfile.pic;document.getElementById('previewWrap').style.display='block'}}
+document.getElementById('pFile').addEventListener('change',function(e){
+let file=e.target.files[0];if(!file)return;
+let reader=new FileReader();
+reader.onload=function(ev){
+let img=new Image();
+img.onload=function(){
+let canvas=document.createElement('canvas');
+let size=150;canvas.width=size;canvas.height=size;
+let ctx=canvas.getContext('2d');
+ctx.drawImage(img,0,0,size,size);
+tempPic=canvas.toDataURL('image/jpeg',0.6);
+document.getElementById('preview').src=tempPic;
+document.getElementById('previewWrap').style.display='block';
+document.getElementById('saveStatus').innerText='Photo resized ✅ Now tap Save';
+};
+img.src=ev.target.result;
+};
+reader.readAsDataURL(file);
 });
-if(t=='notes')renderMat('note');if(t=='assign')renderMat('assign');if(t=='past')renderMat('past');
-if(t=='live')renderLive();if(t=='class'){renderStudents();renderGroupChat()}
-if(t=='notif')renderNotif();
-buildPatronForms();
-}
-function buildPatronForms(){
-let html=(type,label)=>`<div class=card style=background:#e3f2fd><h3>👨‍🏫 Patron Post ${label} - PIN ENS2026</h3><input id="${type}Title" placeholder="Title e.g. ${label} 1"><textarea id="${type}Content" placeholder="Description or Google Drive link https://"></textarea><input id="${type}Date" type=date><input id="${type}Pin" placeholder="PIN" type=password><button class=btn onclick="postMat('${type}')">POST ${label.toUpperCase()}</button></div>`;
-document.getElementById('patronPostNotes').innerHTML=html('note','Notes');
-document.getElementById('patronPostAssign').innerHTML=html('assign','Assignment');
-document.getElementById('patronPostPast').innerHTML=html('past','Past Paper');
-}
-function loadProfile(){if(myProfile.name){document.getElementById('myNameTxt').innerText=myProfile.name;document.getElementById('myRegTxt').innerText=(myProfile.reg||'')+' • ENS/B/26';document.getElementById('pName').value=myProfile.name}if(myProfile.reg)document.getElementById('pReg').value=myProfile.reg;if(myProfile.phone)document.getElementById('pPhone').value=myProfile.phone;if(myProfile.pic)document.getElementById('myPic').src=myProfile.pic}
-document.getElementById('pFile').onchange=e=>{let r=new FileReader();r.onload=()=>{document.getElementById('preview').src=r.result;document.getElementById('preview').style.display='block';document.getElementById('preview').dataset.url=r.result};r.readAsDataURL(e.target.files[0])}
+
 function saveProfile(){
-let name=pName.value||'Student';let reg=pReg.value||'';let phone=pPhone.value||'';let pic=document.getElementById('preview').dataset.url||myProfile.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+try{
+let name=document.getElementById('pName').value.trim()||'Student';
+let reg=document.getElementById('pReg').value.trim();
+let phone=document.getElementById('pPhone').value.trim();
+let pic=tempPic||myProfile.pic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+myProfile={name,reg,phone,pic};
+localStorage.setItem('myProf2',JSON.stringify(myProfile));
+let idx=students.findIndex(s=>s.reg==reg && reg!='');
+if(idx>=0)students[idx]=myProfile;else students.unshift(myProfile);
+localStorage.setItem('ensStudents2',JSON.stringify(students));
+loadProf();renderStudents();
+document.getElementById('saveStatus').innerText='✅ Saved! Close and go to Class tab';
+setTimeout(closeProfile,1000);
+}catch(err){alert('Error: Photo too large. Try smaller photo. '+err);localStorage.removeItem('ensStudents2')}
+}
+
+function render(a=qs){list.innerHTML=a.map((x,i)=>`<div class=card><b>Q: ${x.q}</b><br><small>${x.d}</small><div>${x.ans.map(v=>`<div style=background:#f1f8e9;padding:6px;border-radius:8px;margin:4px 0;display:flex;gap:6px><img src="${v.pic||''}" style=width:28px;height:28px;border-radius:50%"><div><b>${v.role=='patron'?'👨‍🏫 Patron':v.name}</b><br>${v.text}</div></div>`).join('')}</div><select id=r${i} style=width:50%><option value=student>Student</option><option value=patron>Patron PIN</option></select><input id=a${i} placeholder=Answer... style=width:45%><input id=p${i} placeholder=PIN style=display:none;width:45%><button class=btn onclick=ans(${i})>Submit</button></div>`).join('')||'No questions';document.querySelectorAll('#list select').forEach(s=>s.onchange=function(){document.getElementById('p'+this.id.slice(1)).style.display=this.value=='patron'?'inline-block':'none'})}
+function askQ(){if(!q.value)return;qs.unshift({q:q.value,d:d.value,ans:[]});localStorage.setItem('ensQ2',JSON.stringify(qs));q.value=d.value='';render()}
+function ans(i){let role=document.getElementById('r'+i).value;let txt=document.getElementById('a'+i).value;if(!txt)return;if(role=='patron'&&document.getElementById('p'+i).value!=='ENS2026')return alert('Wrong PIN ENS2026');qs[i].ans.push({role,text:txt,name:myProfile.name||'Student',pic:myProfile.pic});localStorage.setItem('ensQ2',JSON.stringify(qs));render()}
+function postNote(){if(nPin.value!=='ENS2026')return alert('PIN ENS2026');if(!nTitle.value)return;notes.unshift({title:nTitle.value,content:nContent.value,type:nType.value,date:new Date().toLocaleDateString()});localStorage.setItem('ensN2',JSON.stringify(notes));nTitle.value=nContent.value=nPin.value='';alert('Posted');renderNotes(nType.value)}
+function renderNotes(f){let fil=notes.filter(n=>n.type==f);let target=f=='past'?'pastList':'notesList';document.getElementById(target).innerHTML=fil.map(n=>`<div class=card style=border-left:5px solid ${f=='past'?'red':'#1565c0'}><b>${n.title}</b><br><small>${n.date}</small><p>${n.content.includes('http')?`<a href="${n.content}" target=_blank style=background:#1b5e20;color:#fff;padding:8px 12px;border-radius:20px;text
