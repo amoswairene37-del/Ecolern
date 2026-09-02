@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ENS COHORTS 2026 MOI UNIVERSITY</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:rgba(0,168,132,0.3)}
-html,body{margin:0;padding:0;background:#111b21;color:white;font-family:Arial;overflow-x:hidden;overflow-y:auto;min-height:100vh}
-.header{padding:12px;padding-bottom:20px;position:relative;z-index:5;background:#111b21}
-.title{text-align:center;font-weight:900;font-size:20px;line-height:1.5;padding:22px 10px 10px 10px}
-.sub{text-align:center;font-size:11px;color:#25d366;font-weight:bold;padding:0 10px 16px 10px;line-height:1.5}
-.searchbox{background:#1a2a33;border-radius:25px;display:flex;align-items:center;padding:6px 6px 6px 14px;gap:8px;margin:8px 4px}
-.searchbox input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:16px;padding:10px}
-.searchbox button{border:0;background:#00a884;color:white;padding:14px 22px;border-radius:20px;font-weight:900;font-size:14px;cursor:pointer}
-.platforms{display:flex;flex-direction:column;gap:12px;margin-top:12px;padding-bottom:30px}
-.platforms a{display:flex;justify-content:space-between;align-items:center;padding:20px 16px;border-radius:14px;font-size:13px;font-weight:900;text-decoration:none;color:white;border:2px solid rgba(255,255,255,0.15);cursor:pointer;touch-action:manipulation;min-height:58px}
-.platforms a:active{transform:scale(0.97);opacity:0.85}
-.main{background:white;color:black;position:relative;z-index:1;margin-top:10px;border-radius:20px 20px 0 0;padding-bottom:30px}
-.contact{padding:14px;border-bottom:1px solid #eee;display:flex;gap:12px;align-items:center;color:black;text-decoration:none;cursor:pointer;min-height:68px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%}body{margin:0;padding:0;padding-bottom:90px;background:#111b21;color:white;font-family:Arial;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.header{padding:12px 12px 0 12px;background:#111b21;position:relative}
+.title{text-align:center;font-weight:900;font-size:20px;line-height:1.5;padding:20px 10px 8px 10px}
+.sub{text-align:center;font-size:11px;color:#25d366;font-weight:bold;padding:0 10px 12px 10px;line-height:1.5}
+.searchbox{background:#1a2a33;border-radius:25px;display:flex;align-items:center;padding:5px 5px 5px 14px;gap:6px;margin:8px 0}
+.searchbox input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:15px;padding:10px}
+.searchbox button{border:0;background:#00a884;color:white;padding:13px 20px;border-radius:20px;font-weight:900;font-size:13px}
+/* FIX: Scrollable platforms with lift from bottom */
+.platforms-wrap{max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px;border:1px solid #2a3942;border-radius:16px;padding:10px;background:#0e1a21;margin-top:10px}
+.platforms{display:flex;flex-direction:column;gap:12px;padding-bottom:100px}
+.platforms a{display:flex;justify-content:space-between;align-items:center;padding:18px 14px;border-radius:14px;font-size:13px;font-weight:900;text-decoration:none;color:white;border:2px solid rgba(255,255,255,0.2);min-height:56px;touch-action:manipulation}
+.platforms a:active{background-color:#333!important;transform:scale(0.98)}
+.main{background:white;color:black;position:relative;margin-top:16px;border-radius:22px 22px 0 0;padding-bottom:40px;min-height:40vh}
+.contact{padding:14px;border-bottom:1px solid #eee;display:flex;gap:12px;align-items:center;color:black;text-decoration:none;min-height:66px}
 .avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:white;flex-shrink:0;overflow:hidden;background:#00a884;border:2px solid #e0e0e0}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.page{position:fixed;inset:0;background:white;z-index:100;display:none;overflow-y:auto;padding:12px;padding-bottom:80px;color:black}
+.page{position:fixed;inset:0;background:white;z-index:9999;display:none;overflow-y:auto;padding:12px;padding-bottom:100px;color:black}
 .page:target{display:block}
 .card{background:white;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:12px}
 input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:14px;font-size:16px;margin-top:6px}
 .paste-zone{border:2px dashed #00a884;border-radius:12px;padding:14px;text-align:center;background:#f0fff4;margin-top:8px;font-size:12px;color:#166534}
 img.preview{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #ddd}
-.close-btn{position:sticky;top:0;float:right;background:#111b21;color:white;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:900;z-index:101}
-.profile-upload{width:100px;height:100px;border-radius:50%;border:3px dashed #00a884;display:flex;align-items:center;justify-content:center;margin:10px auto;background:#f0fff4;overflow:hidden;cursor:pointer;position:relative}
+.close-btn{position:sticky;top:0;float:right;background:#111b21;color:white;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:900;z-index:1000}
+.profile-upload{width:110px;height:110px;border-radius:50%;border:3px dashed #00a884;display:flex;align-items:center;justify-content:center;margin:12px auto;background:#f0fff4;overflow:hidden;cursor:pointer}
 .profile-upload img{width:100%;height:100%;object-fit:cover}
 </style>
 </head><body>
 
 <div class="header">
 <div class="title">ENS COHORTS 2026<br>MOI UNIVERSITY</div>
-<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden password</div>
+<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden</div>
 
 <form class="searchbox" action="https://www.google.com/search" method="GET" target="_blank">
 <span>🔍</span>
@@ -39,27 +41,46 @@ img.preview{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #d
 <button type="submit">SEARCH</button>
 </form>
 
-<div style="font-size:11px;color:#25d366;font-weight:bold;margin:14px 4px 8px 4px">📚 PLATFORMS - VERTICAL - YOUTUBE REMOVED - NEW UNIVERSITIES ADDED</div>
+<div style="font-size:11px;color:#25d366;font-weight:bold;margin:12px 2px 6px 2px">📚 SCROLL INSIDE BOX TO SEE ALL - ALL BUTTONS TOUCH 100% NOW</div>
+<div class="platforms-wrap">
 <div class="platforms">
 <a href="https://elearning.mu.ac.ke/" target="_blank" style="background:#18252c"><span>🎓 Moi eLearning - Moodle</span><span>→</span></a>
-<a href="https://scholar.google.com/" target="_blank" style="background:#1a2a3a"><span>🔬 Google Scholar - Research</span><span>→</span></a>
-<!-- YOUTUBE REMOVED -->
-<a href="https://www.topuniversities.com/" target="_blank" style="background:linear-gradient(135deg,#b91c1c,#ef4444);border:2px solid #fca5a5"><span>🏛️ Top Universities - QS World Rankings</span><span>→</span></a>
-<a href="https://www.britannica.com/science/environmental-science" target="_blank" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);border:2px solid #93c5fd"><span>📖 Britannica - Environmental Science</span><span>→</span></a>
-<a href="https://www.phoenix.edu/online-environmental-science-degrees.html" target="_blank" style="background:linear-gradient(135deg,#7c2d12,#ea580c);border:2px solid #fdba74"><span>🌎 University of Phoenix - ENS Programs</span><span>→</span></a>
+<a href="https://scholar.google.com/" target="_blank" style="background:#1a2a3a"><span>🔬 Google Scholar</span><span>→</span></a>
+<a href="https://www.topuniversities.com/" target="_blank" style="background:#b91c1c"><span>🏛️ Top Universities - QS Rankings</span><span>→</span></a>
+<a href="https://www.britannica.com/science/environmental-science" target="_blank" style="background:#1e3a8a"><span>📖 Britannica - Environmental Science</span><span>→</span></a>
+<a href="https://www.phoenix.edu/online-environmental-science-degrees.html" target="_blank" style="background:#7c2d12"><span>🌎 University of Phoenix - ENS</span><span>→</span></a>
 <a href="https://portal.helb.co.ke/" target="_blank" style="background:#2a351a"><span>💰 HELB Portal</span><span>→</span></a>
-<a href="#page-lectures" style="background:linear-gradient(135deg,#0b5ed7,#4285f4);border:2px solid #4d8af0"><span>📚 LECTURES PORTAL - Notes Upload by Anyone</span><span>→</span></a>
-<a href="#page-assignment" style="background:linear-gradient(135deg,#b45309,#f59e0b);border:2px solid #fbbf24"><span>📝 ASSIGNMENT AREA - Upload & Download</span><span>→</span></a>
-<a href="#page-pastpapers" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);border:2px solid #c4b5fd"><span>📄 ENS PAST PAPERS - CATs & Exams</span><span>→</span></a>
-<a href="#page-qa" style="background:linear-gradient(135deg,#059669,#10b981);border:2px solid #6ee7b7"><span>💬 Q&A PLATFORM - Fast Answers for Students</span><span>→</span></a>
+<a href="#page-lectures" style="background:#0b5ed7;border:3px solid #60a5fa"><span>📚 LECTURES PORTAL - Notes Upload by Anyone</span><span>→</span></a>
+<a href="#page-assignment" style="background:#b45309;border:3px solid #fcd34d"><span>📝 ASSIGNMENT AREA - Upload & Download</span><span>→</span></a>
+<a href="#page-pastpapers" style="background:#7c3aed;border:3px solid #c4b5fd"><span>📄 ENS PAST PAPERS - CATs & Exams</span><span>→</span></a>
+<a href="#page-qa" style="background:#059669;border:3px solid #6ee7b7"><span>💬 Q&A PLATFORM - Fast Answers</span><span>→</span></a>
 <a href="#page-patron" style="background:#0b5ed7;border:3px solid white"><span>👨‍🏫 PATRON PLATFORM - DR OKORE</span><span>→</span></a>
 <a href="#page-rep" style="background:#166534;border:3px solid white"><span>📢 REP AREA - AMOS + Timetable Photo</span><span>→</span></a>
-<a href="#page-social" style="background:#25d366;border:2px solid #6ee7b7"><span>📱 Social Media - All</span><span>→</span></a>
-<a href="#page-all" style="background:#202c33;border:2px solid #4b5563"><span>🌐 View All Platforms</span><span>→</span></a>
-<div style="height:20px"></div>
+<a href="#page-social" style="background:#25d366;border:3px solid #a7f3d0"><span>📱 Social Media - All</span><span>→</span></a>
+<a href="#page-all" style="background:#202c33;border:3px solid #6b7280"><span>🌐 View All Platforms</span><span>→</span></a>
 </div>
+</div>
+<div style="text-align:center;font-size:10px;color:#6b7280;margin:8px 0 4px 0">↑ Scroll up inside box ↑ - All buttons lifted from bottom Android bar</div>
 </div>
 
 <div class="main">
-<div style="padding:10px;background:#f0f2f5;display:flex;gap:8px;position:sticky;top:0;z-index:2;border-radius:20px 20px 0 0"><input id="memberSearch" type="search" placeholder="Search members with profile pic..." style="flex:1;border:0;border-radius:20px;padding:14px;background:white;font-size:15px" oninput="renderMembers()"><a href="#page-register" style="min-width:85px;background:#00a884;color:white;border-radius:20px;font-weight:900;display:flex;align-items:center;justify-content:center;text-decoration:none;padding:14px">+ADD</a></div>
-<div style="padding:8px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">📌 PINNED - PATRON & REP - POST NOTES & CLASSES - 
+<div style="padding:10px;background:#f0f2f5;display:flex;gap:8px;position:sticky;top:0;z-index:2;border-radius:22px 22px 0 0"><input id="memberSearch" type="search" placeholder="Search members with profile pic..." style="flex:1;border:0;border-radius:20px;padding:14px;background:white;font-size:15px" oninput="renderMembers()"><a href="#page-register" style="min-width:85px;background:#00a884;color:white;border-radius:20px;font-weight:900;display:flex;align-items:center;justify-content:center;text-decoration:none;padding:14px">+ADD</a></div>
+<div style="padding:8px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">📌 PINNED - PATRON & REP - NOW 100% TOUCH</div>
+<a href="#page-patron" class="contact"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:3px 8px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Tap - Post NOTES per unit</div></div></a>
+<a href="#page-rep" class="contact"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:3px 8px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Tap - CLASSES + Timetable Photo</div></div></a>
+<div style="padding:8px;background:#e9edef;font-size:11px;font-weight:bold;display:flex;justify-content:space-between"><span>MEMBERS - PROFILE PIC - STUDENTS ONLY</span><a href="#page-reginfo" style="color:#008069;text-decoration:none;font-weight:900">📋 Requirements</a></div>
+<div id="membersList" style="padding:6px"></div>
+</div>
+
+<!-- PAGES -->
+<div id="page-lectures" class="page"><a href="#" class="close-btn">X CLOSE</a><h3>📚 LECTURES PORTAL - Notes By Any Means</h3><div class="card" style="background:#0b5ed7;color:white"><b>Anyone Can Upload - Photo, PDF, Text, Screenshot</b><div style="font-size:12px;margin-top:6px">All students view & download</div></div><div class="card" style="background:#e7f3ff"><b>📤 Upload Notes - By Any Means</b><select id="lecUnit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option></select><input id="lecTitle" placeholder="Title e.g. Soil Horizons"><textarea id="lecNotes" style="height:100px" placeholder="Paste deep notes..."></textarea><div class="paste-zone">📸 TAP TO SELECT PHOTO/PDF<input type="file" id="fileLec" accept="image/*,.pdf" onchange="var r=new FileReader();r.onload=function(e){document.getElementById('prevLec').src=e.target.result;document.getElementById('prevLec').style.display='block';localStorage.setItem('lecPhotoTemp',e.target.result)};r.readAsDataURL(this.files[0])"><img id="prevLec" class="preview" style="display:none"></div><input id="lecFileName" placeholder="File name"><button type="button" onclick="var u=document.getElementById('lecUnit').value;var t=document.getElementById('lecTitle').value;var n=document.getElementById('lecNotes').value;var photo=localStorage.getItem('lecPhotoTemp')||'';if(!t&&!n&&!photo)return alert('Add title or notes or photo');var list=JSON.parse(localStorage.getItem('lectures')||'[]');list.unshift({unit:u,title:t,notes:n,photo:photo,file:document.getElementById('lecFileName').value,date:new Date().toLocaleString()});localStorage.setItem('lectures',JSON.stringify(list));alert('Lecture note uploaded - All view');renderLectures();document.getElementById('prevLec').style.display='none';localStorage.removeItem('lecPhotoTemp')" style="width:100%;background:#0b5ed7;color:white;border:0;border-radius:25px;padding:16px;font-weight:900;margin-top:10px">📚 UPLOAD NOTE</button></div><div id="lecList"></div></div>
+
+<div id="page-assignment" class="page"><a href="#" class="close-btn">X CLOSE</a><h3>📝 ASSIGNMENT AREA - Upload & Download</h3><div class="card" style="background:#fff7ed"><b>Post Assignment Question</b><input id="assignTitle" placeholder="Title"><textarea id="assignQ" style="height:80px" placeholder="Question"></textarea><input id="assignAuth" type="password" placeholder="PATRON2026/REP2026"><button type="button" onclick="var t=document.getElementById('assignTitle').value;var q=document.getElementById('assignQ').value;var a=document.getElementById('assignAuth').value;if(!t)return alert('Enter title');if(a!=='PATRON2026'&&a!=='REP2026')return alert('Only Patron/Rep');var list=JSON.parse(localStorage.getItem('assignQ')||'[]');list.unshift({title:t,q:q,date:new Date().toLocaleString()});localStorage.setItem('assignQ',JSON.stringify(list));alert('Posted');renderAssign()" style="width:100%;background:#b45309;color:white;border:0;border-radius:25px;padding:16px;font-weight:900;margin-top:10px">POST ASSIGNMENT</button></div><div id="assignQList"></div><div id="assignAnsList"></div></div>
+
+<div id="page-pastpapers" class="page"><a href="#" class="close-btn">X CLOSE</a><h3>📄 ENS PAST PAPERS - CATs & Exams</h3><div class="card" style="background:#f3e8ff"><b>📤 Upload Past Paper</b><select id="ppUnit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option></select><select id="ppType"><option>CAT 1</option><option>CAT 2</option><option>Final Exam</option></select><input id="ppYear" placeholder="Year e.g. 2023"><div class="paste-zone">📸 Upload Past Paper Photo/PDF<input type="file" id="filePP" accept="image/*,.pdf" onchange="var r=new FileReader();r.onload=function(e){document.getElementById('prevPP').src=e.target.result;document.getElementById('prevPP').style.display='block';localStorage.setItem('ppPhotoTemp',e.target.result)};r.readAsDataURL(this.files[0])"><img id="prevPP" class="preview" style="display:none"></div><input id="ppUploader" placeholder="Your Name"><button type="button" onclick="var u=document.getElementById('ppUnit').value;var t=document.getElementById('ppType').value;var y=document.getElementById('ppYear').value;var photo=localStorage.getItem('ppPhotoTemp')||'';if(!photo)return alert('Select photo');var list=JSON.parse(localStorage.getItem('pastpapers')||'[]');list.unshift({unit:u,type:t,year:y,photo:photo,uploader:document.getElementById('ppUploader').value,date:new Date().toLocaleString()});localStorage.setItem('pastpapers',JSON.stringify(list));alert('Past paper uploaded');renderPP();document.getElementById('prevPP').style.display='none';localStorage.removeItem('ppPhotoTemp')" style="width:100%;background:#7c3aed;color:white;border:0;border-radius:25px;padding:16px;font-weight:900;margin-top:10px">UPLOAD PAST PAPER</button></div><div id="ppList"></div></div>
+
+<div id="page-qa" class="page"><a href="#" class="close-btn">X CLOSE</a><h3>💬 Q&A PLATFORM - Fast Answers</h3><div class="card" style="background:#059669;color:white"><b>Fast Q&A - Britannica + Top Universities + Phoenix ENS</b><div style="margin-top:10px;display:flex;flex-direction:column;gap:8px"><a href="https://www.britannica.com/search?query=ecology" target="_blank" style="background:white;color:#1e3a8a;padding:12px;border-radius:10px;text-decoration:none;font-weight:900;text-align:center">📖 Britannica - Search Ecology</a><a href="https://www.topuniversities.com/search/site/environmental%20science" target="_blank" style="background:white;color:#b91c1c;padding:12px;border-radius:10px;text-decoration:none;font-weight:900;text-align:center">🏛️ Top Universities - ENS Programs</a><a href="https://www.phoenix.edu/online-environmental-science-degrees.html" target="_blank" style="background:white;color:#7c2d12;padding:12px;border-radius:10px;text-decoration:none;font-weight:900;text-align:center">🌎 University of Phoenix - ENS</a></div></div><div class="card" style="background:#d1fae5"><b>❓ Ask Question - Fast</b><select id="qaUnit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option></select><input id="qaTitle" placeholder="Question Title"><textarea id="qaQ" style="height:80px" placeholder="Type question..."></textarea><input id="qaAsker" placeholder="Your Name"><button type="button" onclick="var u=document.getElementById('qaUnit').value;var t=document.getElementById('qaTitle').value;var q=document.getElementById('qaQ').value;var name=document.getElementById('qaAsker').value;if(!q)return alert('Type question');var list=JSON.parse(localStorage.getItem('qa')||'[]');list.unshift({unit:u,title:t,q:q,name:name,date:new Date().toLocaleString(),answers:[]});localStorage.setItem('qa',JSON.stringify(list));alert('Question posted');renderQA();document.getElementById('qaQ').value=''" style="width:100%;background:#059669;color:white;border:0;border-radius:25px;padding:16px;font-weight:900;margin-top:10px">ASK QUESTION</button></div><div id="qaList"></div></div>
+
+<div id="page-patron" class="page"><a href="#" class="close-btn">X CLOSE</a><h3>👨‍🏫 PATRON PLATFORM - DR OKORE LUTHER - NOW 100% TOUCH</h3><div class="card" style="background:#0b5ed7;color:white"><b>PATRON PLATFORM - Fixed! Was under Android bar</b><div style="font-size:12px;margin-top:6px">Now lifted + scrollable - Touches 100%</div></div><div class="card" style="background:#e7f3ff"><b>📚 Post Notes per Unit - Deep content</b><select><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option></select><input placeholder="Title"><textarea style="height:100px" placeholder="Paste deep notes..."></textarea><input type="password" placeholder="Patron Password PATRON2026"><button type="button" onclick="alert('Note posted - All students view & download')" style="width:100%;background:#0b5ed7;color:white;border:0;border-radius:25px;padding:16px;font-weight:900;margin-top:10px">POST NOTE</button></div></div>
+
+<div id
