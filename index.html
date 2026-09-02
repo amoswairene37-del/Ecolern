@@ -1,109 +1,91 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ENS COHORTS 2026 MOI UNIVERSITY</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+*{box-sizing:border-box}
 body{margin:0;font-family:Arial;height:100vh;display:flex;flex-direction:column;background:#111b21}
-.header{background:#202c33;color:white;padding:10px}
-.title{font-weight:900;font-size:14px}.sub{font-size:10px;color:#25d366;font-weight:bold}
-.searchbar{background:#111b21;border:1px solid #2a3942;border-radius:25px;display:flex;align-items:center;padding:10px 14px;margin-top:8px;gap:8px}
-.searchbar input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:14px}
-.searchbar button{border:0;background:#00a884;color:white;padding:12px 20px;border-radius:20px;font-weight:900;font-size:13px;cursor:pointer}
-/* VERTICAL ARRANGEMENT - NOT HORIZONTAL */
-.platforms{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:220px;overflow-y:auto;padding-right:4px}
-.platforms button{white-space:nowrap;border:1px solid #2a3942;padding:14px 16px;border-radius:12px;font-size:12px;font-weight:900;cursor:pointer;color:white;text-align:left;display:flex;align-items:center;justify-content:space-between}
-.platforms button span:last-child{font-size:14px}
+.header{background:#202c33;color:white;padding:12px}
+.title{text-align:center;font-weight:900;font-size:17px;line-height:1.4;padding:16px 10px 12px 10px;letter-spacing:0.5px}
+.sub{text-align:center;font-size:11px;color:#25d366;font-weight:bold;padding:0 10px 12px 10px;line-height:1.4}
+.searchbar{background:#111b21;border:1px solid #2a3942;border-radius:25px;display:flex;align-items:center;padding:12px 14px;margin:8px 4px;gap:8px}
+.searchbar input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:15px}
+.searchbar button{border:0;background:#00a884;color:white;padding:12px 20px;border-radius:20px;font-weight:900;font-size:14px}
+.platforms{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.platforms button{border:0;padding:16px 16px;border-radius:14px;font-size:13px;font-weight:900;text-align:left;display:flex;justify-content:space-between;align-items:center;color:white;width:100%}
 .main{flex:1;display:flex;background:white;overflow:hidden}
 .left{width:100%;display:flex;flex-direction:column;background:white}
-.contact{padding:14px;border-bottom:1px solid #f0f0f0;display:flex;gap:12px;align-items:center;cursor:pointer}
+.contact{padding:14px;border-bottom:1px solid #f0f0f0;display:flex;gap:12px;align-items:center}
 .avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;color:white}
 .right{flex:1;background: linear-gradient(rgba(229,221,213,0.92), rgba(229,221,213,0.92)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800') center/cover;display:none;flex-direction:column}
 .right.show{display:flex}.left.hide{display:none}
 .chat-head{background:#f0f2f5;padding:10px;display:flex;align-items:center;gap:10px}
 .msgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
-.bubble{max-width:78%;padding:10px 12px;border-radius:8px;font-size:14px;box-shadow:0 1px 1px rgba(0,0,0,0.1)}
+.bubble{max-width:78%;padding:10px 12px;border-radius:8px;font-size:14px}
 .me{align-self:flex-end;background:#d9fdd3}.them{align-self:flex-start;background:white}
 .inputbar{background:#f0f2f5;padding:8px;display:flex;gap:8px}
 .inputbar input{flex:1;border:0;border-radius:20px;padding:12px 15px;outline:none;font-size:15px}
 .inputbar button{border:0;min-width:50px;height:50px;border-radius:50%;background:#00a884;color:white;font-size:20px}
 .page{position:fixed;inset:0;background:white;z-index:30;display:none;overflow-y:auto;padding:12px}
 .page.show{display:block}
-.card{background:white;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px;cursor:pointer}
-input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:12px;font-size:16px;margin-top:6px}
-button.mainbtn{border:0;border-radius:25px;padding:16px;font-weight:900;width:100%;margin-top:10px;color:white;font-size:15px;cursor:pointer}
-.paste-zone{border:2px dashed #00a884;border-radius:12px;padding:12px;text-align:center;background:#f0fff4;margin-top:8px;font-size:12px;color:#166534}
-.paste-zone.dragover{background:#d1e7dd;border-color:#166534}
+.card{background:white;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px}
+input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:14px;font-size:16px;margin-top:6px}
+button.mainbtn{border:0;border-radius:25px;padding:16px;font-weight:900;width:100%;margin-top:10px;color:white;font-size:15px}
+.paste-zone{border:2px dashed #00a884;border-radius:12px;padding:14px;text-align:center;background:#f0fff4;margin-top:8px;font-size:12px;color:#166534}
 img.preview{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #ddd}
 </style>
 </head><body>
 
 <div class="header">
-<div class="title">ENS COHORTS 2026 MOI UNIVERSITY</div>
-<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden</div>
-<div class="searchbar"><span>🔍</span><input id="gSearch" type="search" placeholder="Search Google, Scholar, YouTube, Gemini, ChatGPT..."><button type="button" id="btnSearch">SEARCH</button></div>
+<!-- TITLE WITH SPACE IN MIDDLE TOP - CENTERED -->
+<div class="title">ENS COHORTS 2026<br>MOI UNIVERSITY</div>
+<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden password</div>
 
-<!-- VERTICAL ARRANGEMENT - POE REMOVED -->
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><b style="font-size:11px;color:#25d366">📚 PLATFORMS - VERTICAL - TAP TO OPEN</b><span style="font-size:10px;color:#aaa">Scroll down ▼</span></div>
+<div class="searchbar"><span>🔍</span><input id="gSearch" type="search" placeholder="Search Google, Scholar, YouTube, Gemini..."><button type="button" onclick="doSearch()">SEARCH</button></div>
+
+<div style="font-size:11px;color:#25d366;font-weight:bold;margin:10px 4px 4px 4px">📚 PLATFORMS - VERTICAL - TAP TO OPEN</div>
 <div class="platforms">
-<button type="button" id="pMoi" style="background:#18252c"><span>🎓 Moi eLearning - Moodle</span><span>→</span></button>
-<button type="button" id="pScholar" style="background:#1a2a3a"><span>🔬 Google Scholar - Research</span><span>→</span></button>
-<button type="button" id="pYouTube" style="background:#3a1a1a"><span>▶️ YouTube - Lectures</span><span>→</span></button>
-<button type="button" id="pHelb" style="background:#2a351a"><span>💰 HELB Portal</span><span>→</span></button>
-<button type="button" id="pGemini" style="background:linear-gradient(135deg,#4285f4,#8ab4f8)"><span>✨ Gemini AI - Google</span><span>→</span></button>
-<button type="button" id="pChatGPT" style="background:#10a37f"><span>🤖 ChatGPT - OpenAI</span><span>→</span></button>
-<button type="button" id="pAI" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)"><span>🤖 AI Tools - All AI</span><span>→</span></button>
-<button type="button" id="pPatronArea" style="background:#0b5ed7;border:2px solid #fff"><span>👨‍🏫 PATRON PLATFORM - DR OKORE</span><span>→</span></button>
-<button type="button" id="pRepArea" style="background:#166534;border:2px solid #fff"><span>📢 REP AREA - AMOS NYONGESA</span><span>→</span></button>
-<button type="button" id="pSocial" style="background:#25d366"><span>📱 Social Media - All</span><span>→</span></button>
-<button type="button" id="pAll" style="background:#202c33"><span>🌐 All Platforms List</span><span>→</span></button>
+<button type="button" onclick="openLink('https://elearning.mu.ac.ke/')" style="background:#18252c"><span>🎓 Moi eLearning - Moodle</span><span>→</span></button>
+<button type="button" onclick="openLink('https://scholar.google.com/')" style="background:#1a2a3a"><span>🔬 Google Scholar - Research</span><span>→</span></button>
+<button type="button" onclick="openLink('https://www.youtube.com/')" style="background:#3a1a1a"><span>▶️ YouTube - Lectures</span><span>→</span></button>
+<button type="button" onclick="openLink('https://portal.helb.co.ke/')" style="background:#2a351a"><span>💰 HELB Portal</span><span>→</span></button>
+<button type="button" onclick="openLink('https://gemini.google.com/')" style="background:#4285f4"><span>✨ Gemini AI - Google</span><span>→</span></button>
+<button type="button" onclick="openLink('https://chat.openai.com/')" style="background:#10a37f"><span>🤖 ChatGPT - OpenAI</span><span>→</span></button>
+<button type="button" onclick="openLink('https://www.perplexity.ai/')" style="background:#7c3aed"><span>🤖 AI Tools - All AI</span><span>→</span></button>
+<button type="button" onclick="showPage('patron')" style="background:#0b5ed7;border:2px solid white"><span>👨‍🏫 PATRON PLATFORM - DR OKORE</span><span>→</span></button>
+<button type="button" onclick="showPage('rep')" style="background:#166534;border:2px solid white"><span>📢 REP AREA - AMOS + Timetable Photo</span><span>→</span></button>
+<button type="button" onclick="showPage('social')" style="background:#25d366"><span>📱 Social Media - All Platforms</span><span>→</span></button>
+<button type="button" onclick="showPage('platforms')" style="background:#202c33"><span>🌐 View All Platforms List</span><span>→</span></button>
 </div>
 </div>
 
 <div class="main">
 <div id="leftPanel" class="left">
-<div style="padding:8px;background:#f0f2f5;display:flex;gap:6px"><input id="cSearch" type="search" placeholder="Search members..." style="flex:1;border:0;border-radius:20px;padding:12px;font-size:15px;background:white"><button type="button" id="btnAdd" style="width:75px;background:#00a884;color:white;border:0;border-radius:20px;font-weight:900">+ADD</button></div>
+<div style="padding:8px;background:#f0f2f5;display:flex;gap:6px"><input id="cSearch" type="search" placeholder="Search members..." style="flex:1;border:0;border-radius:20px;padding:12px;font-size:15px;background:white"><button type="button" onclick="document.getElementById('regModal').style.display='flex'" style="width:75px;background:#00a884;color:white;border:0;border-radius:20px;font-weight:900">+ADD</button></div>
 <div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">📌 PINNED - PATRON & REP - POST NOTES & CLASSES</div>
-<div class="contact" id="contactPatron"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 6px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Tap to view/post NOTES per unit - Deep content + Photo paste</div></div></div>
-<div class="contact" id="contactRep"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 6px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Tap to view/post CLASSES + Timetable + Photo paste + Change password</div></div></div>
-<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;display:flex;justify-content:space-between"><span>MEMBERS - PASSWORD HIDDEN</span><span style="color:#008069" id="btnReq">📋 Requirements</span></div>
+<div class="contact" onclick="showPage('patron')"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 6px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Tap to view/post NOTES per unit - Deep content + Photo paste</div></div></div>
+<div class="contact" onclick="showPage('rep')"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 6px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Tap to view/post CLASSES + Timetable + Photo paste + Change password</div></div></div>
+<div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;display:flex;justify-content:space-between"><span>MEMBERS - PASSWORD HIDDEN</span><span style="color:#008069" onclick="showPage('reginfo')">📋 Requirements</span></div>
 <div id="contacts" style="flex:1;overflow-y:auto"></div>
 </div>
 
 <div id="rightPanel" class="right">
-<div class="chat-head"><button type="button" id="btnBack" style="border:0;background:#ddd;width:40px;height:40px;border-radius:50%">←</button><div id="chatAv" class="avatar">A</div><div><b id="chatName">Name</b><div id="chatSub" style="font-size:11px;color:#667781">ENS COHORTS 2026</div></div></div>
+<div class="chat-head"><button type="button" onclick="document.getElementById('rightPanel').classList.remove('show');document.getElementById('leftPanel').classList.remove('hide')" style="border:0;background:#ddd;width:40px;height:40px;border-radius:50%">←</button><div id="chatAv" class="avatar">A</div><div><b id="chatName">Name</b><div id="chatSub" style="font-size:11px;color:#667781">ENS COHORTS 2026</div></div></div>
 <div id="msgs" class="msgs"></div>
 <div id="results" style="background:white;max-height:60%;overflow-y:auto;display:none;border-top:3px solid #00a884"></div>
-<div class="inputbar"><input id="msgIn" type="text" placeholder="Type message..."><button type="button" id="btnSend">➤</button></div>
+<div class="inputbar"><input id="msgIn" type="text" placeholder="Type message..."><button type="button" onclick="sendMsg()">➤</button></div>
 </div>
 </div>
 
-<!-- PATRON PAGE WITH PHOTO PASTE -->
-<div id="page-patron" class="page"><div style="display:flex;justify-content:space-between"><h3>👨‍🏫 PATRON PLATFORM - DR OKORE LUTHER</h3><button type="button" id="closePatron" style="width:40px;background:#ddd;color:black">X</button></div>
-<div class="card" style="background:#0b5ed7;color:white"><b>Patron Exclusive</b><div style="font-size:12px;margin-top:4px">Post Notes per unit + Photo paste - Anyone logged in views & downloads</div></div>
-<div class="card" style="background:#e7f3ff"><b>📚 Post Notes + Paste Photo</b><select id="unit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 104 - Climate</option><option>ENS 201 - GIS</option><option>ENS 202 - Env Law</option></select><input id="noteTitle" placeholder="Title e.g. Soil Horizons"><textarea id="noteContent" style="height:110px" placeholder="Paste DEEP notes here..."></textarea>
-<div class="paste-zone" id="pasteNote">📸 PASTE PHOTO HERE - Ctrl+V or Tap to select<br><span style="font-size:10px">You can paste screenshot, diagram, photo of notes</span><input type="file" id="fileNote" accept="image/*" style="display:none"><img id="previewNote" class="preview" style="display:none"></div>
-<input id="noteFileName" placeholder="File name e.g. ENS102.pdf"><input id="noteAuth" type="password" placeholder="Patron Password PATRON2026"><button type="button" id="btnPostNote" class="mainbtn" style="background:#0b5ed7">POST NOTE + PHOTO - All View</button></div>
-<div id="patronNotesList"></div></div>
+<div id="page-patron" class="page"><div style="display:flex;justify-content:space-between"><h3>👨‍🏫 PATRON PLATFORM - DR OKORE LUTHER</h3><button type="button" onclick="hidePages()" style="width:40px;background:#ddd;color:black">X</button></div>
+<div class="card" style="background:#e7f3ff"><b>📚 Post Notes + Paste Photo</b><select id="unit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 201 - GIS</option></select><input id="noteTitle" placeholder="Title"><textarea id="noteContent" style="height:110px" placeholder="Paste DEEP notes"></textarea>
+<div class="paste-zone" onclick="document.getElementById('fileNote').click()">📸 TAP TO SELECT / PASTE PHOTO - Diagram, Notes Screenshot<input type="file" id="fileNote" accept="image/*" style="display:none"><img id="previewNote" class="preview" style="display:none"></div>
+<input id="noteFileName" placeholder="File name"><input id="noteAuth" type="password" placeholder="Patron Password PATRON2026"><button type="button" onclick="postNote()" class="mainbtn" style="background:#0b5ed7">POST NOTE + PHOTO</button></div><div id="patronNotesList"></div></div>
 
-<!-- REP PAGE WITH PHOTO PASTE FOR TIMETABLE -->
-<div id="page-rep" class="page"><div style="display:flex;justify-content:space-between"><h3>📢 REP AREA - AMOS NYONGESA</h3><button type="button" id="closeRep" style="width:40px;background:#ddd;color:black">X</button></div>
-<div class="card" style="background:#166534;color:white"><b>Rep Exclusive - Classes + Timetable + Photo Paste</b><div style="font-size:12px;margin-top:4px">Post classes for all to view + Timetable photo paste + Change hidden password</div></div>
-<div class="card" style="background:#d1e7dd"><b>📢 Post Classes</b><input id="classUnit" placeholder="Unit"><input id="classVenue" placeholder="Venue"><input id="classTime" placeholder="Time"><input id="classLecturer" placeholder="Lecturer"><textarea id="classInfo" placeholder="Info"></textarea><input id="classAuth" type="password" placeholder="Rep Password REP2026"><button type="button" id="btnPostClass" class="mainbtn" style="background:#166534">POST CLASS - All View</button></div>
-<div class="card"><b>📅 Timetable + PASTE PHOTO OF TIMETABLE</b><div id="timetableView" style="background:#f8f9fa;padding:10px;border-radius:10px;white-space:pre-wrap;min-height:80px;font-size:13px">No timetable yet - Rep will paste text + photo</div>
-<div id="timetablePhotoView"></div>
-<div class="paste-zone" id="pasteTime">📸 PASTE TIMETABLE PHOTO HERE - Screenshot of timetable<br><span style="font-size:10px">Tap to select photo or Ctrl+V to paste</span><input type="file" id="fileTime" accept="image/*" style="display:none"><img id="previewTime" class="preview" style="display:none"></div>
-<textarea id="timeContent" style="height:80px" placeholder="Type timetable text MON 8-10 ENS101 LH1..."></textarea><input id="timeAuth" type="password" placeholder="Rep Password"><button type="button" id="btnPostTime" class="mainbtn" style="background:#166534">PUBLISH TIMETABLE TEXT + PHOTO</button></div>
-<div class="card" style="background:#f8d7da"><b>🔐 Change Hidden Password</b><div>Current: <span id="cpv">•••••</span> <button type="button" id="btnShowPass" style="width:auto;padding:4px 12px;background:#ddd;display:inline">Show</button></div><select id="adminRole"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select><input id="adminOldPass" type="password" placeholder="Admin Pass"><input id="newStudentPass" placeholder="New Student Password"><input id="confirmNewPass" placeholder="Confirm"><button type="button" id="btnChangePass" class="mainbtn" style="background:#166534">UPDATE - Hidden</button></div>
-<div id="classList"></div></div>
+<div id="page-rep" class="page"><div style="display:flex;justify-content:space-between"><h3>📢 REP AREA - AMOS NYONGESA</h3><button type="button" onclick="hidePages()" style="width:40px;background:#ddd;color:black">X</button></div>
+<div class="card" style="background:#d1e7dd"><b>📢 Post Classes</b><input id="classUnit" placeholder="Unit"><input id="classVenue" placeholder="Venue"><input id="classTime" placeholder="Time"><input id="classLecturer" placeholder="Lecturer"><textarea id="classInfo" placeholder="Info"></textarea><input id="classAuth" type="password" placeholder="Rep Password REP2026"><button type="button" onclick="postClass()" class="mainbtn" style="background:#166534">POST CLASS - All View</button></div>
+<div class="card"><b>📅 Timetable + PASTE PHOTO</b><div id="timetableView" style="background:#f8f9fa;padding:10px;border-radius:10px;white-space:pre-wrap;min-height:80px">No timetable yet</div><div id="timetablePhotoView"></div>
+<div class="paste-zone" onclick="document.getElementById('fileTime').click()">📸 TAP TO SELECT / PASTE TIMETABLE PHOTO - Screenshot<input type="file" id="fileTime" accept="image/*" style="display:none"><img id="previewTime" class="preview" style="display:none"></div>
+<textarea id="timeContent" style="height:80px" placeholder="Type timetable text"></textarea><input id="timeAuth" type="password" placeholder="Rep Password"><button type="button" onclick="postTime()" class="mainbtn" style="background:#166534">PUBLISH TIMETABLE TEXT + PHOTO</button></div>
+<div class="card" style="background:#f8d7da"><b>🔐 Change Hidden Password</b><div>Current: <span id="cpv">•••••</span> <button type="button" onclick="togglePass()" style="width:auto;padding:4px 12px;background:#ddd;display:inline">Show</button></div><select id="adminRole"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select><input id="adminOldPass" type="password" placeholder="Admin Pass"><input id="newStudentPass" placeholder="New Password"><input id="confirmNewPass" placeholder="Confirm"><button type="button" onclick="changePass()" class="mainbtn" style="background:#166534">UPDATE - Hidden</button></div><div id="classList"></div></div>
 
-<div id="page-platforms" class="page"><div style="display:flex;justify-content:space-between"><h3>🌐 All Platforms - Vertical (Poe Removed)</h3><button type="button" id="closePlat" style="width:40px;background:#ddd;color:black">X</button></div><div style="display:flex;flex-direction:column;gap:8px"><div class="card" id="ppMoi">🎓 Moi eLearning - Moodle</div><div class="card" id="ppScholar">🔬 Google Scholar</div><div class="card" id="ppYouTube">▶️ YouTube</div><div class="card" id="ppHelb">💰 HELB</div><div class="card" id="ppGemini" style="background:#4285f4;color:white">✨ Gemini AI</div><div class="card" id="ppChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</div><div class="card" id="ppAI" style="background:#7c3aed;color:white">🤖 AI Tools - All AI</div><div class="card" id="ppPatronBtn" style="background:#0b5ed7;color:white">👨‍🏫 PATRON PLATFORM</div><div class="card" id="ppRepBtn" style="background:#166534;color:white">📢 REP AREA + Timetable Photo</div></div></div>
-
-<div id="page-social" class="page"><div style="display:flex;justify-content:space-between"><h3>📱 Social + AI</h3><button type="button" id="closeSocial" style="width:40px;background:#ddd;color:black">X</button></div><div style="display:flex;flex-direction:column;gap:8px"><div class="card" id="sGemini" style="background:#4285f4;color:white">✨ Gemini - Ask AI</div><div class="card" id="sChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</div><div class="card" id="sAI" style="background:#7c3aed;color:white">🤖 AI Tools</div><div class="card" id="sWA" style="background:#25d366;color:white">💬 WhatsApp</div><div class="card" id="sFB" style="background:#1877f2;color:white">📘 Facebook</div><div class="card" id="sIG" style="background:#E4405F;color:white">📸 Instagram</div><div class="card" id="sTT" style="background:black;color:white">🎵 TikTok</div></div></div>
-
-<div id="page-reginfo" class="page"><div style="display:flex;justify-content:space-between"><h3>📋 Requirements</h3><button type="button" id="closeRegInfo" style="width:40px;background:#ddd;color:black">X</button></div><div class="card" style="line-height:1.8;font-size:14px">Full Name, Reg ENS/B/26/XXXX, Phone, Email for upload, Hidden Password ENS26, ENS student<br><br>Top Bar Vertical: Moi eLearning, Scholar, YouTube, HELB, Gemini, ChatGPT, AI Tools, Patron Platform, Rep Area<br><br>Photo Paste: In Timetable you can paste photo screenshot, In Notes you can paste diagram/photo, In Search you can paste image to search<br><br>Background: Academic photo</div></div>
-
-<div id="regModal" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:50"><div style="background:white;border-radius:20px;padding:20px;width:100%;max-width:360px"><h3 style="text-align:center">Registration</h3><input id="rName" placeholder="Full Name *"><input id="rReg" placeholder="Reg No ENS/B/26/... *"><input id="rPhone" placeholder="Phone *"><input id="rEmail" type="email" placeholder="Email *"><input id="rPass" type="password" style="border:2px solid #00a884;background:#f0fff4" placeholder="Hidden Password *"><div id="passError" style="color:red;font-size:11px;display:none">Wrong password</div><button type="button" id="btnRegister" class="mainbtn">REGISTER</button><button type="button" id="btnCancelReg" style="background:transparent;color:gray">Cancel</button></div></div>
-
-<script>
-var sPass=localStorage.getItem('sp')||'ENS26';var pPass=localStorage.getItem('pp')||'PATRON2026';var rPass=localStorage.getItem('rp2')||'REP2026';
-var contacts=JSON.parse(localStorage.getItem
+<div
