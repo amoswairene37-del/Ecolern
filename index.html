@@ -9,14 +9,13 @@ body{margin:0;font-family:Arial;height:100vh;display:flex;flex-direction:column;
 .searchbar{background:#111b21;border:1px solid #2a3942;border-radius:25px;display:flex;align-items:center;padding:10px 14px;margin-top:8px;gap:8px}
 .searchbar input{flex:1;background:transparent;border:0;outline:none;color:white;font-size:14px}
 .searchbar button{border:0;background:#00a884;color:white;padding:12px 20px;border-radius:20px;font-weight:900;font-size:13px;cursor:pointer}
-.platforms{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-top:6px;scrollbar-width:none}
-.platforms::-webkit-scrollbar{display:none}
-.platforms button{white-space:nowrap;border:1px solid #2a3942;padding:10px 14px;border-radius:20px;font-size:11px;font-weight:900;flex-shrink:0;cursor:pointer;color:white}
-.platforms button:active{transform:scale(0.95)}
+/* VERTICAL ARRANGEMENT - NOT HORIZONTAL */
+.platforms{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:220px;overflow-y:auto;padding-right:4px}
+.platforms button{white-space:nowrap;border:1px solid #2a3942;padding:14px 16px;border-radius:12px;font-size:12px;font-weight:900;cursor:pointer;color:white;text-align:left;display:flex;align-items:center;justify-content:space-between}
+.platforms button span:last-child{font-size:14px}
 .main{flex:1;display:flex;background:white;overflow:hidden}
 .left{width:100%;display:flex;flex-direction:column;background:white}
 .contact{padding:14px;border-bottom:1px solid #f0f0f0;display:flex;gap:12px;align-items:center;cursor:pointer}
-.contact:active{background:#e0f2e9}
 .avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;color:white}
 .right{flex:1;background: linear-gradient(rgba(229,221,213,0.92), rgba(229,221,213,0.92)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800') center/cover;display:none;flex-direction:column}
 .right.show{display:flex}.left.hide{display:none}
@@ -30,30 +29,33 @@ body{margin:0;font-family:Arial;height:100vh;display:flex;flex-direction:column;
 .page{position:fixed;inset:0;background:white;z-index:30;display:none;overflow-y:auto;padding:12px}
 .page.show{display:block}
 .card{background:white;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px;cursor:pointer}
-input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:14px;font-size:16px;margin-top:6px}
+input,select,textarea{width:100%;border:1px solid #ccc;border-radius:10px;padding:12px;font-size:16px;margin-top:6px}
 button.mainbtn{border:0;border-radius:25px;padding:16px;font-weight:900;width:100%;margin-top:10px;color:white;font-size:15px;cursor:pointer}
+.paste-zone{border:2px dashed #00a884;border-radius:12px;padding:12px;text-align:center;background:#f0fff4;margin-top:8px;font-size:12px;color:#166534}
+.paste-zone.dragover{background:#d1e7dd;border-color:#166534}
+img.preview{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #ddd}
 </style>
 </head><body>
 
 <div class="header">
 <div class="title">ENS COHORTS 2026 MOI UNIVERSITY</div>
-<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden password</div>
+<div class="sub">PATRON: DR OKORE LUTHER | REP: AMOS NYONGESA | ✅ Deep + Academic + Hidden</div>
 <div class="searchbar"><span>🔍</span><input id="gSearch" type="search" placeholder="Search Google, Scholar, YouTube, Gemini, ChatGPT..."><button type="button" id="btnSearch">SEARCH</button></div>
 
-<!-- NEW TOP TASK BAR - WITH GEMINI, CHATGPT, POE, AI + PATRON + REP -->
+<!-- VERTICAL ARRANGEMENT - POE REMOVED -->
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><b style="font-size:11px;color:#25d366">📚 PLATFORMS - VERTICAL - TAP TO OPEN</b><span style="font-size:10px;color:#aaa">Scroll down ▼</span></div>
 <div class="platforms">
-<button type="button" id="pMoi" style="background:#18252c">Moi eLearning</button>
-<button type="button" id="pScholar" style="background:#1a2a3a">🔬 Scholar</button>
-<button type="button" id="pYouTube" style="background:#3a1a1a">▶️ YouTube</button>
-<button type="button" id="pHelb" style="background:#2a351a">💰 HELB</button>
-<button type="button" id="pGemini" style="background:linear-gradient(135deg,#4285f4,#8ab4f8);color:white">✨ Gemini</button>
-<button type="button" id="pChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</button>
-<button type="button" id="pPoe" style="background:#000000;color:white">🧠 Poe AI</button>
-<button type="button" id="pAI" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:white">🤖 AI Tools</button>
-<button type="button" id="pPatronArea" style="background:#0b5ed7;color:white;border:2px solid #fff">👨‍🏫 PATRON PLATFORM</button>
-<button type="button" id="pRepArea" style="background:#166534;color:white;border:2px solid #fff">📢 REP AREA</button>
-<button type="button" id="pSocial" style="background:#25d366;color:white">📱 Social Media</button>
-<button type="button" id="pAll" style="background:#202c33">🌐 All Platforms</button>
+<button type="button" id="pMoi" style="background:#18252c"><span>🎓 Moi eLearning - Moodle</span><span>→</span></button>
+<button type="button" id="pScholar" style="background:#1a2a3a"><span>🔬 Google Scholar - Research</span><span>→</span></button>
+<button type="button" id="pYouTube" style="background:#3a1a1a"><span>▶️ YouTube - Lectures</span><span>→</span></button>
+<button type="button" id="pHelb" style="background:#2a351a"><span>💰 HELB Portal</span><span>→</span></button>
+<button type="button" id="pGemini" style="background:linear-gradient(135deg,#4285f4,#8ab4f8)"><span>✨ Gemini AI - Google</span><span>→</span></button>
+<button type="button" id="pChatGPT" style="background:#10a37f"><span>🤖 ChatGPT - OpenAI</span><span>→</span></button>
+<button type="button" id="pAI" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)"><span>🤖 AI Tools - All AI</span><span>→</span></button>
+<button type="button" id="pPatronArea" style="background:#0b5ed7;border:2px solid #fff"><span>👨‍🏫 PATRON PLATFORM - DR OKORE</span><span>→</span></button>
+<button type="button" id="pRepArea" style="background:#166534;border:2px solid #fff"><span>📢 REP AREA - AMOS NYONGESA</span><span>→</span></button>
+<button type="button" id="pSocial" style="background:#25d366"><span>📱 Social Media - All</span><span>→</span></button>
+<button type="button" id="pAll" style="background:#202c33"><span>🌐 All Platforms List</span><span>→</span></button>
 </div>
 </div>
 
@@ -61,8 +63,8 @@ button.mainbtn{border:0;border-radius:25px;padding:16px;font-weight:900;width:10
 <div id="leftPanel" class="left">
 <div style="padding:8px;background:#f0f2f5;display:flex;gap:6px"><input id="cSearch" type="search" placeholder="Search members..." style="flex:1;border:0;border-radius:20px;padding:12px;font-size:15px;background:white"><button type="button" id="btnAdd" style="width:75px;background:#00a884;color:white;border:0;border-radius:20px;font-weight:900">+ADD</button></div>
 <div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;color:#008069">📌 PINNED - PATRON & REP - POST NOTES & CLASSES</div>
-<div class="contact" id="contactPatron"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 6px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Tap to view/post NOTES per unit - Deep content</div></div></div>
-<div class="contact" id="contactRep"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 6px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Tap to view/post CLASSES + Timetable + Change password</div></div></div>
+<div class="contact" id="contactPatron"><div class="avatar" style="background:#0b5ed7">OL</div><div><b>DR OKORE LUTHER <span style="background:#0b5ed7;color:white;font-size:9px;padding:2px 6px;border-radius:10px">PATRON</span></b><div style="font-size:12px;color:#667781">Tap to view/post NOTES per unit - Deep content + Photo paste</div></div></div>
+<div class="contact" id="contactRep"><div class="avatar" style="background:#166534">AN</div><div><b>AMOS NYONGESA <span style="background:#166534;color:white;font-size:9px;padding:2px 6px;border-radius:10px">REP</span></b><div style="font-size:12px;color:#667781">Tap to view/post CLASSES + Timetable + Photo paste + Change password</div></div></div>
 <div style="padding:6px;background:#e9edef;font-size:11px;font-weight:bold;display:flex;justify-content:space-between"><span>MEMBERS - PASSWORD HIDDEN</span><span style="color:#008069" id="btnReq">📋 Requirements</span></div>
 <div id="contacts" style="flex:1;overflow-y:auto"></div>
 </div>
@@ -70,124 +72,38 @@ button.mainbtn{border:0;border-radius:25px;padding:16px;font-weight:900;width:10
 <div id="rightPanel" class="right">
 <div class="chat-head"><button type="button" id="btnBack" style="border:0;background:#ddd;width:40px;height:40px;border-radius:50%">←</button><div id="chatAv" class="avatar">A</div><div><b id="chatName">Name</b><div id="chatSub" style="font-size:11px;color:#667781">ENS COHORTS 2026</div></div></div>
 <div id="msgs" class="msgs"></div>
-<div id="results" style="background:white;max-height:55%;overflow-y:auto;display:none;border-top:3px solid #00a884"></div>
+<div id="results" style="background:white;max-height:60%;overflow-y:auto;display:none;border-top:3px solid #00a884"></div>
 <div class="inputbar"><input id="msgIn" type="text" placeholder="Type message..."><button type="button" id="btnSend">➤</button></div>
 </div>
 </div>
 
-<!-- PATRON SPECIFIC PLATFORM -->
+<!-- PATRON PAGE WITH PHOTO PASTE -->
 <div id="page-patron" class="page"><div style="display:flex;justify-content:space-between"><h3>👨‍🏫 PATRON PLATFORM - DR OKORE LUTHER</h3><button type="button" id="closePatron" style="width:40px;background:#ddd;color:black">X</button></div>
-<div class="card" style="background:#0b5ed7;color:white"><b>Patron Exclusive Area</b><div style="font-size:12px;margin-top:6px">Only Patron can post here - Students view only<br>Role: Lecturer, School of Environmental Studies<br>Can post: Notes per unit, Assignments, CATs, Exam guidelines</div></div>
-<div class="card" style="background:#e7f3ff"><b>📚 Post Notes Per Unit (Anyone logged in views)</b><select id="unit"><option>ENS 101 - Ecology - Ecosystem, Biotic/Abiotic</option><option>ENS 102 - Soil Science - Horizons O-A-B-C-R, pH, texture</option><option>ENS 103 - Environmental Chemistry - BOD, COD, pollution</option><option>ENS 104 - Climate Change - Greenhouse gases</option><option>ENS 201 - GIS & Remote Sensing</option><option>ENS 202 - Environmental Law - NEMA, EMCA</option><option>ENS 203 - Biodiversity</option><option>ENS 204 - EIA</option></select><input id="noteTitle" placeholder="Title e.g. Soil Horizons Deep Notes"><textarea id="noteContent" style="height:130px" placeholder="Paste DEEP notes - detailed content for students"></textarea><input id="noteFileName" placeholder="File name e.g. ENS102.pdf"><input id="noteAuth" type="password" placeholder="Patron Password PATRON2026"><button type="button" id="btnPostNote" class="mainbtn" style="background:#0b5ed7">📤 POST NOTE - All Students View & Download</button></div>
-<div class="card" style="background:#fff3cd"><b>📝 Post Assignments / CATs</b><input id="assignTitle" placeholder="Title e.g. ENS 101 CAT 1"><textarea id="assignDesc" placeholder="Details, deadline, instructions"></textarea><input id="assignAuth" type="password" placeholder="Patron Password"><button type="button" id="btnPostAssign" class="mainbtn" style="background:#0b5ed7">POST ASSIGNMENT - Students upload via email</button></div>
-<div id="patronNotesList"></div><div id="patronAssignList"></div>
-</div>
+<div class="card" style="background:#0b5ed7;color:white"><b>Patron Exclusive</b><div style="font-size:12px;margin-top:4px">Post Notes per unit + Photo paste - Anyone logged in views & downloads</div></div>
+<div class="card" style="background:#e7f3ff"><b>📚 Post Notes + Paste Photo</b><select id="unit"><option>ENS 101 - Ecology</option><option>ENS 102 - Soil Science</option><option>ENS 103 - Env Chemistry</option><option>ENS 104 - Climate</option><option>ENS 201 - GIS</option><option>ENS 202 - Env Law</option></select><input id="noteTitle" placeholder="Title e.g. Soil Horizons"><textarea id="noteContent" style="height:110px" placeholder="Paste DEEP notes here..."></textarea>
+<div class="paste-zone" id="pasteNote">📸 PASTE PHOTO HERE - Ctrl+V or Tap to select<br><span style="font-size:10px">You can paste screenshot, diagram, photo of notes</span><input type="file" id="fileNote" accept="image/*" style="display:none"><img id="previewNote" class="preview" style="display:none"></div>
+<input id="noteFileName" placeholder="File name e.g. ENS102.pdf"><input id="noteAuth" type="password" placeholder="Patron Password PATRON2026"><button type="button" id="btnPostNote" class="mainbtn" style="background:#0b5ed7">POST NOTE + PHOTO - All View</button></div>
+<div id="patronNotesList"></div></div>
 
-<!-- REP SPECIFIC AREA -->
+<!-- REP PAGE WITH PHOTO PASTE FOR TIMETABLE -->
 <div id="page-rep" class="page"><div style="display:flex;justify-content:space-between"><h3>📢 REP AREA - AMOS NYONGESA</h3><button type="button" id="closeRep" style="width:40px;background:#ddd;color:black">X</button></div>
-<div class="card" style="background:#166534;color:white"><b>Rep Exclusive Area</b><div style="font-size:12px;margin-top:6px">Only Rep can post here - All members view<br>Role: Class Rep ENS/B/26<br>Can post: Classes, Timetable, Announcements, Change hidden student password</div></div>
-<div class="card" style="background:#d1e7dd"><b>📢 Post Classes - All Members View</b><input id="classUnit" placeholder="Unit e.g. ENS 101 Ecology"><input id="classVenue" placeholder="Venue e.g. LH1, Lab 2"><input id="classTime" placeholder="Time e.g. MON 8:00-10:00 AM"><input id="classLecturer" placeholder="Lecturer e.g. Dr Okore"><textarea id="classInfo" placeholder="Info - CAT dates, extra..."></textarea><input id="classAuth" type="password" placeholder="Rep Password REP2026"><button type="button" id="btnPostClass" class="mainbtn" style="background:#166534">POST CLASS - All Members View on Home</button></div>
-<div class="card"><b>📅 Post Timetable</b><div id="timetableView" style="background:#f8f9fa;padding:10px;border-radius:10px;white-space:pre-wrap;min-height:80px;font-size:13px">No timetable - Rep will post</div><textarea id="timeContent" style="height:100px" placeholder="MON 8-10 ENS101 LH1 Dr Okore..."></textarea><input id="timeAuth" type="password" placeholder="Rep Password"><button type="button" id="btnPostTime" class="mainbtn" style="background:#166534">PUBLISH TIMETABLE</button></div>
-<div class="card" style="background:#f8d7da"><b>🔐 Change Hidden Student Password - Rep Only</b><div>Current: <span id="cpv">•••••</span> <button type="button" id="btnShowPass" style="width:auto;padding:4px 12px;background:#ddd;display:inline">Show</button> - Hidden</div><select id="adminRole"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select><input id="adminOldPass" type="password" placeholder="Your Admin Pass PATRON2026/REP2026"><input id="newStudentPass" placeholder="New Student Password"><input id="confirmNewPass" placeholder="Confirm"><button type="button" id="btnChangePass" class="mainbtn" style="background:#166534">UPDATE PASSWORD - Hidden</button></div>
-<div id="classList"></div>
-</div>
+<div class="card" style="background:#166534;color:white"><b>Rep Exclusive - Classes + Timetable + Photo Paste</b><div style="font-size:12px;margin-top:4px">Post classes for all to view + Timetable photo paste + Change hidden password</div></div>
+<div class="card" style="background:#d1e7dd"><b>📢 Post Classes</b><input id="classUnit" placeholder="Unit"><input id="classVenue" placeholder="Venue"><input id="classTime" placeholder="Time"><input id="classLecturer" placeholder="Lecturer"><textarea id="classInfo" placeholder="Info"></textarea><input id="classAuth" type="password" placeholder="Rep Password REP2026"><button type="button" id="btnPostClass" class="mainbtn" style="background:#166534">POST CLASS - All View</button></div>
+<div class="card"><b>📅 Timetable + PASTE PHOTO OF TIMETABLE</b><div id="timetableView" style="background:#f8f9fa;padding:10px;border-radius:10px;white-space:pre-wrap;min-height:80px;font-size:13px">No timetable yet - Rep will paste text + photo</div>
+<div id="timetablePhotoView"></div>
+<div class="paste-zone" id="pasteTime">📸 PASTE TIMETABLE PHOTO HERE - Screenshot of timetable<br><span style="font-size:10px">Tap to select photo or Ctrl+V to paste</span><input type="file" id="fileTime" accept="image/*" style="display:none"><img id="previewTime" class="preview" style="display:none"></div>
+<textarea id="timeContent" style="height:80px" placeholder="Type timetable text MON 8-10 ENS101 LH1..."></textarea><input id="timeAuth" type="password" placeholder="Rep Password"><button type="button" id="btnPostTime" class="mainbtn" style="background:#166534">PUBLISH TIMETABLE TEXT + PHOTO</button></div>
+<div class="card" style="background:#f8d7da"><b>🔐 Change Hidden Password</b><div>Current: <span id="cpv">•••••</span> <button type="button" id="btnShowPass" style="width:auto;padding:4px 12px;background:#ddd;display:inline">Show</button></div><select id="adminRole"><option value="">Select Role</option><option value="patron">PATRON</option><option value="rep">REP</option></select><input id="adminOldPass" type="password" placeholder="Admin Pass"><input id="newStudentPass" placeholder="New Student Password"><input id="confirmNewPass" placeholder="Confirm"><button type="button" id="btnChangePass" class="mainbtn" style="background:#166534">UPDATE - Hidden</button></div>
+<div id="classList"></div></div>
 
-<!-- OTHER PAGES -->
-<div id="page-platforms" class="page"><div style="display:flex;justify-content:space-between"><h3>🌐 All Platforms - Including AI</h3><button type="button" id="closePlat" style="width:40px;background:#ddd;color:black">X</button></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<div class="card" id="ppMoi">🎓 Moi eLearning</div>
-<div class="card" id="ppScholar">🔬 Scholar</div>
-<div class="card" id="ppYouTube">▶️ YouTube</div>
-<div class="card" id="ppHelb">💰 HELB</div>
-<div class="card" id="ppGemini" style="background:#4285f4;color:white">✨ Gemini - Google AI</div>
-<div class="card" id="ppChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT - OpenAI</div>
-<div class="card" id="ppPoe" style="background:black;color:white">🧠 Poe - Multi AI</div>
-<div class="card" id="ppAI" style="background:#7c3aed;color:white">🤖 AI Tools - All</div>
-<div class="card" id="ppPatronBtn" style="background:#0b5ed7;color:white">👨‍🏫 PATRON PLATFORM</div>
-<div class="card" id="ppRepBtn" style="background:#166534;color:white">📢 REP AREA</div>
-<div class="card" id="ppWA" style="background:#25d366;color:white">💬 WhatsApp</div>
-<div class="card" id="ppFB" style="background:#1877f2;color:white">📘 Facebook</div>
-</div>
-</div>
+<div id="page-platforms" class="page"><div style="display:flex;justify-content:space-between"><h3>🌐 All Platforms - Vertical (Poe Removed)</h3><button type="button" id="closePlat" style="width:40px;background:#ddd;color:black">X</button></div><div style="display:flex;flex-direction:column;gap:8px"><div class="card" id="ppMoi">🎓 Moi eLearning - Moodle</div><div class="card" id="ppScholar">🔬 Google Scholar</div><div class="card" id="ppYouTube">▶️ YouTube</div><div class="card" id="ppHelb">💰 HELB</div><div class="card" id="ppGemini" style="background:#4285f4;color:white">✨ Gemini AI</div><div class="card" id="ppChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</div><div class="card" id="ppAI" style="background:#7c3aed;color:white">🤖 AI Tools - All AI</div><div class="card" id="ppPatronBtn" style="background:#0b5ed7;color:white">👨‍🏫 PATRON PLATFORM</div><div class="card" id="ppRepBtn" style="background:#166534;color:white">📢 REP AREA + Timetable Photo</div></div></div>
 
-<div id="page-social" class="page"><div style="display:flex;justify-content:space-between"><h3>📱 Social Media + AI</h3><button type="button" id="closeSocial" style="width:40px;background:#ddd;color:black">X</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="card" id="sGemini" style="background:#4285f4;color:white">✨ Gemini</div><div class="card" id="sChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</div><div class="card" id="sPoe" style="background:black;color:white">🧠 Poe</div><div class="card" id="sAI" style="background:#7c3aed;color:white">🤖 AI</div><div class="card" id="sWA" style="background:#25d366;color:white">💬 WhatsApp</div><div class="card" id="sFB" style="background:#1877f2;color:white">📘 Facebook</div><div class="card" id="sIG" style="background:#E4405F;color:white">📸 Instagram</div><div class="card" id="sTT" style="background:black;color:white">🎵 TikTok</div></div></div>
+<div id="page-social" class="page"><div style="display:flex;justify-content:space-between"><h3>📱 Social + AI</h3><button type="button" id="closeSocial" style="width:40px;background:#ddd;color:black">X</button></div><div style="display:flex;flex-direction:column;gap:8px"><div class="card" id="sGemini" style="background:#4285f4;color:white">✨ Gemini - Ask AI</div><div class="card" id="sChatGPT" style="background:#10a37f;color:white">🤖 ChatGPT</div><div class="card" id="sAI" style="background:#7c3aed;color:white">🤖 AI Tools</div><div class="card" id="sWA" style="background:#25d366;color:white">💬 WhatsApp</div><div class="card" id="sFB" style="background:#1877f2;color:white">📘 Facebook</div><div class="card" id="sIG" style="background:#E4405F;color:white">📸 Instagram</div><div class="card" id="sTT" style="background:black;color:white">🎵 TikTok</div></div></div>
 
-<div id="page-reginfo" class="page"><div style="display:flex;justify-content:space-between"><h3>📋 Requirements</h3><button type="button" id="closeRegInfo" style="width:40px;background:#ddd;color:black">X</button></div><div class="card" style="line-height:1.8;font-size:14px"><b>ENS COHORTS 2026 Registration:</b><br>1. Full Name as per ID<br>2. Reg No ENS/B/26/XXXX<br>3. Phone 07XXX<br>4. Email for assignments upload via email (anyone logged in can upload)<br>5. Hidden Password ENS26 - Ask Rep AMOS NYONGESA<br>6. ENS student only<br><br><b>Top Bar:</b> Moi eLearning, Scholar, YouTube, HELB, Gemini, ChatGPT, Poe, AI, Patron Platform, Rep Area, Social Media<br><br><b>Background:</b> Academic photo - Moi University students<br><b>Social:</b> WhatsApp, Facebook, Instagram, TikTok, X, YouTube, LinkedIn, Telegram</div></div>
+<div id="page-reginfo" class="page"><div style="display:flex;justify-content:space-between"><h3>📋 Requirements</h3><button type="button" id="closeRegInfo" style="width:40px;background:#ddd;color:black">X</button></div><div class="card" style="line-height:1.8;font-size:14px">Full Name, Reg ENS/B/26/XXXX, Phone, Email for upload, Hidden Password ENS26, ENS student<br><br>Top Bar Vertical: Moi eLearning, Scholar, YouTube, HELB, Gemini, ChatGPT, AI Tools, Patron Platform, Rep Area<br><br>Photo Paste: In Timetable you can paste photo screenshot, In Notes you can paste diagram/photo, In Search you can paste image to search<br><br>Background: Academic photo</div></div>
 
 <div id="regModal" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:50"><div style="background:white;border-radius:20px;padding:20px;width:100%;max-width:360px"><h3 style="text-align:center">Registration</h3><input id="rName" placeholder="Full Name *"><input id="rReg" placeholder="Reg No ENS/B/26/... *"><input id="rPhone" placeholder="Phone *"><input id="rEmail" type="email" placeholder="Email *"><input id="rPass" type="password" style="border:2px solid #00a884;background:#f0fff4" placeholder="Hidden Password *"><div id="passError" style="color:red;font-size:11px;display:none">Wrong password</div><button type="button" id="btnRegister" class="mainbtn">REGISTER</button><button type="button" id="btnCancelReg" style="background:transparent;color:gray">Cancel</button></div></div>
 
 <script>
 var sPass=localStorage.getItem('sp')||'ENS26';var pPass=localStorage.getItem('pp')||'PATRON2026';var rPass=localStorage.getItem('rp2')||'REP2026';
-var contacts=JSON.parse(localStorage.getItem('c2')||'[]');var messages=JSON.parse(localStorage.getItem('m2')||'{}');var notes=JSON.parse(localStorage.getItem('n2')||'[]');var classes=JSON.parse(localStorage.getItem('classes')||'[]');var assigns=JSON.parse(localStorage.getItem('a2')||'[]');var tt=localStorage.getItem('tt')||'';var active=null;
-
-function askPass(){if(localStorage.getItem('logged')==='1') return;var p=prompt("ENS COHORTS 2026 MOI UNIVERSITY\nPATRON: DR OKORE LUTHER | REP: AMOS NYONGESA\n\nEnter Hidden Password (Contact Rep AMOS):");if(p===null){setTimeout(askPass,400);return;}if(p===sPass||p.toLowerCase()==='ens26'){localStorage.setItem('logged','1');}else{alert("Wrong! Hidden password is ENS26");setTimeout(askPass,400);}}
-setTimeout(askPass,500);
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));document.getElementById('page-'+id).classList.add('show');}
-function hidePages(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));}
-function openLink(u){window.open(u,'_blank');}
-function addTouch(id, fn){var el=document.getElementById(id);if(!el) return;el.addEventListener('click', fn);el.addEventListener('touchend', function(e){e.preventDefault();fn();},{passive:false});}
-
-// TOP SEARCH - WORKS 100%
-addTouch('btnSearch', function(){
-  var q=document.getElementById('gSearch').value.trim();
-  if(!q){alert("Type to search - Google, Scholar, YouTube, Gemini, ChatGPT");return;}
-  var res=document.getElementById('results');res.style.display='block';
-  res.innerHTML=`<div style="padding:12px;background:#f0f2f5;display:flex;justify-content:space-between"><b>Search: ${q}</b><button type="button" id="closeRes" style="width:35px;background:#ddd;color:black;padding:6px">X</button></div>
-  <div class="card" id="resG"><b>🔍 Google</b> - ${q}</div>
-  <div class="card" id="resScholar"><b>🔬 Scholar</b> - ${q}</div>
-  <div class="card" id="resYT"><b>▶️ YouTube</b> - ${q}</div>
-  <div class="card" id="resGemini"><b>✨ Gemini</b> - Ask "${q}" on Gemini</div>
-  <div class="card" id="resChatGPT"><b>🤖 ChatGPT</b> - Ask "${q}" on ChatGPT</div>
-  <div class="card" id="resPoe"><b>🧠 Poe</b> - Ask "${q}" on Poe</div>`;
-  addTouch('closeRes', function(){res.style.display='none';});
-  addTouch('resG', function(){openLink('https://www.google.com/search?q='+encodeURIComponent(q));});
-  addTouch('resScholar', function(){openLink('https://scholar.google.com/scholar?q='+encodeURIComponent(q));});
-  addTouch('resYT', function(){openLink('https://www.youtube.com/results?search_query='+encodeURIComponent(q));});
-  addTouch('resGemini', function(){openLink('https://gemini.google.com/app?q='+encodeURIComponent(q));});
-  addTouch('resChatGPT', function(){openLink('https://chat.openai.com/?q='+encodeURIComponent(q));});
-  addTouch('resPoe', function(){openLink('https://poe.com/?q='+encodeURIComponent(q));});
-});
-
-// NEW TOP BAR BUTTONS - GEMINI, CHATGPT, POE, AI + PATRON + REP
-addTouch('pMoi', function(){openLink('https://elearning.mu.ac.ke/');});
-addTouch('pScholar', function(){openLink('https://scholar.google.com/');});
-addTouch('pYouTube', function(){openLink('https://www.youtube.com/');});
-addTouch('pHelb', function(){openLink('https://portal.helb.co.ke/');});
-addTouch('pGemini', function(){openLink('https://gemini.google.com/');});
-addTouch('pChatGPT', function(){openLink('https://chat.openai.com/');});
-addTouch('pPoe', function(){openLink('https://poe.com/');});
-addTouch('pAI', function(){showPage('social');});
-addTouch('pPatronArea', function(){showPage('patron');});
-addTouch('pRepArea', function(){showPage('rep');});
-addTouch('pSocial', function(){showPage('social');});
-addTouch('pAll', function(){showPage('platforms');});
-
-addTouch('btnAdd', function(){document.getElementById('regModal').style.display='flex';});
-addTouch('btnReq', function(){showPage('reginfo');});
-addTouch('contactPatron', function(){showPage('patron');});
-addTouch('contactRep', function(){showPage('rep');});
-addTouch('btnBack', function(){document.getElementById('rightPanel').classList.remove('show');document.getElementById('leftPanel').classList.remove('hide');});
-addTouch('btnSend', function(){var input=document.getElementById('msgIn');var text=input.value.trim();if(!text||!active)return;if(!messages[active])messages[active]=[];messages[active].push({text:text,me:true,time:new Date().toLocaleTimeString()});localStorage.setItem('m2',JSON.stringify(messages));var box=document.getElementById('msgs');var d=document.createElement('div');d.className='bubble me';d.innerHTML=text+`<div style="font-size:10px;text-align:right">${new Date().toLocaleTimeString()} ✓✓</div>`;box.appendChild(d);input.value='';box.scrollTop=box.scrollHeight;});
-
-addTouch('closePatron', hidePages);addTouch('closeRep', hidePages);addTouch('closePlat', hidePages);addTouch('closeSocial', hidePages);addTouch('closeRegInfo', hidePages);
-addTouch('ppMoi', function(){openLink('https://elearning.mu.ac.ke/');});addTouch('ppScholar', function(){openLink('https://scholar.google.com/');});addTouch('ppYouTube', function(){openLink('https://www.youtube.com/');});addTouch('ppHelb', function(){openLink('https://portal.helb.co.ke/');});
-addTouch('ppGemini', function(){openLink('https://gemini.google.com/');});addTouch('ppChatGPT', function(){openLink('https://chat.openai.com/');});addTouch('ppPoe', function(){openLink('https://poe.com/');});addTouch('ppAI', function(){openLink('https://poe.com/');});addTouch('ppPatronBtn', function(){showPage('patron');});addTouch('ppRepBtn', function(){showPage('rep');});addTouch('ppWA', function(){openLink('https://wa.me/');});addTouch('ppFB', function(){openLink('https://facebook.com/');});
-addTouch('sGemini', function(){openLink('https://gemini.google.com/');});addTouch('sChatGPT', function(){openLink('https://chat.openai.com/');});addTouch('sPoe', function(){openLink('https://poe.com/');});addTouch('sAI', function(){openLink('https://poe.com/');});addTouch('sWA', function(){openLink('https://wa.me/');});addTouch('sFB', function(){openLink('https://facebook.com/');});addTouch('sIG', function(){openLink('https://instagram.com/');});addTouch('sTT', function(){openLink('https://tiktok.com/');});
-addTouch('btnPostNote', function(){var u=document.getElementById('unit').value;var t=document.getElementById('noteTitle').value.trim();var c=document.getElementById('noteContent').value.trim();var f=document.getElementById('noteFileName').value.trim()||u+'.pdf';var a=document.getElementById('noteAuth').value.trim();if(!c){alert('Paste deep notes');return;}if(a!==pPass&&a!==rPass){alert('Only Patron DR OKORE - PATRON2026');return;}notes.unshift({unit:u,title:t,content:c,fileName:f,date:new Date().toLocaleString()});localStorage.setItem('n2',JSON.stringify(notes));alert('Note posted - Anyone logged in can view & download');renderPatron();});
-addTouch('btnPostAssign', function(){var t=document.getElementById('assignTitle').value.trim();var d=document.getElementById('assignDesc').value.trim();var a=document.getElementById('assignAuth').value.trim();if(!t)return alert('Enter title');if(a!==pPass)return alert('Only Patron');assigns.unshift({title:t,desc:d,date:new Date().toLocaleString()});localStorage.setItem('a2',JSON.stringify(assigns));alert('Assignment posted');renderPatron();});
-addTouch('btnPostClass', function(){var u=document.getElementById('classUnit').value.trim();var v=document.getElementById('classVenue').value.trim();var ti=document.getElementById('classTime').value.trim();var l=document.getElementById('classLecturer').value.trim();var info=document.getElementById('classInfo').value.trim();var a=document.getElementById('classAuth').value.trim();if(!u||!v||!ti){alert('Fill unit, venue, time');return;}if(a!==rPass&&a!==pPass){alert('Only Rep AMOS - REP2026');return;}classes.unshift({unit:u,venue:v,time:ti,lecturer:l,info:info,date:new Date().toLocaleString()});localStorage.setItem('classes',JSON.stringify(classes));alert('Class posted - All members view');renderRep();});
-addTouch('btnPostTime', function(){var c=document.getElementById('timeContent').value.trim();var a=document.getElementById('timeAuth').value.trim();if(!c)return;if(a!==rPass&&a!==pPass)return alert('Only Rep/Patron');localStorage.setItem('tt',c);document.getElementById('timetableView').textContent=c;alert('Timetable published');});
-addTouch('btnShowPass', function(){var el=document.getElementById('cpv');el.textContent=el.textContent==='•••••'?sPass:'•••••';});
-addTouch('btnChangePass', function(){var role=document.getElementById('adminRole').value;var oldP=document.getElementById('adminOldPass').value.trim();var ns=document.getElementById('newStudentPass').value.trim();var cs=document.getElementById('confirmNewPass').value.trim();if(!role)return alert('Select Role');if(role==='patron'&&oldP!==pPass)return alert('Wrong Patron');if(role==='rep'&&oldP!==rPass)return alert('Wrong Rep');if(!ns||ns!==cs)return alert('No match');sPass=ns;localStorage.setItem('sp',ns);alert('Password changed - Hidden: '+ns);});
-addTouch('btnRegister', function(){var name=document.getElementById('rName').value.trim();var reg=document.getElementById('rReg').value.trim();var phone=document.getElementById('rPhone').value.trim();var email=document.getElementById('rEmail').value.trim();var pass=document.getElementById('rPass').value.trim();if(!name||!reg)return alert('Enter Name & Reg');if(pass!==sPass&&pass.toLowerCase()!=='ens26'){document.getElementById('passError').style.display='block';return;}contacts.push({name,reg,phone,email});localStorage.setItem('c2',JSON.stringify(contacts));document.getElementById('regModal').style.display='none';renderContacts();});
-addTouch('btnCancelReg', function(){document.getElementById('regModal').style.display='none';});
-
-document.getElementById('gSearch').addEventListener('keypress', function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('btnSearch').click();}});
-document.getElementById('cSearch').addEventListener('input', function(){var q=this.value.toLowerCase();var el=document.getElementById('contacts');var f=contacts.filter(c=>c.name.toLowerCase().includes(q)||c.reg.toLowerCase().includes(q));el.innerHTML='';f.forEach(c=>{var d=document.createElement('div');d.className='contact';d.innerHTML=`<div class="avatar">${c.name[0]}</div><div><b>${c.name}</b><div style="font-size:11px">${c.reg}</div></div>`;d.addEventListener('click',()=>{active=c.name;document.getElementById('leftPanel').classList.add('hide');document.getElementById('rightPanel').classList.add('show');});el.appendChild(d);});});
-
-function renderContacts(){var el=document.getElementById('contacts');el.innerHTML='';contacts.forEach(function(c){var d=document.createElement('div');d.className='contact';d.innerHTML=`<div class="avatar">${c.name[0].toUpperCase()}</div><div><b>${c.name}</b><div style="font-size:11px;color:#667781">${c.reg} • Verified</div></div>`;d.addEventListener('click',function(){active=c.name;document.getElementById('leftPanel').classList.add('hide');document.getElementById('rightPanel').classList.add('show');});d.addEventListener('touchend',function(e){e.preventDefault();active=c.name;document.getElementById('leftPanel').classList.add('hide');document.getElementById('rightPanel').classList.add('show');},{passive:false});el.appendChild(d);});}
-function renderPatron(){var nl=document.getElementById('patronNotesList');nl.innerHTML='';notes.forEach(n=>{nl.innerHTML+=`<div class="card"><b>${n.unit} - ${n.title}</b><div style="font-size:11px">${n.date}</div><div style="font-size:12px;background:#f8f9fa;padding:8px;border-radius:8px;margin-top:4px;white-space:pre-wrap">${n.content.substring(0,300)}</div><div style="font-size:10px;color:#0b5ed7">📄 ${n.fileName} - Anyone logged in can download</div></div>`;});var al=document.getElementById('patronAssignList');al.innerHTML='';assigns.forEach(a=>{al.innerHTML+=`<div class="card" style="border-left:4px solid #0b5ed7"><b>📝 ${a.title}</b><div style="font-size:12px">${a.desc}</div><div style="font-size:10px">${a.date}</div></div>`;});}
-function renderRep(){var cl=document.getElementById('classList');cl.innerHTML='';classes.forEach(c=>{cl.innerHTML+=`<div class="card" style="border-left:4px solid #166534"><b>📢 ${c.unit} - ${c.time}</b><br>Venue:${c.venue} Lecturer:${c.lecturer}<br>${c.info}<div style="font-size:10px">${c.date}</div></div>`;});var tv=localStorage.getItem('tt');if(tv)document.getElementById('timetableView').textContent=tv;}
-renderContacts();renderPatron();renderRep();
-</script>
-</body></html>
+var contacts=JSON.parse(localStorage.getItem
